@@ -30,8 +30,12 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-security-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("io.mockk:mockk:1.14.9")
+    testImplementation("io.kotest:kotest-assertions-core:5.8.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("com.auth0:java-jwt:4.5.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation:4.0.2")
 }
 
 kotlin {
