@@ -1,10 +1,12 @@
-package br.com.claus.sellvia.application.usecase
+package br.com.claus.sellvia.application.usecase.auth
 
 import br.com.claus.sellvia.application.dto.request.LoginRequestDTO
 import br.com.claus.sellvia.application.port.PasswordEncoderPort
 import br.com.claus.sellvia.application.port.TokenServicePort
-import br.com.claus.sellvia.application.usecase.auth.LoginUseCase
+import br.com.claus.sellvia.application.service.AuthServiceHelper
 import br.com.claus.sellvia.domain.enums.UserRole
+import br.com.claus.sellvia.domain.exception.InvalidCredentialsException
+import br.com.claus.sellvia.domain.exception.InvalidFieldException
 import br.com.claus.sellvia.domain.model.User
 import br.com.claus.sellvia.domain.repository.UserRepository
 import io.kotest.assertions.throwables.shouldThrow
@@ -12,7 +14,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.mockito.Mockito.verify
 import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
 import kotlin.test.Test
@@ -23,7 +24,8 @@ class LoginUseCaseTest {
     private val passwordEncoder = mockk<PasswordEncoderPort>()
     private val tokenService = mockk<TokenServicePort>()
 
-    private val loginUseCase = LoginUseCase(userRepository, passwordEncoder, tokenService)
+    private val loginUseCase =
+        LoginUseCase(tokenService, userRepository, passwordEncoder, AuthServiceHelper(tokenService))
 
     @Test
     fun `should return tokens when credentials are valid`() {
@@ -41,7 +43,8 @@ class LoginUseCaseTest {
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
             createdBy = "system",
-            updatedBy = "system"
+            updatedBy = "system",
+            email = "email@gmail.com"
         )
 
         every { userRepository.findByUsername("claus") } returns user
@@ -64,8 +67,16 @@ class LoginUseCaseTest {
         every { userRepository.findByUsername(any()) } returns mockk(relaxed = true)
         every { passwordEncoder.matches(any(), any()) } returns false
 
-        shouldThrow<ResponseStatusException> {
+        shouldThrow<InvalidCredentialsException> {
             loginUseCase.execute(LoginRequestDTO("123", "123456"))
+        }
+    }
+
+    @Test
+    fun `should throw exception when password is blank`() {
+
+        shouldThrow<InvalidFieldException> {
+            loginUseCase.execute(LoginRequestDTO("    ", "     "))
         }
     }
 }

@@ -21,4 +21,17 @@ class UserRepositoryImpl(
         val savedEntity = springDataRepository.save(entity)
         return savedEntity.toModel()
     }
+
+    override fun existsByCpf(cpf: String): Boolean {
+        return springDataRepository.existsByCpf(cpf)
+    }
+
+    override fun existsByEmail(email: String): Boolean {
+        return springDataRepository.existsByEmail(email)
+    }
+
+    override fun existsByUsername(username: String): Boolean {
+        return springDataRepository.existsByUsername(username)
+    }
+
 }

@@ -12,14 +12,15 @@ import java.util.Date
 @Component
 class TokenServiceAdapter(
     @Value("\${jwt.secret}") private val secret: String,
-    @Value("\${jwt.token-expiration}") private val tokenExpiration: Long = 3600000
+    @Value("\${jwt.token-expiration}") private val tokenExpiration: Long = 3600000,
+    @Value("\${jwt.refresh-token-expiration}") private val tokenRefreshExpiration: Long = tokenExpiration,
 ) : TokenServicePort {
 
     private val algorithm = Algorithm.HMAC256(secret)
 
     override fun generateToken(user: User) = createToken(user, TokenType.MAIN_TOKEN, tokenExpiration)
 
-    override fun generateRefreshToken(user: User) = createToken(user, TokenType.REFRESH_TOKEN, tokenExpiration * 2) // Refresh costuma durar mais
+    override fun generateRefreshToken(user: User) = createToken(user, TokenType.REFRESH_TOKEN, tokenRefreshExpiration)
 
     override fun validateToken(token: String): String? = validate(token, TokenType.MAIN_TOKEN)
 
