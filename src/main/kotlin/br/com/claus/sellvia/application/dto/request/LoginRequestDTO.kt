@@ -1,10 +1,14 @@
 package br.com.claus.sellvia.application.dto.request
 
-import jakarta.validation.constraints.NotBlank
+import br.com.claus.sellvia.domain.exception.InvalidFieldException
 
 data class LoginRequestDTO(
-    @field:NotBlank
-    val username: String,
-    @field:NotBlank
-    val password: String,
-)
+    val username: String?,
+    val password: String?,
+){
+    fun validate() {
+        if(username.isNullOrBlank() || password.isNullOrBlank()) {
+            throw InvalidFieldException("Os campos de login do usuário não devem estar vazios.")
+        }
+    }
+}

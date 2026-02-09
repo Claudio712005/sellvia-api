@@ -4,35 +4,29 @@ import br.com.claus.sellvia.application.dto.request.LoginRequestDTO
 import br.com.claus.sellvia.application.dto.response.LoginResponseDTO
 import br.com.claus.sellvia.application.port.PasswordEncoderPort
 import br.com.claus.sellvia.application.port.TokenServicePort
-import br.com.claus.sellvia.domain.exception.NotFoundResouceException
+import br.com.claus.sellvia.application.service.AuthServiceHelper
+import br.com.claus.sellvia.domain.annotation.UseCase
+import br.com.claus.sellvia.domain.exception.InvalidCredentialsException
 import br.com.claus.sellvia.domain.repository.UserRepository
-import br.com.claus.sellvia.infrastructure.persistence.mapper.toResponseDTO
-import org.springframework.http.HttpStatus
-import org.springframework.web.server.ResponseStatusException
 
+@UseCase
 class LoginUseCase(
+    val tokenServicePort: TokenServicePort,
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoderPort,
-    private val tokenService: TokenServicePort
+    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService = tokenServicePort)
 ) {
 
     fun execute(request: LoginRequestDTO): LoginResponseDTO {
-        val user = userRepository.findByUsername(request.username)
-            ?: throw NotFoundResouceException("Usuário não encontrado")
+        request.validate()
 
-        if (!passwordEncoder.matches(request.password, user.password)) {
-            throw ResponseStatusException(HttpStatus.FORBIDDEN, "Senha inválida")
+        val user = userRepository.findByUsername(request.username!!)
+            ?: throw InvalidCredentialsException("Usuário não encontrado ou credencias inválidas.")
+
+        if (!passwordEncoder.matches(request.password!!, user.password!!)) {
+            throw InvalidCredentialsException("Usuário não encontrado ou credencias inválida3.")
         }
 
-        val token = tokenService.generateToken(user)
-        val refreshToken = tokenService.generateRefreshToken(user)
-
-        return LoginResponseDTO(
-            token = token,
-            refreshToken = refreshToken,
-            user = user.toResponseDTO()
-        ).also { dto ->
-            dto.company = user.company?.toResponseDTO()
-        }
+        return authServiceHelper.createLoginResponse(user)
     }
 }

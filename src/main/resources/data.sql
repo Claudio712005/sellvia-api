@@ -1,7 +1,8 @@
-INSERT INTO companies (name, cnpj, business_name, website_url, is_active, company_url_logo)
-VALUES ('Empresa Teste', '12345678000199', 'Teste LTDA', 'https://sellvia.com.br', true, 'https://images.vexels.com/media/users/3/142789/isolated/preview/2bfb04ad814c4995f0c537c68db5cd0b-logotipo-do-circulo-multicolorido.png');
+INSERT INTO companies (name, cnpj, business_name, website_url, is_active, company_url_logo) VALUES
+('Empresa Teste 1', '12345678000199', 'Teste LTDA', 'https://sellvia.com.br', true, 'https://images.vexels.com/media/users/3/142789/isolated/preview/2bfb04ad814c4995f0c537c68db5cd0b-logotipo-do-circulo-multicolorido.png'),
+('Empresa Teste 2', '12345678000198', 'Teste LTDA 2', 'https://sellvia2.com.br', true, 'https://images.vexels.com/media/users/3/142789/isolated/preview/2bfb04ad814c4995f0c537c68db5cd0b-logotipo-do-circulo-multicolorido.png');
 
-INSERT INTO users (name, username, cpf, is_active, password, created_at, updated_at, created_by, updated_by, role, company_id)
+INSERT INTO users (name, username, cpf, is_active, password, created_at, updated_at, created_by, updated_by, role, company_id, email)
 VALUES (
     'Admin Claus',
     'claus_admin',
@@ -13,5 +14,6 @@ VALUES (
     'system',
     'system',
     'SYSTEM_ADMIN',
-    1
+    1,
+    'clausilvaaraujo11@gmail.com'
 );

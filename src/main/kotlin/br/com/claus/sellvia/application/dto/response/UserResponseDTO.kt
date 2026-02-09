@@ -6,5 +6,6 @@ data class UserResponseDTO (
     val id: Long? = null,
     val username: String = "",
     val name: String = "",
-    val role: UserRole
+    val role: UserRole,
+    val email: String = "",
 )
