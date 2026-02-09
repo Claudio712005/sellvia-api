@@ -1,11 +1,11 @@
 package br.com.claus.sellvia.infrastructure.persistence.mapper
 
-import br.com.claus.sellvia.application.dto.response.UserResponseDTO
+import br.com.claus.sellvia.application.dto.request.UserRequestDTO
 import br.com.claus.sellvia.domain.model.User
 import br.com.claus.sellvia.infrastructure.persistence.model.UserEntity
 
 fun User.toEntity(): UserEntity {
-    return UserEntity(
+    val entity = UserEntity(
         username = this.username,
         password = this.password,
         createdBy = this.createdBy,
@@ -16,17 +16,12 @@ fun User.toEntity(): UserEntity {
         createdAt = this.createdAt,
         role = this.role,
         name = this.name,
-        isActive = this.isActive
+        isActive = this.isActive,
+        email = this.email,
     )
-}
 
-fun User.toResponseDTO(): UserResponseDTO {
-    return UserResponseDTO(
-        username = this.username,
-        id = this.id ?: 0,
-        role = this.role,
-        name = this.name,
-    )
+    entity.company = this.company?.toEntity()
+    return entity
 }
 
 fun UserEntity.toModel(): User {
@@ -42,6 +37,7 @@ fun UserEntity.toModel(): User {
         role = this.role,
         name = this.name,
         isActive = this.isActive,
-        company = company?.toDomain()
+        company = company?.toDomain(),
+        email = this.email,
     )
 }

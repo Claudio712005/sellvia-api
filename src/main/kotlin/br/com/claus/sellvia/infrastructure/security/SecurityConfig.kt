@@ -23,13 +23,17 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http.csrf { it.disable() }
+            .headers { headers ->
+                headers.frameOptions { it.sameOrigin() }
+            }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
 
-                auth.requestMatchers(*ApiEndpoints.PUBLIC_PATHS).permitAll()
+                auth.requestMatchers(*ApiEndpoints.PUBLIC).permitAll()
 
-                ApiEndpoints.ROLE_PERMISSIONS.forEach { (role, paths) ->
-                    auth.requestMatchers(*paths).hasAuthority(role.role)
+                ApiEndpoints.PRIVATE.forEach { (path, roles) ->
+                    val authorities = roles.map { it.role }.toTypedArray()
+                    auth.requestMatchers(path).hasAnyAuthority(*authorities)
                 }
 
                 auth.anyRequest().authenticated()
