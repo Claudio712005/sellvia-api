@@ -27,6 +27,10 @@ object ApiEndpoints {
         const val REFRESH_TOKEN_ROOT = "$AUTH_ROOT$REFRESH_TOKEN"
     }
 
+    object Category {
+        const val CATEGORY_ROOT = "$API_ROOT/categories"
+    }
+
     val PUBLIC = arrayOf(
         System.H2_CONSOLE_ROOT,
         System.ERROR_ROOT,
@@ -37,6 +41,7 @@ object ApiEndpoints {
     )
 
     val PRIVATE: Map<String, Array<UserRole>> = mapOf(
-        Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN)
+        Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
+        Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER)
     )
 }

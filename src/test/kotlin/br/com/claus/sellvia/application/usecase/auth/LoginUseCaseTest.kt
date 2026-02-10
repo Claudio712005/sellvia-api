@@ -14,7 +14,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
 import kotlin.test.Test
 

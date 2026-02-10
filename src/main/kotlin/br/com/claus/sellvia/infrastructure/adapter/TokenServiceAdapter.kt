@@ -3,9 +3,13 @@ package br.com.claus.sellvia.infrastructure.adapter
 import br.com.claus.sellvia.application.port.TokenServicePort
 import br.com.claus.sellvia.domain.enums.TokenType
 import br.com.claus.sellvia.domain.model.User
+import br.com.claus.sellvia.infrastructure.persistence.model.UserEntity
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import java.util.Date
 
@@ -26,11 +30,21 @@ class TokenServiceAdapter(
 
     override fun validateRefreshToken(token: String): String? = validate(token, TokenType.REFRESH_TOKEN)
 
+    override fun getClaimFromToken(claim: String): String? {
+        val principal = SecurityContextHolder.getContext().authentication?.principal as? UserEntity
+        return when(claim) {
+            "companyId" -> principal?.company?.id.toString()
+            "role" -> principal?.role?.name
+            else -> null
+        }
+    }
+
     private fun createToken(user: User, type: TokenType, expiration: Long): String {
         return JWT.create()
             .withSubject(user.username)
             .withClaim("role", user.role.name)
             .withClaim("type", type.name)
+            .withClaim("companyId", user.company?.id)
             .withExpiresAt(Date(System.currentTimeMillis() + expiration))
             .sign(algorithm)
     }
@@ -47,4 +61,5 @@ class TokenServiceAdapter(
             null
         }
     }
+
 }

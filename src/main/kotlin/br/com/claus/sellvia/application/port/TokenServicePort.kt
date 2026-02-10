@@ -7,4 +7,5 @@ interface TokenServicePort {
     fun generateRefreshToken(user: User): String
     fun validateToken(token: String): String?
     fun validateRefreshToken(token: String): String?
+    fun getClaimFromToken(claim: String): String?
 }
