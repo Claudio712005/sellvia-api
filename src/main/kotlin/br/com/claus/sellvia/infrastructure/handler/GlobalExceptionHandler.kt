@@ -134,6 +134,21 @@ class GlobalExceptionHandler {
             path = request.servletPath
         )
     }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleServerError(
+        exception: IllegalArgumentException,
+        request: HttpServletRequest
+    ): ErrorView {
+        return ErrorView(
+            status = HttpStatus.BAD_REQUEST.value(),
+            error = HttpStatus.BAD_REQUEST.name,
+            message = exception.message,
+            path = request.servletPath
+        )
+    }
+
 }
 
 data class ErrorResponse(val message: String?)

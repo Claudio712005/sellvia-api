@@ -1,10 +1,15 @@
 package br.com.claus.sellvia.infrastructure.persistence.repository
 
 import br.com.claus.sellvia.domain.model.Category
+import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
+import br.com.claus.sellvia.domain.pagination.Pagination
 import br.com.claus.sellvia.domain.repository.CategoryRepository
 import br.com.claus.sellvia.infrastructure.persistence.jpa.SpringDataCategoryRepository
 import br.com.claus.sellvia.infrastructure.persistence.mapper.toDomain
+import br.com.claus.sellvia.infrastructure.persistence.mapper.toDomainPagination
 import br.com.claus.sellvia.infrastructure.persistence.mapper.toEntity
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
 import kotlin.jvm.optionals.getOrNull
 
@@ -42,4 +47,26 @@ class CategoryRepositoryImpl(
     ): Category? = springDataRepository
         .findByNameAndCompanyId(name, companyId)
         ?.toDomain()
+
+    override fun findBySearchQueryPageable(searchQuery: CategorySearchQuery): Pagination<Category> {
+        val sortOrder = Sort.by(
+            Sort.Direction.fromString(searchQuery.direction.toString()),
+            searchQuery.sort
+        )
+
+        val pageable = PageRequest.of(searchQuery.page, searchQuery.perPage, sortOrder)
+
+        val companyId = searchQuery.companyId
+            ?: throw IllegalArgumentException("CompanyId é obrigatório para a busca.")
+
+        val springPage = springDataRepository.findByNameContainingIgnoreCaseAndCompanyId(
+            searchQuery.terms,
+            companyId,
+            pageable
+        )
+
+        return springPage
+            .map { it.toDomain() }
+            .toDomainPagination()
+    }
 }
