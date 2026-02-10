@@ -1,6 +1,5 @@
 package br.com.claus.sellvia.infrastructure.handler
 
-import br.com.claus.sellvia.domain.exception.EntitiesConflictException
 import br.com.claus.sellvia.domain.exception.InvalidCredentialsException
 import br.com.claus.sellvia.domain.exception.InvalidFieldException
 import br.com.claus.sellvia.domain.exception.InvalidTokenException
@@ -93,20 +92,6 @@ class GlobalExceptionHandler {
         )
     }
 
-    @ExceptionHandler(WithoutPermissionException::class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    fun handleServerError(
-        exception: WithoutPermissionException,
-        request: HttpServletRequest
-    ): ErrorView {
-        return ErrorView(
-            status = HttpStatus.FORBIDDEN.value(),
-            error = HttpStatus.FORBIDDEN.name,
-            message = exception.message,
-            path = request.servletPath
-        )
-    }
-
     @ExceptionHandler(EntitiesConflictException::class)
     @ResponseStatus(HttpStatus.CONFLICT)
     fun handleServerError(
@@ -116,6 +101,20 @@ class GlobalExceptionHandler {
         return ErrorView(
             status = HttpStatus.CONFLICT.value(),
             error = HttpStatus.CONFLICT.name,
+            message = exception.message,
+            path = request.servletPath
+        )
+    }
+          
+    @ExceptionHandler(WithoutPermissionException::class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    fun handleServerError(
+        exception: WithoutPermissionException,
+        request: HttpServletRequest
+    ): ErrorView {
+        return ErrorView(
+            status = HttpStatus.FORBIDDEN.value(),
+            error = HttpStatus.FORBIDDEN.name,
             message = exception.message,
             path = request.servletPath
         )
