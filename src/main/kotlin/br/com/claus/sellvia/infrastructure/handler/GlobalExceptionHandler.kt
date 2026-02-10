@@ -1,5 +1,6 @@
 package br.com.claus.sellvia.infrastructure.handler
 
+import br.com.claus.sellvia.domain.exception.EntitiesConflictException
 import br.com.claus.sellvia.domain.exception.InvalidCredentialsException
 import br.com.claus.sellvia.domain.exception.InvalidFieldException
 import br.com.claus.sellvia.domain.exception.InvalidTokenException

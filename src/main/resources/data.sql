@@ -31,14 +31,11 @@ INSERT INTO categories (name, description, created_at, updated_at, created_by, u
 ('Móveis', 'Móveis para casa e jardim', NOW(), NOW(), 'system', 'system', 2);
 
 INSERT INTO users (name, username, cpf, is_active, password, created_at, updated_at, created_by, updated_by, role, company_id, email) VALUES
--- Administradores de Empresas
 ('Ricardo Silva', 'ricardo_admin', '22334455667', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_ADMIN', 1, 'ricardo@techinovacao.com'),
 ('Fernanda Lima', 'fernanda_admin', '33445566778', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_ADMIN', 3, 'fernanda@logexpress.com'),
 
--- Usuários comuns de Empresas
 ('João Peão', 'joao_user', '44556677889', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_USER', 1, 'joao@techinovacao.com'),
 ('Maria Vendas', 'maria_user', '55667788990', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_USER', 2, 'maria@varejoglobal.com'),
 
--- Usuários SEM Empresa (Independentes ou System Admins)
 ('Suporte Master', 'suporte_claus', '99887766554', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'SYSTEM_ADMIN', NULL, 'suporte@sellvia.com.br'),
 ('Consultor Externo', 'consultor_free', '11223344556', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'SYSTEM_ADMIN', NULL, 'consultor@gmail.com');
