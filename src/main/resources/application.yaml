@@ -25,5 +25,6 @@ spring:
       data-locations: classpath:data.sql
 
 jwt:
-  secret: "secret-temporaria"
-  token-expiration: 3600000
+  secret: ${JWT_SECRET:secret-temporaria}
+  token-expiration: ${JWT_TOKEN_EXPIRATION:18000000}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}

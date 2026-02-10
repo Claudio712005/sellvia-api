@@ -1,25 +1,15 @@
 package br.com.claus.sellvia.infrastructure.config
 
-import br.com.claus.sellvia.application.port.PasswordEncoderPort
-import br.com.claus.sellvia.application.port.TokenServicePort
-import br.com.claus.sellvia.application.usecase.auth.LoginUseCase
-import br.com.claus.sellvia.domain.repository.UserRepository
-import org.springframework.context.annotation.Bean
+import br.com.claus.sellvia.domain.annotation.UseCase
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.FilterType
 
 @Configuration
-class BeanConfiguration {
-
-    @Bean
-    fun loginUseCase(
-        userRepository: UserRepository,
-        passwordEncoder: PasswordEncoderPort,
-        tokenService: TokenServicePort
-    ): LoginUseCase {
-        return LoginUseCase(
-            userRepository,
-            passwordEncoder,
-            tokenService
-        )
-    }
-}
+@ComponentScan(
+    basePackages = ["br.com.claus.sellvia"],
+    includeFilters = [
+        ComponentScan.Filter(type = FilterType.ANNOTATION, classes = [UseCase::class])
+    ]
+)
+class BeanConfiguration

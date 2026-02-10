@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface SpringDataUserRepository: JpaRepository<UserEntity, Long> {
     fun findByUsername(username: String): UserEntity?
+    fun existsByUsername(username: String): Boolean
+    fun existsByCpf(cpf: String): Boolean
+    fun existsByEmail(email: String): Boolean
 }

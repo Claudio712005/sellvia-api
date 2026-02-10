@@ -27,12 +27,3 @@ fun CompanyEntity.toDomain(): Company {
         companyUrlLogo = this.companyUrlLogo,
     )
 }
-
-fun Company.toResponseDTO(): CompanyResponseDTO {
-    return CompanyResponseDTO(
-        id = this.id,
-        name = this.name,
-        websiteUrl = this.websiteUrl,
-        companyUrlLogo = this.companyUrlLogo,
-    )
-}
