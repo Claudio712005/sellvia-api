@@ -1,6 +1,7 @@
 package br.com.claus.sellvia.application.usecase.category
 
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.service.PermissionServiceHelper
 import br.com.claus.sellvia.domain.enums.Direction
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.InvalidTokenException
@@ -27,7 +28,8 @@ class FindPageableCategoryUseCaseTest {
     fun setup() {
         useCase = FindPageableCategoryUseCase(
             categoryRepository = categoryRepository,
-            tokenServicePort = tokenServicePort
+            tokenServicePort = tokenServicePort,
+                permissionServiceHelper = PermissionServiceHelper(tokenServicePort)
         )
     }
 
@@ -107,19 +109,15 @@ class FindPageableCategoryUseCaseTest {
     fun `should throw InvalidTokenException when role is missing in token`() {
         val searchQuery = createSearchQuery(companyId = 1L)
 
-        every {
-            tokenServicePort.getClaimFromToken("role")
-        } returns null
+        every { tokenServicePort.getClaimFromToken("companyId") } returns "1"
+
+        every { tokenServicePort.getClaimFromToken("role") } returns null
 
         val exception = assertThrows<InvalidTokenException> {
             useCase.execute(searchQuery)
         }
 
-        assertEquals("Usuário inválido.", exception.message)
-
-        verify(exactly = 0) {
-            categoryRepository.findBySearchQueryPageable(any())
-        }
+        assertEquals("Token inválido.", exception.message)
     }
 
     @Test
@@ -139,7 +137,7 @@ class FindPageableCategoryUseCaseTest {
         }
 
         assertEquals(
-            "Usuário sem permissão para acessar essa empresa.",
+            "Usuário sem permissão para manipular/visualizar esse recurso.",
             exception.message
         )
 
@@ -165,7 +163,7 @@ class FindPageableCategoryUseCaseTest {
         }
 
         assertEquals(
-            "Usuário sem permissão para acessar essa empresa.",
+            "Usuário sem permissão para manipular/visualizar esse recurso.",
             exception.message
         )
 

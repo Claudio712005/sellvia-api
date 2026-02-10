@@ -2,6 +2,7 @@ package br.com.claus.sellvia.application.usecase.category
 
 import br.com.claus.sellvia.application.dto.request.CategoryRequestDTO
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.EntitiesConflictException
 import br.com.claus.sellvia.domain.exception.InvalidFieldException
 import br.com.claus.sellvia.domain.exception.WithoutPermissionException
@@ -38,6 +39,10 @@ class CreateCategoryUseCaseTest {
         every {
             tokenService.getClaimFromToken("companyId")
         } returns request.companyId.toString()
+
+        every {
+            tokenService.getClaimFromToken("role")
+        } returns UserRole.COMPANY_USER.toString()
 
         every {
             repository.save(any<Category>())
@@ -101,12 +106,16 @@ class CreateCategoryUseCaseTest {
             tokenService.getClaimFromToken("companyId")
         } returns null
 
+        every {
+            tokenService.getClaimFromToken("role")
+        } returns UserRole.COMPANY_USER.toString()
+
         val exception = assertThrows<WithoutPermissionException> {
             useCase.execute(request)
         }
 
         kotlin.test.assertEquals(
-            "Usuário inválido ou sem permissão para acessar esta informação.",
+            "Usuário sem permissão para manipular/visualizar esse recurso.",
             exception.message
         )
     }
@@ -123,12 +132,14 @@ class CreateCategoryUseCaseTest {
             tokenService.getClaimFromToken("companyId")
         } returns "999"
 
+        every { tokenService.getClaimFromToken("role") } returns UserRole.COMPANY_USER.toString()
+
         val exception = assertThrows<WithoutPermissionException> {
             useCase.execute(request)
         }
 
         kotlin.test.assertEquals(
-            "O Usuário não tem permissão para criar categorias para esta empresa.",
+            "Usuário sem permissão para manipular/visualizar esse recurso.",
             exception.message
         )
 
