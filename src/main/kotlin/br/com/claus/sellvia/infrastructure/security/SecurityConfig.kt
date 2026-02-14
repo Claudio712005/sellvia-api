@@ -2,6 +2,7 @@ package br.com.claus.sellvia.infrastructure.security
 
 import br.com.claus.sellvia.infrastructure.config.ApiEndpoints
 import br.com.claus.sellvia.infrastructure.security.filter.JwtAuthenticationFilter
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -17,7 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtFilter: JwtAuthenticationFilter
+    private val jwtFilter: JwtAuthenticationFilter,
+    private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint
 ) {
 
     @Bean
@@ -27,6 +29,7 @@ class SecurityConfig(
                 headers.frameOptions { it.sameOrigin() }
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .exceptionHandling { it.authenticationEntryPoint(jwtAuthenticationEntryPoint) }
             .authorizeHttpRequests { auth ->
 
                 auth.requestMatchers(*ApiEndpoints.PUBLIC).permitAll()

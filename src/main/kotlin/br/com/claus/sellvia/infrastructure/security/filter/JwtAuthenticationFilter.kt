@@ -20,13 +20,18 @@ class JwtAuthenticationFilter(
         val token = recoverToken(request)
 
         if (token != null) {
-            val login = tokenService.validateToken(token)
-            if (login != null) {
-                val user = userDetailsService.loadUserByUsername(login)
-                val authentication = UsernamePasswordAuthenticationToken(user, null, user.authorities)
-                SecurityContextHolder.getContext().authentication = authentication
+            try {
+                val login = tokenService.validateToken(token)
+                if (login != null) {
+                    val user = userDetailsService.loadUserByUsername(login)
+                    val authentication = UsernamePasswordAuthenticationToken(user, null, user.authorities)
+                    SecurityContextHolder.getContext().authentication = authentication
+                }
+            } catch (e: Exception) {
+                SecurityContextHolder.clearContext()
             }
         }
+
         filterChain.doFilter(request, response)
     }
 
