@@ -52,14 +52,14 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidCredentialsException::class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     fun handleNotFound(
         exception: InvalidCredentialsException,
         request: HttpServletRequest
     ): ErrorView {
         return ErrorView(
-            status = HttpStatus.FORBIDDEN.value(),
-            error = HttpStatus.FORBIDDEN.name,
+            status = HttpStatus.UNAUTHORIZED.value(),
+            error = HttpStatus.UNAUTHORIZED.name,
             message = exception.message,
             path = request.servletPath
         )
