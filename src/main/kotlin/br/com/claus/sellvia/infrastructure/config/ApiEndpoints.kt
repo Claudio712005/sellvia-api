@@ -31,6 +31,10 @@ object ApiEndpoints {
         const val CATEGORY_ROOT = "$API_ROOT/categories"
     }
 
+    object Product {
+        const val PRODUCT_ROOT = "$API_ROOT/products"
+    }
+
     val PUBLIC = arrayOf(
         System.H2_CONSOLE_ROOT,
         System.ERROR_ROOT,
@@ -42,6 +46,7 @@ object ApiEndpoints {
 
     val PRIVATE: Map<String, Array<UserRole>> = mapOf(
         Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
-        Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER)
+        Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER),
+        Product.PRODUCT_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
     )
 }
