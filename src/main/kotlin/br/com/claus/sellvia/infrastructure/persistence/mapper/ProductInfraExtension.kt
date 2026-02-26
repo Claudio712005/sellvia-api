@@ -33,8 +33,8 @@ fun ProductEntity.toDomain() = Product(
     description = description,
     status = status,
     imageUrl = imageUrl,
-    createdAt = createdAt!!,
-    updatedAt = updatedAt!!,
-    createdBy = createdBy!!,
-    updatedBy = updatedBy!!
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    createdBy = createdBy,
+    updatedBy = updatedBy
 )

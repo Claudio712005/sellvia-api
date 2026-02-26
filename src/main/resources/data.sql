@@ -68,3 +68,21 @@ INSERT INTO users (name, username, cpf, is_active, password, created_at, updated
 
 ('Suporte Master', 'suporte_claus', '99887766554', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'SYSTEM_ADMIN', NULL, 'suporte@sellvia.com.br'),
 ('Consultor Externo', 'consultor_free', '11223344556', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'SYSTEM_ADMIN', NULL, 'consultor@gmail.com');
+
+INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type)
+VALUES (1, 'Smartphone Galaxy S24', 'Smartphone de última geração com IA', 5499.00, 3200.00, 'https://link.com/foto1.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT');
+
+INSERT INTO products (id, sku, stock_quantity, type)
+VALUES (1, 'SAM-S24-128GB', 50, 'PHYSICAL');
+
+INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type)
+VALUES (2, 'Fone Bluetooth Noise Cancelling', 'Fone de ouvido com cancelamento de ruído ativo', 899.90, 450.00, 'https://link.com/foto2.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT');
+
+INSERT INTO products (id, sku, stock_quantity, type)
+VALUES (2, 'AUD-NOISE-900', 120, 'PHYSICAL');
+
+INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type)
+VALUES (3, 'Curso de Kotlin Avançado', 'Acesso vitalício ao curso de Kotlin para backend', 299.00, 50.00, 'https://link.com/foto3.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT');
+
+INSERT INTO products (id, sku, stock_quantity, type)
+VALUES (3, 'EDU-KOTLIN-AV', NULL, 'DIGITAL');

@@ -1,12 +1,17 @@
 package br.com.claus.sellvia.web.controller
 
 import br.com.claus.sellvia.application.dto.request.ProductRequestDTO
+import br.com.claus.sellvia.application.dto.response.ProductResponseDTO
 import br.com.claus.sellvia.application.usecase.product.CreateProductUseCase
+import br.com.claus.sellvia.application.usecase.product.UpdateProductUseCase
 import br.com.claus.sellvia.infrastructure.config.ApiEndpoints
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -16,7 +21,8 @@ import org.springframework.web.multipart.MultipartFile
 @RestController
 @RequestMapping(ApiEndpoints.Product.PRODUCT_ROOT)
 class ProductController(
-    private val createProductUseCase: CreateProductUseCase
+    private val createProductUseCase: CreateProductUseCase,
+    private val updateProductUseCase: UpdateProductUseCase,
 ) {
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
@@ -30,5 +36,14 @@ class ProductController(
         )
 
         return ResponseEntity.status(201).build()
+    }
+
+    @PutMapping("/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun update(
+        @RequestBody request: ProductRequestDTO,
+        @PathVariable("id") id: Long,
+    ): ResponseEntity<ProductResponseDTO> {
+        val response = updateProductUseCase.execute(request, id)
+        return ResponseEntity.ok().body(response)
     }
 }

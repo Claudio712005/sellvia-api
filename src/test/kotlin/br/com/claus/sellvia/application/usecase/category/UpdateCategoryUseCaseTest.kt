@@ -2,7 +2,6 @@ package br.com.claus.sellvia.application.usecase.category
 
 import br.com.claus.sellvia.application.dto.request.CategoryRequestDTO
 import br.com.claus.sellvia.application.port.TokenServicePort
-import br.com.claus.sellvia.application.service.PermissionServiceHelper
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.WithoutPermissionException

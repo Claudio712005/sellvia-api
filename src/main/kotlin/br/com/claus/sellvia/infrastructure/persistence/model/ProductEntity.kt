@@ -15,21 +15,21 @@ import java.time.LocalDateTime
 @DiscriminatorValue("PRODUCT")
 class ProductEntity(
     id: Long? = null,
-    name: String,
-    description: String,
-    price: BigDecimal,
-    productionCost: BigDecimal,
-    company: CompanyEntity,
-    status: ResourceStatus,
+    name: String = "",
+    description: String = "",
+    price: BigDecimal = BigDecimal.ZERO,
+    productionCost: BigDecimal = BigDecimal.ZERO,
+    company: CompanyEntity = CompanyEntity(),
+    status: ResourceStatus = ResourceStatus.ACTIVE,
     imageUrl: String? = null,
     createdBy: String? = null,
     updatedBy: String? = null,
     createdAt: LocalDateTime? = null,
     updatedAt: LocalDateTime? = null,
 
-    val sku: String,
+    val sku: String = "",
     val stockQuantity: Int? = null,
 
     @Enumerated(EnumType.STRING)
-    val type: ProductType
+    val type: ProductType = ProductType.PHYSICAL
 ) : SaleableItemEntity(id, name, description, price, productionCost, imageUrl, company, status, createdAt, updatedAt, createdBy, updatedBy)

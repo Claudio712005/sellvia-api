@@ -11,6 +11,7 @@ abstract class SaleableItemRequestDTO (
     open val productionCost: BigDecimal,
     open val companyId: Long,
     open val status: ResourceStatus = ResourceStatus.ACTIVE,
+    open var imageUrl: String? = null
 ){
 
     open fun validate(){
