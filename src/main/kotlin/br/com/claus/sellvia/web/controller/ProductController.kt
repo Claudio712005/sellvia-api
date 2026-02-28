@@ -3,11 +3,13 @@ package br.com.claus.sellvia.web.controller
 import br.com.claus.sellvia.application.dto.request.ProductRequestDTO
 import br.com.claus.sellvia.application.dto.response.ProductResponseDTO
 import br.com.claus.sellvia.application.usecase.product.CreateProductUseCase
+import br.com.claus.sellvia.application.usecase.product.DeleteProductUseCase
 import br.com.claus.sellvia.application.usecase.product.UpdateProductUseCase
 import br.com.claus.sellvia.infrastructure.config.ApiEndpoints
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile
 class ProductController(
     private val createProductUseCase: CreateProductUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
+    private val deleteProductUseCase: DeleteProductUseCase
 ) {
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
@@ -45,5 +48,11 @@ class ProductController(
     ): ResponseEntity<ProductResponseDTO> {
         val response = updateProductUseCase.execute(request, id)
         return ResponseEntity.ok().body(response)
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: Long): ResponseEntity<Any> {
+        deleteProductUseCase.execute(id)
+        return ResponseEntity.noContent().build()
     }
 }
