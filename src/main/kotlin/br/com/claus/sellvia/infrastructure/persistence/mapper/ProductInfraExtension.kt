@@ -1,5 +1,6 @@
 package br.com.claus.sellvia.infrastructure.persistence.mapper
 
+import br.com.claus.sellvia.application.mapper.toResponseDTO
 import br.com.claus.sellvia.domain.model.Product
 import br.com.claus.sellvia.infrastructure.persistence.model.ProductEntity
 
@@ -18,7 +19,8 @@ fun Product.toEntity() = ProductEntity(
     createdAt = createdAt,
     updatedAt = updatedAt,
     createdBy = createdBy,
-    updatedBy = updatedBy
+    updatedBy = updatedBy,
+    category = category?.toEntity()
 )
 
 fun ProductEntity.toDomain() = Product(
@@ -36,5 +38,6 @@ fun ProductEntity.toDomain() = Product(
     createdAt = createdAt,
     updatedAt = updatedAt,
     createdBy = createdBy,
-    updatedBy = updatedBy
+    updatedBy = updatedBy,
+    category = category?.toDomain()
 )

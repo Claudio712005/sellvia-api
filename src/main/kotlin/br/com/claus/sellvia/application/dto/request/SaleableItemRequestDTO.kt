@@ -11,7 +11,8 @@ abstract class SaleableItemRequestDTO (
     open val productionCost: BigDecimal,
     open val companyId: Long,
     open val status: ResourceStatus = ResourceStatus.ACTIVE,
-    open var imageUrl: String? = null
+    open var imageUrl: String? = null,
+    open val categoryId : Long? = null,
 ){
 
     open fun validate(){
@@ -20,5 +21,6 @@ abstract class SaleableItemRequestDTO (
         require(productionCost >= BigDecimal.ZERO) { "Custo de produção deve ser maior ou igual a zero." }
         require(companyId != null) { "ID da empresa é obrigatório." }
         require(description.isNotBlank()) { "Descrição não pode ser vazia." }
+        require(categoryId == null || categoryId!! > 0) { "ID da categoria deve ser maior que zero." }
     }
 }

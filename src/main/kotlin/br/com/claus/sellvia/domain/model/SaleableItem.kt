@@ -17,7 +17,8 @@ abstract class SaleableItem(
     open val updatedAt: LocalDateTime?,
     open val createdBy: String?,
     open val updatedBy: String?,
-    open val imageUrl: String? = null
+    open val imageUrl: String? = null,
+    open val category: Category? = null
 ) {
     fun profitMargin(): BigDecimal {
         if (productionCost <= BigDecimal.ZERO) return BigDecimal.ZERO

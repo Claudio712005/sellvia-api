@@ -1,10 +1,15 @@
 package br.com.claus.sellvia.infrastructure.persistence.repository
 
 import br.com.claus.sellvia.domain.model.Product
+import br.com.claus.sellvia.domain.pagination.Pagination
+import br.com.claus.sellvia.domain.pagination.ProductSearchQuery
 import br.com.claus.sellvia.domain.repository.ProductRepository
 import br.com.claus.sellvia.infrastructure.persistence.jpa.SpringDataProductRepository
 import br.com.claus.sellvia.infrastructure.persistence.mapper.toDomain
 import br.com.claus.sellvia.infrastructure.persistence.mapper.toEntity
+import br.com.claus.sellvia.infrastructure.persistence.specification.ProductSpecificationFactory
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
 import kotlin.jvm.optionals.getOrNull
 
@@ -64,5 +69,23 @@ class ProductRepositoryImpl(
         companyId: Long
     ): Product? {
         return springDataRepository.findBySkuAndCompanyId(sku, companyId)?.toDomain()
+    }
+
+    override fun findAll(query: ProductSearchQuery): Pagination<Product> {
+        val sort = Sort.by(Sort.Direction.fromString(query.direction.name), query.sort)
+
+        val pageRequest = PageRequest.of(query.page, query.perPage, sort)
+
+        val spec = ProductSpecificationFactory.build(query)
+
+        val page = springDataRepository.findAll(spec, pageRequest)
+
+        return Pagination(
+            currentPage = page.number,
+            perPage = page.size,
+            totalItems = page.totalElements,
+            items = page.content.map { it.toDomain() },
+            totalPages = page.totalPages
+        )
     }
 }

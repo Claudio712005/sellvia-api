@@ -62,27 +62,52 @@ INSERT INTO categories (name, description, created_at, updated_at, created_by, u
 INSERT INTO users (name, username, cpf, is_active, password, created_at, updated_at, created_by, updated_by, role, company_id, email) VALUES
 ('Ricardo Silva', 'ricardo_admin', '22334455667', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_ADMIN', 1, 'ricardo@techinovacao.com'),
 ('Fernanda Lima', 'fernanda_admin', '33445566778', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_ADMIN', 3, 'fernanda@logexpress.com'),
-
 ('João Peão', 'joao_user', '44556677889', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_USER', 1, 'joao@techinovacao.com'),
 ('Maria Vendas', 'maria_user', '55667788990', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'COMPANY_USER', 2, 'maria@varejoglobal.com'),
-
 ('Suporte Master', 'suporte_claus', '99887766554', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'SYSTEM_ADMIN', NULL, 'suporte@sellvia.com.br'),
 ('Consultor Externo', 'consultor_free', '11223344556', true, '$2a$10$eFmiwr46VX5dp4A6uiWPVu.qSDues5Aw29H8MdvBmpm.dx2LsUVCy', NOW(), NOW(), 'system', 'system', 'SYSTEM_ADMIN', NULL, 'consultor@gmail.com');
 
-INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type)
-VALUES (1, 'Smartphone Galaxy S24', 'Smartphone de última geração com IA', 5499.00, 3200.00, 'https://link.com/foto1.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT');
+INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type, category_id) VALUES
+(4, 'Processador AMD Ryzen 9 7950X', 'Processador de alta performance com 16 núcleos', 3899.00, 2100.00, 'https://link.com/ryzen9.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 1),
+(5, 'Placa de Vídeo RTX 4080 Super', 'GPU para jogos em 4K e Ray Tracing', 7499.90, 4800.00, 'https://link.com/rtx4080.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 1),
+(6, 'Memória RAM DDR5 32GB (2x16)', 'Módulos de alta velocidade 6000MHz', 950.00, 420.00, 'https://link.com/ram32gb.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 1),
+(7, 'SSD NVMe 2TB Gen4', 'Armazenamento ultra rápido de 7500MB/s', 1100.00, 580.00, 'https://link.com/ssd2tb.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 2),
+(8, 'Monitor Gamer 27" 4K 144Hz', 'Display IPS com cores precisas e alta taxa de atualização', 3200.00, 1950.00, 'https://link.com/monitor4k.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 2),
+(9, 'Teclado Mecânico RGB Hot-swap', 'Switch Blue com retroiluminação customizável', 450.00, 180.00, 'https://link.com/teclado.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 3),
+(10, 'Windows 11 Pro - Licença Digital', 'Chave de ativação vitalícia para Windows 11 Pro', 159.00, 40.00, 'https://link.com/win11.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 4),
+(11, 'Antivírus Total Security (1 Ano)', 'Proteção completa contra malwares e ransomware', 89.90, 15.00, 'https://link.com/antivirus.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 4),
+(12, 'Roteador Wi-Fi 6 AX3000', 'Cobertura ampliada e conexão para múltiplos dispositivos', 580.00, 290.00, 'https://link.com/router6.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 5),
+(13, 'Headset Gamer 7.1 Surround', 'Áudio imersivo com cancelamento de ruído no microfone', 620.00, 240.00, 'https://link.com/headset.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 3),
+(14, 'Lâmpada Inteligente RGB Wi-Fi', 'Controle por voz e aplicativo (16 milhões de cores)', 75.00, 28.00, 'https://link.com/smartbulb.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 6),
+(15, 'Webcam 4K Ultra HD', 'Ideal para streaming e videoconferência profissional', 890.00, 410.00, 'https://link.com/webcam4k.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 7),
+(16, 'Laptop Workstation Pro 16"', 'Equipado com i9 e 64GB de RAM para engenharia', 12500.00, 8200.00, 'https://link.com/laptop.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', 8),
+(17, 'Mouse Wireless Ergonômico', 'Sensor de alta precisão 25k DPI', 399.00, 150.00, 'https://link.com/mouse.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null),
+(18, 'HD Externo 4TB Rugged', 'Proteção contra quedas e criptografia de hardware', 850.00, 460.00, 'https://link.com/hd4tb.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null),
+(19, 'Microfone Condensador USB', 'Qualidade de estúdio para podcasts e lives', 720.00, 310.00, 'https://link.com/mic.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null),
+(20, 'Nobreak 1500VA Bivolt', 'Proteção contra surtos e queda de energia', 1450.00, 890.00, 'https://link.com/nobreak.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null),
+(21, 'Pasta Térmica Alta Performance', 'Condutividade térmica de 12.5 W/mK', 65.00, 12.00, 'https://link.com/thermal.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null),
+(22, 'Water Cooler 360mm RGB', 'Sistema de resfriamento líquido para CPUs potentes', 980.00, 520.00, 'https://link.com/wc360.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null),
+(23, 'Gabinete Mid-Tower Glass', 'Lateral em vidro temperado e 4 fans inclusas', 540.00, 210.00, 'https://link.com/case.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT', null);
 
-INSERT INTO products (id, sku, stock_quantity, type)
-VALUES (1, 'SAM-S24-128GB', 50, 'PHYSICAL');
-
-INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type)
-VALUES (2, 'Fone Bluetooth Noise Cancelling', 'Fone de ouvido com cancelamento de ruído ativo', 899.90, 450.00, 'https://link.com/foto2.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT');
-
-INSERT INTO products (id, sku, stock_quantity, type)
-VALUES (2, 'AUD-NOISE-900', 120, 'PHYSICAL');
-
-INSERT INTO saleable_items (id, name, description, price, production_cost, image_url, company_id, status, created_at, created_by, item_type)
-VALUES (3, 'Curso de Kotlin Avançado', 'Acesso vitalício ao curso de Kotlin para backend', 299.00, 50.00, 'https://link.com/foto3.jpg', 1, 'ACTIVE', CURRENT_TIMESTAMP, 'admin', 'PRODUCT');
-
-INSERT INTO products (id, sku, stock_quantity, type)
-VALUES (3, 'EDU-KOTLIN-AV', NULL, 'DIGITAL');
+-- Inserindo os detalhes técnicos na tabela products
+INSERT INTO products (id, sku, stock_quantity, type) VALUES
+(4, 'CPU-AMD-R9-7950', 25, 'PHYSICAL'),
+(5, 'GPU-NV-RTX4080S', 10, 'PHYSICAL'),
+(6, 'MEM-DDR5-32GB', 100, 'PHYSICAL'),
+(7, 'SSD-NVME-2TB', 80, 'PHYSICAL'),
+(8, 'MON-4K-144-27', 15, 'PHYSICAL'),
+(9, 'KB-MECH-RGB', 45, 'PHYSICAL'),
+(10, 'SOFT-WIN11-PRO', NULL, 'DIGITAL'),
+(11, 'SOFT-AV-TS-1Y', NULL, 'DIGITAL'),
+(12, 'NET-WIFI6-AX30', 30, 'PHYSICAL'),
+(13, 'AUD-71-SURROUND', 60, 'PHYSICAL'),
+(14, 'IOT-BULB-RGB', 200, 'PHYSICAL'),
+(15, 'CAM-4K-STREAM', 20, 'PHYSICAL'),
+(16, 'LAP-WORK-I9-64', 5, 'PHYSICAL'),
+(17, 'MSE-WIRE-25K', 75, 'PHYSICAL'),
+(18, 'STR-HD-EXT-4TB', 40, 'PHYSICAL'),
+(19, 'AUD-MIC-USB', 35, 'PHYSICAL'),
+(20, 'PWR-UPS-1500VA', 12, 'PHYSICAL'),
+(21, 'ACC-THERM-PAST', 150, 'PHYSICAL'),
+(22, 'COOL-WC-360', 18, 'PHYSICAL'),
+(23, 'CASE-MID-GLASS', 22, 'PHYSICAL');

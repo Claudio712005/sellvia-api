@@ -17,6 +17,7 @@ abstract class SaleableItemResponseDTO(
     open val companyId: Long,
     open val status: ResourceStatus = ResourceStatus.ACTIVE,
     open val imageUrl: String?,
+    open val category: CategoryResponseDTO?,
 
     open val createdAt: LocalDateTime? = null,
     open val updatedAt: LocalDateTime? = null,

@@ -39,6 +39,9 @@ abstract class SaleableItemEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     val company: CompanyEntity,
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    val category: CategoryEntity? = null,
+
     @Enumerated(EnumType.STRING)
     val status: ResourceStatus,
 

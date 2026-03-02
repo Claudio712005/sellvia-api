@@ -26,10 +26,11 @@ class ProductEntity(
     updatedBy: String? = null,
     createdAt: LocalDateTime? = null,
     updatedAt: LocalDateTime? = null,
+    category: CategoryEntity? = null,
 
     val sku: String = "",
     val stockQuantity: Int? = null,
 
     @Enumerated(EnumType.STRING)
     val type: ProductType = ProductType.PHYSICAL
-) : SaleableItemEntity(id, name, description, price, productionCost, imageUrl, company, status, createdAt, updatedAt, createdBy, updatedBy)
+) : SaleableItemEntity(id, name, description, price, productionCost, imageUrl, company, category, status, createdAt, updatedAt, createdBy, updatedBy)

@@ -4,12 +4,16 @@ import br.com.claus.sellvia.application.dto.request.ProductRequestDTO
 import br.com.claus.sellvia.application.dto.response.ProductResponseDTO
 import br.com.claus.sellvia.application.usecase.product.CreateProductUseCase
 import br.com.claus.sellvia.application.usecase.product.DeleteProductUseCase
+import br.com.claus.sellvia.application.usecase.product.FindPageableProductUseCase
 import br.com.claus.sellvia.application.usecase.product.UpdateProductUseCase
+import br.com.claus.sellvia.domain.pagination.Pagination
+import br.com.claus.sellvia.domain.pagination.ProductSearchQuery
 import br.com.claus.sellvia.infrastructure.config.ApiEndpoints
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -25,7 +29,8 @@ import org.springframework.web.multipart.MultipartFile
 class ProductController(
     private val createProductUseCase: CreateProductUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
-    private val deleteProductUseCase: DeleteProductUseCase
+    private val deleteProductUseCase: DeleteProductUseCase,
+    private val findPageableProductUseCase: FindPageableProductUseCase,
 ) {
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
@@ -54,5 +59,12 @@ class ProductController(
     fun delete(@PathVariable("id") id: Long): ResponseEntity<Any> {
         deleteProductUseCase.execute(id)
         return ResponseEntity.noContent().build()
+    }
+
+    @GetMapping
+    fun findAll(
+        filter: ProductSearchQuery
+    ): ResponseEntity<Pagination<ProductResponseDTO>>{
+        return ResponseEntity.ok(findPageableProductUseCase.execute(filter))
     }
 }

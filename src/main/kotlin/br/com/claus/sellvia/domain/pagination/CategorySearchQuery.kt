@@ -8,7 +8,7 @@ class CategorySearchQuery(
     terms: String,
     sort: String,
     direction: Direction,
-    val companyId: Long? = null
+    var companyId: Long? = null
 ): SearchQuery(
     page,
     perPage,

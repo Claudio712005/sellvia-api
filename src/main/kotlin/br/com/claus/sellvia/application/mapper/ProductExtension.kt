@@ -2,6 +2,7 @@ package br.com.claus.sellvia.application.mapper
 
 import br.com.claus.sellvia.application.dto.request.ProductRequestDTO
 import br.com.claus.sellvia.application.dto.response.ProductResponseDTO
+import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.domain.model.Product
 
@@ -19,7 +20,8 @@ fun ProductRequestDTO.toDomain(
     status = status,
     createdAt = null,
     updatedAt = null,
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
+    category = Category(id = categoryId),
 )
 
 fun Product.toResponseDTO() = ProductResponseDTO(
@@ -37,5 +39,6 @@ fun Product.toResponseDTO() = ProductResponseDTO(
     updatedAt = updatedAt,
     createdBy = createdBy,
     updatedBy = updatedBy,
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
+    category = category?.toResponseDTO()
 )

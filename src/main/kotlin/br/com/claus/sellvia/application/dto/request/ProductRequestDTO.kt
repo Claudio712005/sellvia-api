@@ -13,6 +13,7 @@ data class ProductRequestDTO(
         override val companyId: Long,
         override val status: ResourceStatus = ResourceStatus.ACTIVE,
         override var imageUrl: String? = null,
+        override var categoryId: Long? = null,
 
         val sku: String,
         val stockQuantity: Int? = null,
@@ -26,7 +27,8 @@ data class ProductRequestDTO(
     productionCost = productionCost,
     companyId = companyId,
     status = status,
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
+    categoryId = categoryId
 ) {
 
     override fun validate() {

@@ -69,4 +69,8 @@ class CategoryRepositoryImpl(
             .map { it.toDomain() }
             .toDomainPagination()
     }
+
+    override fun existsByIdAndCompanyId(id: Long, companyId: Long): Boolean {
+        return springDataRepository.existsByIdAndCompanyId(id, companyId)
+    }
 }

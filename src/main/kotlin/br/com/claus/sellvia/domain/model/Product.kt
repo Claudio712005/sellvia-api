@@ -20,8 +20,9 @@ data class Product(
     override val updatedAt: LocalDateTime? = null,
     override val createdBy: String? = null,
     override val updatedBy: String? = null,
-    override val imageUrl: String? = null
-) : SaleableItem(id, name, description, price, productionCost, company, status, createdAt, updatedAt, createdBy, updatedBy, imageUrl) {
+    override val imageUrl: String? = null,
+    override val category: Category? = null
+) : SaleableItem(id, name, description, price, productionCost, company, status, createdAt, updatedAt, createdBy, updatedBy, imageUrl, category) {
 
     override fun isAvailable(): Boolean =
         if (type == ProductType.PHYSICAL) status == ResourceStatus.ACTIVE && (stockQuantity != null && stockQuantity > 0)

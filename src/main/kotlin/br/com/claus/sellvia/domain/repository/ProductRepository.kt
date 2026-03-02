@@ -1,6 +1,8 @@
 package br.com.claus.sellvia.domain.repository
 
 import br.com.claus.sellvia.domain.model.Product
+import br.com.claus.sellvia.domain.pagination.Pagination
+import br.com.claus.sellvia.domain.pagination.ProductSearchQuery
 
 interface ProductRepository {
 
@@ -16,4 +18,6 @@ interface ProductRepository {
     fun update(product: Product): Product
     fun delete(id: Long)
     fun findBySkuAndCompanyId(sku: String, companyId: Long): Product?
+
+    fun findAll(query: ProductSearchQuery): Pagination<Product>
 }
