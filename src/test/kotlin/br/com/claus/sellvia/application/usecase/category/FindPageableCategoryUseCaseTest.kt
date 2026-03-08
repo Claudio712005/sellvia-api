@@ -1,11 +1,10 @@
 package br.com.claus.sellvia.application.usecase.category
 
-import br.com.claus.sellvia.application.port.TokenServicePort
-import br.com.claus.sellvia.application.service.PermissionServiceHelper
+import br.com.claus.sellvia.application.port.PermissionHelperPort
 import br.com.claus.sellvia.domain.enums.Direction
 import br.com.claus.sellvia.domain.enums.UserRole
-import br.com.claus.sellvia.domain.exception.InvalidTokenException
 import br.com.claus.sellvia.domain.exception.WithoutPermissionException
+import br.com.claus.sellvia.domain.model.AuthenticatedUserDetails
 import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
@@ -20,7 +19,7 @@ import kotlin.test.assertEquals
 class FindPageableCategoryUseCaseTest {
 
     private val categoryRepository = mockk<CategoryRepository>()
-    private val tokenServicePort = mockk<TokenServicePort>()
+    private val permissionHelperPort = mockk<PermissionHelperPort>()
 
     private lateinit var useCase: FindPageableCategoryUseCase
 
@@ -28,148 +27,77 @@ class FindPageableCategoryUseCaseTest {
     fun setup() {
         useCase = FindPageableCategoryUseCase(
             categoryRepository = categoryRepository,
-            tokenServicePort = tokenServicePort,
-                permissionServiceHelper = PermissionServiceHelper(tokenServicePort)
+            permissionHelperPort = permissionHelperPort
         )
     }
 
     @Test
-    fun `should return paginated categories when user is SYSTEM_ADMIN`() {
-        val searchQuery = createSearchQuery(companyId = 1L)
+    fun `should return all categories when user is SYSTEM_ADMIN`() {
+        val searchQuery = createSearchQuery(companyId = null)
+        val adminDetails = AuthenticatedUserDetails(role = UserRole.SYSTEM_ADMIN, companyId = null)
 
-        every {
-            tokenServicePort.getClaimFromToken("role")
-        } returns UserRole.SYSTEM_ADMIN.name
-
-        every {
-            tokenServicePort.getClaimFromToken("companyId")
-        } returns null
+        every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns adminDetails
+        every { permissionHelperPort.verifyUserCanDoesThisAction(any()) } just runs
 
         val pagination = Pagination(
             items = listOf(createCategory()),
-            currentPage = 0,
-            perPage = 10,
-            totalItems = 1,
-            totalPages = 1
+            currentPage = 0, perPage = 10, totalItems = 1, totalPages = 1
         )
 
-        every {
-            categoryRepository.findBySearchQueryPageable(searchQuery)
-        } returns pagination
+        every { categoryRepository.findBySearchQueryPageable(any()) } returns pagination
 
         val result = useCase.execute(searchQuery)
 
         assertEquals(1, result.items.size)
-        assertEquals(0, result.currentPage)
-        assertEquals(10, result.perPage)
-        assertEquals(1, result.totalItems)
-        assertEquals(1, result.totalPages)
-
-        verify(exactly = 1) {
-            categoryRepository.findBySearchQueryPageable(searchQuery)
-        }
+        verify(exactly = 1) { categoryRepository.findBySearchQueryPageable(match { it.companyId == null }) }
     }
 
     @Test
-    fun `should return paginated categories when user is not SYSTEM_ADMIN and companyId matches`() {
-        val companyId = 1L
-        val searchQuery = createSearchQuery(companyId = companyId)
+    fun `should enforce company filter from user details when not admin`() {
+        // Cenário: Usuário comum tenta buscar sem filtro, mas o UseCase deve injetar a empresa 10L
+        val userCompanyId = 10L
+        val searchQuery = createSearchQuery(companyId = null)
+        val userDetails = AuthenticatedUserDetails(role = UserRole.COMPANY_USER, companyId = userCompanyId)
 
-        every {
-            tokenServicePort.getClaimFromToken("role")
-        } returns UserRole.COMPANY_ADMIN.name
-
-        every {
-            tokenServicePort.getClaimFromToken("companyId")
-        } returns companyId.toString()
+        every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns userDetails
+        every { permissionHelperPort.verifyUserCanDoesThisAction(userCompanyId) } just runs
 
         val pagination = Pagination(
-            items = listOf(createCategory(companyId)),
-            currentPage = 0,
-            perPage = 10,
-            totalItems = 1,
-            totalPages = 1
+            items = listOf(createCategory(userCompanyId)),
+            currentPage = 0, perPage = 10, totalItems = 1, totalPages = 1
         )
 
         every {
-            categoryRepository.findBySearchQueryPageable(searchQuery)
+            categoryRepository.findBySearchQueryPageable(match { it.companyId == userCompanyId })
         } returns pagination
 
-        val result = useCase.execute(searchQuery)
-
-        assertEquals(1, result.items.size)
-        assertEquals(companyId, result.items.first().companyId)
+        useCase.execute(searchQuery)
 
         verify(exactly = 1) {
-            categoryRepository.findBySearchQueryPageable(searchQuery)
+            categoryRepository.findBySearchQueryPageable(match { it.companyId == userCompanyId })
         }
     }
 
     @Test
-    fun `should throw InvalidTokenException when role is missing in token`() {
-        val searchQuery = createSearchQuery(companyId = 1L)
+    fun `should throw WithoutPermissionException when permission helper denies action`() {
+        val userCompanyId = 10L
+        val targetCompanyId = 99L
+        val searchQuery = createSearchQuery(companyId = targetCompanyId)
 
-        every { tokenServicePort.getClaimFromToken("companyId") } returns "1"
+        // Simula usuário logado na empresa 10 tentando acessar a 99
+        val userDetails = AuthenticatedUserDetails(role = UserRole.COMPANY_USER, companyId = userCompanyId)
 
-        every { tokenServicePort.getClaimFromToken("role") } returns null
+        every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns userDetails
 
-        val exception = assertThrows<InvalidTokenException> {
+        every {
+            permissionHelperPort.verifyUserCanDoesThisAction(any())
+        } throws WithoutPermissionException("Acesso negado")
+
+        assertThrows<WithoutPermissionException> {
             useCase.execute(searchQuery)
         }
 
-        assertEquals("Token inválido.", exception.message)
-    }
-
-    @Test
-    fun `should throw WithoutPermissionException when token companyId is different from searchQuery companyId`() {
-        val searchQuery = createSearchQuery(companyId = 2L)
-
-        every {
-            tokenServicePort.getClaimFromToken("role")
-        } returns UserRole.COMPANY_ADMIN.name
-
-        every {
-            tokenServicePort.getClaimFromToken("companyId")
-        } returns "1"
-
-        val exception = assertThrows<WithoutPermissionException> {
-            useCase.execute(searchQuery)
-        }
-
-        assertEquals(
-            "Usuário sem permissão para manipular/visualizar esse recurso.",
-            exception.message
-        )
-
-        verify(exactly = 0) {
-            categoryRepository.findBySearchQueryPageable(any())
-        }
-    }
-
-    @Test
-    fun `should throw WithoutPermissionException when searchQuery companyId is null for non SYSTEM_ADMIN`() {
-        val searchQuery = createSearchQuery(companyId = null)
-
-        every {
-            tokenServicePort.getClaimFromToken("role")
-        } returns UserRole.COMPANY_ADMIN.name
-
-        every {
-            tokenServicePort.getClaimFromToken("companyId")
-        } returns "1"
-
-        val exception = assertThrows<WithoutPermissionException> {
-            useCase.execute(searchQuery)
-        }
-
-        assertEquals(
-            "Usuário sem permissão para manipular/visualizar esse recurso.",
-            exception.message
-        )
-
-        verify(exactly = 0) {
-            categoryRepository.findBySearchQueryPageable(any())
-        }
+        verify(exactly = 0) { categoryRepository.findBySearchQueryPageable(any()) }
     }
 
     private fun createSearchQuery(companyId: Long?) =

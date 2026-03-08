@@ -12,4 +12,5 @@ interface CategoryRepository {
     fun findAll(): List<Category>
     fun findByNameAndCompanyId(name: String, companyId: Long): Category?
     fun findBySearchQueryPageable(searchQuery: CategorySearchQuery): Pagination<Category>
+    fun existsByIdAndCompanyId(id: Long, companyId: Long): Boolean
 }

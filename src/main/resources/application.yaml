@@ -28,3 +28,13 @@ jwt:
   secret: ${JWT_SECRET:secret-temporaria}
   token-expiration: ${JWT_TOKEN_EXPIRATION:18000000}
   refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}
+
+cloudflare-r2:
+  account-id: ${CLOUDFLARE_R2_ACCOUNT_ID}
+  secret-key: ${CLOUDFLARE_R2_ACCESS_KEY}
+  access-key: ${CLOUDFLARE_R2_SECRET_KEY}
+  bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME}
+
+logging:
+  level:
+    software.amazon.awssdk: DEBUG

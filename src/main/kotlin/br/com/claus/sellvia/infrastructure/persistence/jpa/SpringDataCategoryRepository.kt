@@ -13,4 +13,6 @@ interface SpringDataCategoryRepository: JpaRepository<CategoryEntity, Long> {
         companyId: Long,
         pageable: Pageable
     ): Page<CategoryEntity>
+
+    fun existsByIdAndCompanyId(id: Long, companyId: Long): Boolean
 }

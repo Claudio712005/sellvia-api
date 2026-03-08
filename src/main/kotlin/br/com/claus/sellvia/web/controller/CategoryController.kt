@@ -8,8 +8,10 @@ import br.com.claus.sellvia.application.usecase.category.FindPageableCategoryUse
 import br.com.claus.sellvia.application.usecase.category.UpdateCategoryUseCase
 import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
 import br.com.claus.sellvia.domain.enums.Direction
+import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.pagination.Pagination
 import br.com.claus.sellvia.infrastructure.config.ApiEndpoints
+import br.com.claus.sellvia.infrastructure.persistence.mapper.toEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -36,6 +38,7 @@ class CategoryController(
         @RequestBody
         requestDTO: CategoryRequestDTO
     ): ResponseEntity<Any> {
+        Category().toEntity()
         createCategoryUseCase.execute(requestDTO)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }

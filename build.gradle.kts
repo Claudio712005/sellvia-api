@@ -19,6 +19,12 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("software.amazon.awssdk:bom:2.20.0")
+    }
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-h2console")
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -35,7 +41,10 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("com.auth0:java-jwt:4.5.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.sksamuel.scrimage:scrimage-core:4.1.3")
+    implementation("com.sksamuel.scrimage:scrimage-webp:4.1.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:4.0.2")
+    implementation("software.amazon.awssdk:s3")
 }
 
 kotlin {
