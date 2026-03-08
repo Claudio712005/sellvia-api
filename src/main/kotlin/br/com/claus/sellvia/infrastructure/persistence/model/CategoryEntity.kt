@@ -21,26 +21,22 @@ import java.time.LocalDateTime
 @Table(name = "categories")
 @EntityListeners(AuditingEntityListener::class)
 data class CategoryEntity(
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-
     @Column(nullable = false)
     val name: String = "",
     @Column(nullable = false)
     val description: String = "",
-
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null,
-
     @CreatedBy
-    var createdBy: String? =  null,
+    var createdBy: String? = null,
     @LastModifiedBy
     var updatedBy: String? = null,
-){
+) {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     var company: CompanyEntity? = null

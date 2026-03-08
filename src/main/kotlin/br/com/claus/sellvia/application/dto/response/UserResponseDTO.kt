@@ -2,7 +2,7 @@ package br.com.claus.sellvia.application.dto.response
 
 import br.com.claus.sellvia.domain.enums.UserRole
 
-data class UserResponseDTO (
+data class UserResponseDTO(
     val id: Long? = null,
     val username: String = "",
     val name: String = "",

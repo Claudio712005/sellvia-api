@@ -24,6 +24,19 @@ class ServiceEntity(
     createdBy: String? = null,
     updatedBy: String? = null,
     category: CategoryEntity? = null,
-
-    val estimatedDurationInMinutes: Int
-) : SaleableItemEntity(id, name, description, price, productionCost, imageUrl, company, category, status, createdAt, updatedAt, createdBy, updatedBy)
+    val estimatedDurationInMinutes: Int,
+) : SaleableItemEntity(
+        id,
+        name,
+        description,
+        price,
+        productionCost,
+        imageUrl,
+        company,
+        category,
+        status,
+        createdAt,
+        updatedAt,
+        createdBy,
+        updatedBy
+    )

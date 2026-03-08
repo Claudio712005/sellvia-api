@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class DeleteProductUseCaseTest {
-
     private val repository = mockk<ProductRepository>()
     private val permissionHelperPort = mockk<PermissionHelperPort>()
 
@@ -22,10 +21,11 @@ class DeleteProductUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = DeleteProductUseCase(
-            repository = repository,
-            permissionHelperPort = permissionHelperPort
-        )
+        useCase =
+            DeleteProductUseCase(
+                repository = repository,
+                permissionHelperPort = permissionHelperPort
+            )
     }
 
     @Test
@@ -42,9 +42,10 @@ class DeleteProductUseCaseTest {
 
     @Test
     fun `should delete product successfully when data is valid`() {
-        val product = mockk<Product> {
-            every { company.id } returns 1L
-        }
+        val product =
+            mockk<Product> {
+                every { company.id } returns 1L
+            }
 
         every { repository.findById(any()) } returns product
         every { permissionHelperPort.verifyUserCanDoesThisAction(any()) } just runs

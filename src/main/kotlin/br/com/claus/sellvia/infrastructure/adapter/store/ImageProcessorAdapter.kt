@@ -11,17 +11,17 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 
 @Component
-class ImageProcessorAdapter: ImageProcessorPort{
-
+class ImageProcessorAdapter : ImageProcessorPort {
     override fun optimize(imageBytes: ByteArray): OptimizedImageDTO {
         try {
             val image = ImmutableImage.loader().fromStream(ByteArrayInputStream(imageBytes))
 
             val resized = image.scaleToWidth(1080)
 
-            val writer = WebpWriter.DEFAULT
-                .withLossless()
-                .withZ(6)
+            val writer =
+                WebpWriter.DEFAULT
+                    .withLossless()
+                    .withZ(6)
 
             val webpBytes = resized.bytes(writer)
             return OptimizedImageDTO(
@@ -34,7 +34,10 @@ class ImageProcessorAdapter: ImageProcessorPort{
         }
     }
 
-    private fun resizeImage(originalImage: BufferedImage, targetWidth: Int): BufferedImage {
+    private fun resizeImage(
+        originalImage: BufferedImage,
+        targetWidth: Int,
+    ): BufferedImage {
         val percentage = targetWidth.toDouble() / originalImage.width
         val targetHeight = (originalImage.height * percentage).toInt()
 

@@ -30,36 +30,26 @@ class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
-
     var name: String = "",
-
     @Column(unique = true)
     private var username: String = "",
-
     @Column(unique = true)
     var email: String = "",
-
     var cpf: String = "",
     var isActive: Boolean = true,
-
     @Column(name = "password")
     private var password: String = "",
-
     @CreatedDate
     var createdAt: LocalDateTime? = null,
-
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null,
-
     @CreatedBy
     var createdBy: String? = null,
     @LastModifiedBy
     var updatedBy: String? = null,
-
     @Enumerated(EnumType.STRING)
-    var role: UserRole = UserRole.COMPANY_USER
+    var role: UserRole = UserRole.COMPANY_USER,
 ) : UserDetails {
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     var company: CompanyEntity? = null
@@ -73,7 +63,10 @@ class UserEntity(
     }
 
     override fun isAccountNonExpired() = true
+
     override fun isAccountNonLocked() = true
+
     override fun isCredentialsNonExpired() = true
+
     override fun isEnabled() = isActive
 }

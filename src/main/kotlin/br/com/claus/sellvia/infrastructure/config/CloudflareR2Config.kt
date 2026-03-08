@@ -12,7 +12,6 @@ import java.net.URI
 
 @Configuration
 class CloudflareR2Config {
-
     @Value("\${cloudflare-r2.account-id}")
     private lateinit var accountId: String
 

@@ -10,9 +10,8 @@ import br.com.claus.sellvia.domain.repository.CategoryRepository
 @UseCase
 class CreateCategoryUseCase(
     private val repository: CategoryRepository,
-    private val permissionServiceHelperPort: PermissionHelperPort
+    private val permissionServiceHelperPort: PermissionHelperPort,
 ) {
-
     fun execute(request: CategoryRequestDTO) {
         request.validate()
 

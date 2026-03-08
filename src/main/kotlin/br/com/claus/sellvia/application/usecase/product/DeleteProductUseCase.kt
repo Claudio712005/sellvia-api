@@ -9,9 +9,7 @@ class DeleteProductUseCase(
     private val repository: ProductRepository,
     private val permissionHelperPort: PermissionHelperPort,
 ) {
-
     fun execute(id: Long) {
-
         if (id <= 0) {
             throw IllegalArgumentException("ID do produto deve ser um número positivo.")
         }

@@ -7,12 +7,13 @@ import br.com.claus.sellvia.domain.exception.InvalidTokenException
 import br.com.claus.sellvia.domain.model.User
 
 class AuthServiceHelper(private val tokenService: TokenServicePort) {
-
     fun createLoginResponse(user: User): LoginResponseDTO {
-        val token = tokenService
-            .generateToken(user)
-        val refreshToken = tokenService
-            .generateRefreshToken(user)
+        val token =
+            tokenService
+                .generateToken(user)
+        val refreshToken =
+            tokenService
+                .generateRefreshToken(user)
 
         return LoginResponseDTO(
             token = token,
@@ -32,5 +33,4 @@ class AuthServiceHelper(private val tokenService: TokenServicePort) {
         return tokenService.validateRefreshToken(token)
             ?: throw InvalidTokenException("Token iválido")
     }
-
 }

@@ -10,17 +10,16 @@ import br.com.claus.sellvia.domain.pagination.ProductSearchQuery
 import br.com.claus.sellvia.domain.repository.ProductRepository
 
 @UseCase
-class FindPageableProductUseCase (
+class FindPageableProductUseCase(
     private val repository: ProductRepository,
-    private val permissionHelperPort: PermissionHelperPort
-){
-
+    private val permissionHelperPort: PermissionHelperPort,
+) {
     fun execute(query: ProductSearchQuery): Pagination<ProductResponseDTO> {
-
         val authenticatedUser = permissionHelperPort.getDetailsOfAuthenticatedUser()
 
-        val companyId = (query.companyId == null && UserRole.SYSTEM_ADMIN != authenticatedUser.role)
-            .let { if(it) authenticatedUser.companyId else query.companyId }
+        val companyId =
+            (query.companyId == null && UserRole.SYSTEM_ADMIN != authenticatedUser.role)
+                .let { if (it) authenticatedUser.companyId else query.companyId }
 
         query.companyId = companyId
 

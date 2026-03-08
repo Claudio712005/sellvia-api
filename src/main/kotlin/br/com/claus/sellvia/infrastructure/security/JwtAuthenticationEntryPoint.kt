@@ -12,21 +12,21 @@ import tools.jackson.databind.ObjectMapper
 
 @Component
 class JwtAuthenticationEntryPoint(private val objectMapper: ObjectMapper) : AuthenticationEntryPoint {
-
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authException: AuthenticationException
+        authException: AuthenticationException,
     ) {
         response.status = HttpStatus.UNAUTHORIZED.value()
         response.contentType = MediaType.APPLICATION_JSON_VALUE
 
-        val errorResponse = ErrorView(
-            status = HttpStatus.UNAUTHORIZED.value(),
-            error = HttpStatus.UNAUTHORIZED.name,
-            message = "Token inválido ou expirado. Por favor, realize o login novamente.",
-            path = request.servletPath
-        )
+        val errorResponse =
+            ErrorView(
+                status = HttpStatus.UNAUTHORIZED.value(),
+                error = HttpStatus.UNAUTHORIZED.name,
+                message = "Token inválido ou expirado. Por favor, realize o login novamente.",
+                path = request.servletPath
+            )
 
         response.writer.write(objectMapper.writeValueAsString(errorResponse))
     }

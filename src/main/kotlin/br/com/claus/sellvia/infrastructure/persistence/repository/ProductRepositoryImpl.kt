@@ -15,7 +15,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Component
 class ProductRepositoryImpl(
-    private val springDataRepository: SpringDataProductRepository
+    private val springDataRepository: SpringDataProductRepository,
 ) : ProductRepository {
     override fun create(product: Product): Product {
         return springDataRepository.save(product.copy(id = null).toEntity()).toDomain()
@@ -29,26 +29,32 @@ class ProductRepositoryImpl(
         return springDataRepository.existsById(id)
     }
 
-    override fun existsBySkuAndCompanyId(sku: String, companyId: Long): Boolean {
+    override fun existsBySkuAndCompanyId(
+        sku: String,
+        companyId: Long,
+    ): Boolean {
         return springDataRepository.existsBySkuAndCompanyId(sku, companyId)
     }
 
     override fun existsBySkuAndCompanyIdAndNotId(
         sku: String,
         companyId: Long,
-        id: Long
+        id: Long,
     ): Boolean {
         return existsByNameAndCompanyIdAndNotId(sku, companyId, id)
     }
 
-    override fun existsByNameAndCompanyId(name: String, companyId: Long): Boolean {
+    override fun existsByNameAndCompanyId(
+        name: String,
+        companyId: Long,
+    ): Boolean {
         return springDataRepository.existsByNameAndCompanyId(name, companyId)
     }
 
     override fun existsByNameAndCompanyIdAndNotId(
         name: String,
         companyId: Long,
-        id: Long
+        id: Long,
     ): Boolean {
         return springDataRepository.existsByNameAndCompanyIdAndIdNot(name, companyId, id)
     }
@@ -66,7 +72,7 @@ class ProductRepositoryImpl(
 
     override fun findBySkuAndCompanyId(
         sku: String,
-        companyId: Long
+        companyId: Long,
     ): Product? {
         return springDataRepository.findBySkuAndCompanyId(sku, companyId)?.toDomain()
     }

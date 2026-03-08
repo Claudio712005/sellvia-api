@@ -15,7 +15,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Component
 class CategoryRepositoryImpl(
-    private val springDataRepository: SpringDataCategoryRepository
+    private val springDataRepository: SpringDataCategoryRepository,
 ) : CategoryRepository {
     override fun findById(id: Long): Category? {
         return springDataRepository
@@ -43,34 +43,41 @@ class CategoryRepositoryImpl(
 
     override fun findByNameAndCompanyId(
         name: String,
-        companyId: Long
-    ): Category? = springDataRepository
-        .findByNameAndCompanyId(name, companyId)
-        ?.toDomain()
+        companyId: Long,
+    ): Category? =
+        springDataRepository
+            .findByNameAndCompanyId(name, companyId)
+            ?.toDomain()
 
     override fun findBySearchQueryPageable(searchQuery: CategorySearchQuery): Pagination<Category> {
-        val sortOrder = Sort.by(
-            Sort.Direction.fromString(searchQuery.direction.toString()),
-            searchQuery.sort
-        )
+        val sortOrder =
+            Sort.by(
+                Sort.Direction.fromString(searchQuery.direction.toString()),
+                searchQuery.sort
+            )
 
         val pageable = PageRequest.of(searchQuery.page, searchQuery.perPage, sortOrder)
 
-        val companyId = searchQuery.companyId
-            ?: throw IllegalArgumentException("CompanyId é obrigatório para a busca.")
+        val companyId =
+            searchQuery.companyId
+                ?: throw IllegalArgumentException("CompanyId é obrigatório para a busca.")
 
-        val springPage = springDataRepository.findByNameContainingIgnoreCaseAndCompanyId(
-            searchQuery.terms,
-            companyId,
-            pageable
-        )
+        val springPage =
+            springDataRepository.findByNameContainingIgnoreCaseAndCompanyId(
+                searchQuery.terms,
+                companyId,
+                pageable
+            )
 
         return springPage
             .map { it.toDomain() }
             .toDomainPagination()
     }
 
-    override fun existsByIdAndCompanyId(id: Long, companyId: Long): Boolean {
+    override fun existsByIdAndCompanyId(
+        id: Long,
+        companyId: Long,
+    ): Boolean {
         return springDataRepository.existsByIdAndCompanyId(id, companyId)
     }
 }

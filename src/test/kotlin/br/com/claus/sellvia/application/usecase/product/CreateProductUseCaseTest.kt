@@ -18,7 +18,6 @@ import java.math.BigDecimal
 import kotlin.test.assertEquals
 
 class CreateProductUseCaseTest {
-
     private val repository = mockk<ProductRepository>()
     private val permissionHelpPort = mockk<PermissionHelperPort>()
     private val processorResourceStorePort = mockk<ProcessorResourceStorePort>()
@@ -28,12 +27,13 @@ class CreateProductUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = CreateProductUseCase(
-            repository = repository,
-            permissionServicePort = permissionHelpPort,
-            processorResourceStorePort = processorResourceStorePort,
-            categoryRepository = categoryRepository,
-        )
+        useCase =
+            CreateProductUseCase(
+                repository = repository,
+                permissionServicePort = permissionHelpPort,
+                processorResourceStorePort = processorResourceStorePort,
+                categoryRepository = categoryRepository,
+            )
     }
 
     @Test
@@ -75,9 +75,10 @@ class CreateProductUseCaseTest {
         // Simula que a categoria não foi encontrada
         every { categoryRepository.existsByIdAndCompanyId(999L, request.companyId) } returns false
 
-        val exception = assertThrows<NotFoundResouceException> {
-            useCase.execute(request, byteArrayOf())
-        }
+        val exception =
+            assertThrows<NotFoundResouceException> {
+                useCase.execute(request, byteArrayOf())
+            }
 
         assertEquals("Categoria com id '999' não encontrada para esta empresa.", exception.message)
         verify(exactly = 0) { repository.create(any()) }
@@ -87,9 +88,10 @@ class CreateProductUseCaseTest {
     fun `should throw exception and rollback when image upload fails`() {
         val request = createValidRequest() // Sem categoria
         val image = "fake-image".toByteArray()
-        val productSaved = mockk<Product> {
-            every { id } returns 1L
-        }
+        val productSaved =
+            mockk<Product> {
+                every { id } returns 1L
+            }
 
         every { permissionHelpPort.verifyUserCanDoesThisAction(any()) } just runs
         every { repository.existsBySkuAndCompanyId(any(), any()) } returns false
@@ -113,20 +115,22 @@ class CreateProductUseCaseTest {
         every { permissionHelpPort.verifyUserCanDoesThisAction(request.companyId) } just runs
         every { repository.existsBySkuAndCompanyId(request.sku.uppercase(), request.companyId) } returns true
 
-        val exception = assertThrows<ResourceAlreadyExistsException> {
-            useCase.execute(request, byteArrayOf())
-        }
+        val exception =
+            assertThrows<ResourceAlreadyExistsException> {
+                useCase.execute(request, byteArrayOf())
+            }
         assertEquals("Produto com SKU '${request.sku.uppercase()}' já existe para esta empresa.", exception.message)
         verify(exactly = 0) { repository.create(any()) }
     }
 
-    private fun createValidRequest(categoryId: Long? = null) = ProductRequestDTO(
-        name = "Teclado Mecânico",
-        description = "RGB Cherry MX Blue",
-        price = BigDecimal("500.00"),
-        productionCost = BigDecimal("200.00"),
-        companyId = 123L,
-        sku = "KBD-123",
-        categoryId = categoryId
-    )
+    private fun createValidRequest(categoryId: Long? = null) =
+        ProductRequestDTO(
+            name = "Teclado Mecânico",
+            description = "RGB Cherry MX Blue",
+            price = BigDecimal("500.00"),
+            productionCost = BigDecimal("200.00"),
+            companyId = 123L,
+            sku = "KBD-123",
+            categoryId = categoryId
+        )
 }

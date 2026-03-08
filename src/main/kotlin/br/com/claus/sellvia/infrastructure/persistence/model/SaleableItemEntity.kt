@@ -35,23 +35,18 @@ abstract class SaleableItemEntity(
     val price: BigDecimal,
     val productionCost: BigDecimal,
     val imageUrl: String?,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val company: CompanyEntity,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val category: CategoryEntity? = null,
-
     @Enumerated(EnumType.STRING)
     val status: ResourceStatus,
-
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null,
-
     @CreatedBy
-    var createdBy: String? =  null,
+    var createdBy: String? = null,
     @LastModifiedBy
     var updatedBy: String? = null,
 )

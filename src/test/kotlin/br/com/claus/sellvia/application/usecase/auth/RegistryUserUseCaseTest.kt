@@ -19,7 +19,6 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 class RegistryUserUseCaseTest {
-
     private val userRepository = mockk<UserRepository>()
     private val tokenService = mockk<TokenServicePort>()
     private val companyRepository = mockk<CompanyRepository>()
@@ -30,13 +29,14 @@ class RegistryUserUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = RegistryUserUseCase(
-            userRepository,
-            tokenService,
-            companyRepository,
-            passwordEncoder,
-            authServiceHelper
-        )
+        useCase =
+            RegistryUserUseCase(
+                userRepository,
+                tokenService,
+                companyRepository,
+                passwordEncoder,
+                authServiceHelper
+            )
     }
 
     @Test
@@ -72,9 +72,10 @@ class RegistryUserUseCaseTest {
         every { userRepository.existsByUsername(any()) } returns false
         every { userRepository.existsByCpf(any()) } returns false
 
-        val exception = assertThrows<WithoutPermissionException> {
-            useCase.execute(request, token)
-        }
+        val exception =
+            assertThrows<WithoutPermissionException> {
+                useCase.execute(request, token)
+            }
         assertEquals("Você não pode cadastrar um usuário para uma empresa diferente da sua.", exception.message)
     }
 
@@ -111,17 +112,21 @@ class RegistryUserUseCaseTest {
         }
     }
 
-    private fun createValidRequest() = UserRequestDTO(
-        username = "claus",
-        email = "claus@test.com",
-        password = "Password123!",
-        userRole = UserRole.COMPANY_ADMIN,
-        companyId = 1L,
-        name = "Claus",
-        cpf = "12345678901"
-    )
+    private fun createValidRequest() =
+        UserRequestDTO(
+            username = "claus",
+            email = "claus@test.com",
+            password = "Password123!",
+            userRole = UserRole.COMPANY_ADMIN,
+            companyId = 1L,
+            name = "Claus",
+            cpf = "12345678901"
+        )
 
-    private fun createUser(role: UserRole, companyId: Long? = null) = User(
+    private fun createUser(
+        role: UserRole,
+        companyId: Long? = null,
+    ) = User(
         id = 1L,
         username = "admin",
         email = "admin@test.com",

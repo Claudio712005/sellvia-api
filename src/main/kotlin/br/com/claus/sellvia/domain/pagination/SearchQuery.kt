@@ -7,9 +7,8 @@ open class SearchQuery(
     open val perPage: Int = 10,
     open val terms: String = "",
     open val sort: String = "id",
-    open val direction: Direction = Direction.ASC
+    open val direction: Direction = Direction.ASC,
 ) {
-
     init {
         require(page >= 0) { "Página inválida" }
         require(perPage in 1..100) { "Tamanho da página inválido" }

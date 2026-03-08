@@ -11,17 +11,17 @@ import br.com.claus.sellvia.domain.repository.UserRepository
 class RefreshTokenUseCase(
     private val tokenService: TokenServicePort,
     private val userRepository: UserRepository,
-    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService)
+    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService),
 ) {
-
     fun execute(refreshToken: String): LoginResponseDTO {
+        val username =
+            authServiceHelper
+                .getUsernameByRefreshToken(refreshToken)
 
-        val username = authServiceHelper
-            .getUsernameByRefreshToken(refreshToken)
-
-        val user = userRepository
-            .findByUsername(username)
-            ?: throw NotFoundResouceException("Usuário não encontrado")
+        val user =
+            userRepository
+                .findByUsername(username)
+                ?: throw NotFoundResouceException("Usuário não encontrado")
 
         return authServiceHelper
             .createLoginResponse(user)

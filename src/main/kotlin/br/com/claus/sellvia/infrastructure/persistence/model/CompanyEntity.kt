@@ -27,18 +27,15 @@ data class CompanyEntity(
     val websiteUrl: String = "",
     val isActive: Boolean = true,
     val companyUrlLogo: String = "",
-
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null,
-
     @CreatedBy
-    var createdBy: String? =  null,
+    var createdBy: String? = null,
     @LastModifiedBy
     var updatedBy: String? = null,
-){
-
+) {
     @OneToMany(mappedBy = "company")
     val users: List<UserEntity> = emptyList()
 }

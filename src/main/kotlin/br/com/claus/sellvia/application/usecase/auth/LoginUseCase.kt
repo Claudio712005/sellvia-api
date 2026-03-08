@@ -14,14 +14,14 @@ class LoginUseCase(
     val tokenServicePort: TokenServicePort,
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoderPort,
-    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService = tokenServicePort)
+    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService = tokenServicePort),
 ) {
-
     fun execute(request: LoginRequestDTO): LoginResponseDTO {
         request.validate()
 
-        val user = userRepository.findByUsername(request.username!!)
-            ?: throw InvalidCredentialsException("Usuário não encontrado ou credencias inválidas.")
+        val user =
+            userRepository.findByUsername(request.username!!)
+                ?: throw InvalidCredentialsException("Usuário não encontrado ou credencias inválidas.")
 
         if (!passwordEncoder.matches(request.password!!, user.password!!)) {
             throw InvalidCredentialsException("Usuário não encontrado ou credencias inválida3.")

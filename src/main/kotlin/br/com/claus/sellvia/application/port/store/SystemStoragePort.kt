@@ -1,9 +1,6 @@
 package br.com.claus.sellvia.application.port.store
 
-import br.com.claus.sellvia.domain.enums.FolderDestination
-
 interface SystemStoragePort {
-
     fun store(
         file: ByteArray,
         path: String,
@@ -12,5 +9,4 @@ interface SystemStoragePort {
     ): String
 
     fun delete(key: String)
-
 }

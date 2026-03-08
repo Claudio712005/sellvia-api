@@ -13,7 +13,6 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 class DeleteCategoryUseCaseTest {
-
     private val repository = mockk<CategoryRepository>()
     private val permissionHelperPort = mockk<PermissionHelperPort>()
 
@@ -21,10 +20,11 @@ class DeleteCategoryUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = DeleteCategoryUseCase(
-            categoryRepository = repository,
-            permissionServiceHelperPort = permissionHelperPort,
-        )
+        useCase =
+            DeleteCategoryUseCase(
+                categoryRepository = repository,
+                permissionServiceHelperPort = permissionHelperPort,
+            )
     }
 
     @Test
@@ -47,9 +47,10 @@ class DeleteCategoryUseCaseTest {
     fun `should throw IllegalArgumentException when id is zero or negative`() {
         val invalidId = 0L
 
-        val exception = assertThrows<IllegalArgumentException> {
-            useCase.execute(invalidId)
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                useCase.execute(invalidId)
+            }
 
         assertEquals("ID da categoria deve ser maior que zero", exception.message)
         verify(exactly = 0) { repository.findById(any()) }
@@ -60,9 +61,10 @@ class DeleteCategoryUseCaseTest {
         val id = 1L
         every { repository.findById(id) } returns null
 
-        val exception = assertThrows<NotFoundResouceException> {
-            useCase.execute(id)
-        }
+        val exception =
+            assertThrows<NotFoundResouceException> {
+                useCase.execute(id)
+            }
 
         assertEquals("Categoria com ID $id não encontrada", exception.message)
         verify(exactly = 0) { repository.deleteById(any()) }
@@ -98,5 +100,4 @@ class DeleteCategoryUseCaseTest {
 
         verify(exactly = 1) { repository.deleteById(id) }
     }
-
 }

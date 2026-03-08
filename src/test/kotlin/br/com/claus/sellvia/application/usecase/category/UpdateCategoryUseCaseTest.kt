@@ -2,10 +2,8 @@ package br.com.claus.sellvia.application.usecase.category
 
 import br.com.claus.sellvia.application.dto.request.CategoryRequestDTO
 import br.com.claus.sellvia.application.port.PermissionHelperPort
-import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.WithoutPermissionException
-import br.com.claus.sellvia.domain.model.AuthenticatedUserDetails
 import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.domain.repository.CategoryRepository
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 class UpdateCategoryUseCaseTest {
-
     private val repository = mockk<CategoryRepository>()
     private val permissionHelperPort = mockk<PermissionHelperPort>()
 
@@ -24,10 +21,11 @@ class UpdateCategoryUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = UpdateCategoryUseCase(
-            repository = repository,
-            permissionHelperPort = permissionHelperPort,
-        )
+        useCase =
+            UpdateCategoryUseCase(
+                repository = repository,
+                permissionHelperPort = permissionHelperPort,
+            )
     }
 
     @Test
@@ -94,9 +92,10 @@ class UpdateCategoryUseCaseTest {
         every { permissionHelperPort.verifyUserCanDoesThisAction(companyId) } just Runs
         every { repository.findByNameAndCompanyId(request.name!!, companyId) } returns otherCategory
 
-        val exception = assertThrows<IllegalArgumentException> {
-            useCase.execute(id, request)
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                useCase.execute(id, request)
+            }
 
         assertEquals("Já existe uma categoria com o nome '${request.name}' para esta empresa", exception.message)
         verify(exactly = 0) { repository.save(any()) }
@@ -119,9 +118,10 @@ class UpdateCategoryUseCaseTest {
         verify(exactly = 1) { repository.save(any()) }
     }
 
-    private fun createValidRequest() = CategoryRequestDTO(
-        name = "Updated Category",
-        description = "Updated description",
-        companyId = 10L
-    )
+    private fun createValidRequest() =
+        CategoryRequestDTO(
+            name = "Updated Category",
+            description = "Updated description",
+            companyId = 10L
+        )
 }

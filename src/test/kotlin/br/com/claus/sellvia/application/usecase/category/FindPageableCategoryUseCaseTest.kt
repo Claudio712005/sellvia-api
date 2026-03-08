@@ -17,7 +17,6 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 class FindPageableCategoryUseCaseTest {
-
     private val categoryRepository = mockk<CategoryRepository>()
     private val permissionHelperPort = mockk<PermissionHelperPort>()
 
@@ -25,10 +24,11 @@ class FindPageableCategoryUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = FindPageableCategoryUseCase(
-            categoryRepository = categoryRepository,
-            permissionHelperPort = permissionHelperPort
-        )
+        useCase =
+            FindPageableCategoryUseCase(
+                categoryRepository = categoryRepository,
+                permissionHelperPort = permissionHelperPort
+            )
     }
 
     @Test
@@ -39,10 +39,14 @@ class FindPageableCategoryUseCaseTest {
         every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns adminDetails
         every { permissionHelperPort.verifyUserCanDoesThisAction(any()) } just runs
 
-        val pagination = Pagination(
-            items = listOf(createCategory()),
-            currentPage = 0, perPage = 10, totalItems = 1, totalPages = 1
-        )
+        val pagination =
+            Pagination(
+                items = listOf(createCategory()),
+                currentPage = 0,
+                perPage = 10,
+                totalItems = 1,
+                totalPages = 1
+            )
 
         every { categoryRepository.findBySearchQueryPageable(any()) } returns pagination
 
@@ -62,10 +66,14 @@ class FindPageableCategoryUseCaseTest {
         every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns userDetails
         every { permissionHelperPort.verifyUserCanDoesThisAction(userCompanyId) } just runs
 
-        val pagination = Pagination(
-            items = listOf(createCategory(userCompanyId)),
-            currentPage = 0, perPage = 10, totalItems = 1, totalPages = 1
-        )
+        val pagination =
+            Pagination(
+                items = listOf(createCategory(userCompanyId)),
+                currentPage = 0,
+                perPage = 10,
+                totalItems = 1,
+                totalPages = 1
+            )
 
         every {
             categoryRepository.findBySearchQueryPageable(match { it.companyId == userCompanyId })

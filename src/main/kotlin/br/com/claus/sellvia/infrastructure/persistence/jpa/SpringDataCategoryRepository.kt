@@ -5,14 +5,20 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface SpringDataCategoryRepository: JpaRepository<CategoryEntity, Long> {
+interface SpringDataCategoryRepository : JpaRepository<CategoryEntity, Long> {
+    fun findByNameAndCompanyId(
+        name: String,
+        companyId: Long,
+    ): CategoryEntity?
 
-    fun findByNameAndCompanyId(name: String, companyId: Long): CategoryEntity?
     fun findByNameContainingIgnoreCaseAndCompanyId(
         name: String,
         companyId: Long,
-        pageable: Pageable
+        pageable: Pageable,
     ): Page<CategoryEntity>
 
-    fun existsByIdAndCompanyId(id: Long, companyId: Long): Boolean
+    fun existsByIdAndCompanyId(
+        id: Long,
+        companyId: Long,
+    ): Boolean
 }
