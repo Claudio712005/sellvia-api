@@ -1,8 +1,9 @@
-val layerConfigs = listOf(
-    LayerConfig("domain", "🎯 ", 0.05),
-    LayerConfig("application", "⚙️ ", 0.5),
-    LayerConfig("infrastructure", "🔌 ", 0.05)
-)
+val layerConfigs =
+    listOf(
+        LayerConfig("domain", "🎯 ", 0.05),
+        LayerConfig("application", "⚙️ ", 0.5),
+        LayerConfig("infrastructure", "🔌 ", 0.05)
+    )
 val globalMinCoverage = 0.05
 
 data class LayerConfig(val name: String, val icon: String, val min: Double) : java.io.Serializable
@@ -17,17 +18,22 @@ tasks.named<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
     }
 
-    val excludes = listOf(
-        "**/entity/**",
-        "**/dto/**",
-        "**/config/**",
-        "**/*Application*",
-        "**/infrastructure/persistence/model/**"
-    )
+    val excludes =
+        listOf(
+            "**/entity/**",
+            "**/dto/**",
+            "**/config/**",
+            "**/*Application*",
+            "**/infrastructure/persistence/model/**"
+        )
 
-    classDirectories.setFrom(files(classDirectories.map {
-        fileTree(it) { exclude(excludes) }
-    }))
+    classDirectories.setFrom(
+        files(
+            classDirectories.map {
+                fileTree(it) { exclude(excludes) }
+            }
+        )
+    )
 
     val reportFileProperty = layout.buildDirectory.file("reports/jacoco/test/jacocoTestReport.xml")
     val htmlReportUri = layout.buildDirectory.dir("reports/jacoco/test/html").get().asFile.toURI().toString()
@@ -84,7 +90,7 @@ tasks.named<JacocoReport>("jacocoTestReport") {
                 pkgs.forEach { (name, stats) ->
                     val perc = (stats.first / stats.second) * 100
                     val percStr = "${"%.2f".format(perc)}%"
-                    val prefix = "${config.icon} [${config.name.uppercase().padEnd(14)}] ${name} : "
+                    val prefix = "${config.icon} [${config.name.uppercase().padEnd(14)}] $name : "
                     println(prefix + " ".repeat((lineWidth - prefix.length - percStr.length).coerceAtLeast(0)) + " " + percStr)
                 }
                 val stats = layerTotals[config.name] ?: Pair(0.0, 1.0)

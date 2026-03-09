@@ -11,7 +11,7 @@ plugins {
     jacoco
 }
 
-jacoco{
+jacoco {
     toolVersion = "0.8.12"
 }
 
@@ -80,7 +80,7 @@ kotlin {
     }
 }
 
-tasks.test{
+tasks.test {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
 }
