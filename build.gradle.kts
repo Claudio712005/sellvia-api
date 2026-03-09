@@ -7,6 +7,12 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
     id("org.flywaydb.flyway") version "10.17.0"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+
+    jacoco
+}
+
+jacoco{
+    toolVersion = "0.8.12"
 }
 
 ktlint {
@@ -73,6 +79,13 @@ kotlin {
         freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
     }
 }
+
+tasks.test{
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+apply(from = "jacoco-report.gradle.kts")
 
 tasks.withType<Test> {
     useJUnitPlatform()
