@@ -1,20 +1,22 @@
 import org.gradle.testing.jacoco.tasks.JacocoCoverageVerification
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
-val layerConfigs = listOf(
-    LayerConfig("domain", "🎯 ", 0.00),
-    LayerConfig("application", "⚙️ ", 0.0),
-    LayerConfig("infrastructure", "🔌 ", 0.00)
-)
+val layerConfigs =
+    listOf(
+        LayerConfig("domain", "🎯 ", 0.00),
+        LayerConfig("application", "⚙️ ", 0.0),
+        LayerConfig("infrastructure", "🔌 ", 0.00)
+    )
 val globalMinCoverage = 0.05
 
-val jacocoExcludes = listOf(
-    "**/entity/**",
-    "**/dto/**",
-    "**/config/**",
-    "**/*Application*",
-    "**/infrastructure/persistence/model/**"
-)
+val jacocoExcludes =
+    listOf(
+        "**/entity/**",
+        "**/dto/**",
+        "**/config/**",
+        "**/*Application*",
+        "**/infrastructure/persistence/model/**"
+    )
 
 data class LayerConfig(val name: String, val icon: String, val min: Double) : java.io.Serializable
 
@@ -28,9 +30,13 @@ tasks.named<JacocoReport>("jacocoTestReport") {
     }
 
     // Aplica filtros no Relatório
-    classDirectories.setFrom(files(classDirectories.map {
-        fileTree(it) { exclude(jacocoExcludes) }
-    }))
+    classDirectories.setFrom(
+        files(
+            classDirectories.map {
+                fileTree(it) { exclude(jacocoExcludes) }
+            }
+        )
+    )
 
     val reportFileProperty = layout.buildDirectory.file("reports/jacoco/test/jacocoTestReport.xml")
     val htmlReportUri = layout.buildDirectory.dir("reports/jacoco/test/html").get().asFile.toURI().toString()
@@ -130,9 +136,13 @@ tasks.named<JacocoReport>("jacocoTestReport") {
 }
 
 tasks.named<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
-    classDirectories.setFrom(files(classDirectories.map {
-        fileTree(it) { exclude(jacocoExcludes) }
-    }))
+    classDirectories.setFrom(
+        files(
+            classDirectories.map {
+                fileTree(it) { exclude(jacocoExcludes) }
+            }
+        )
+    )
 
     violationRules {
         rule {
