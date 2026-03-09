@@ -11,11 +11,11 @@ import br.com.claus.sellvia.domain.model.Product
 import br.com.claus.sellvia.domain.repository.CategoryRepository
 import br.com.claus.sellvia.domain.repository.ProductRepository
 import io.mockk.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
-import kotlin.test.assertEquals
 
 class CreateProductUseCaseTest {
     private val repository = mockk<ProductRepository>()

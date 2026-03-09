@@ -11,10 +11,10 @@ import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
 import br.com.claus.sellvia.domain.pagination.Pagination
 import br.com.claus.sellvia.domain.repository.CategoryRepository
 import io.mockk.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 class FindPageableCategoryUseCaseTest {
     private val categoryRepository = mockk<CategoryRepository>()

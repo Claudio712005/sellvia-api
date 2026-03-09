@@ -13,10 +13,10 @@ import br.com.claus.sellvia.domain.model.User
 import br.com.claus.sellvia.domain.repository.CompanyRepository
 import br.com.claus.sellvia.domain.repository.UserRepository
 import io.mockk.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 class RegistryUserUseCaseTest {
     private val userRepository = mockk<UserRepository>()

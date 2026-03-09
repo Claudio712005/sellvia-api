@@ -14,8 +14,8 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import kotlin.test.Test
 
 class LoginUseCaseTest {
     private val userRepository = mockk<UserRepository>()

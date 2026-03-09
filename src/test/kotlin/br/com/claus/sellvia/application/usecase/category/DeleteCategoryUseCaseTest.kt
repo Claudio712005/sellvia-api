@@ -7,10 +7,10 @@ import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.domain.repository.CategoryRepository
 import io.mockk.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 class DeleteCategoryUseCaseTest {
     private val repository = mockk<CategoryRepository>()
