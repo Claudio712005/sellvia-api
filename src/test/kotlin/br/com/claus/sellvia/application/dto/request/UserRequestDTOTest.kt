@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class UserRequestDTOTest {
-
     @Test
     fun `should validate successfully with correct data`() {
         val dto = createValidDTO()
@@ -61,13 +60,14 @@ class UserRequestDTOTest {
         assertThrows<InvalidFieldException> { dto.validate() }
     }
 
-    private fun createValidDTO() = UserRequestDTO(
-        username = "johndoe",
-        email = "john@example.com",
-        password = "Password123!",
-        userRole = UserRole.COMPANY_ADMIN,
-        companyId = 1L,
-        name = "John Doe",
-        cpf = "12345678901"
-    )
+    private fun createValidDTO() =
+        UserRequestDTO(
+            username = "johndoe",
+            email = "john@example.com",
+            password = "Password123!",
+            userRole = UserRole.COMPANY_ADMIN,
+            companyId = 1L,
+            name = "John Doe",
+            cpf = "12345678901"
+        )
 }

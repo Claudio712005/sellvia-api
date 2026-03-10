@@ -15,13 +15,20 @@ data class UserRequestDTO(
     val name: String? = null,
     val cpf: String? = null,
 ) {
-
     fun validate() {
         if (username.isNullOrBlank()) throw InvalidFieldException("Username não pode ser vazio")
 
         if (email.isNullOrBlank() || !email.contains("@")) throw InvalidFieldException("Email inválido ou vazio")
 
-        if (password.isNullOrBlank() || !password.matches(PASSWORD_REGEX)) throw InvalidFieldException("A senha deve ter no mínimo 6 caracteres, contendo pelo menos um número, uma letra maiúscula, uma minúscula e um caractere especial.")
+        if (password.isNullOrBlank() ||
+            !password.matches(
+                PASSWORD_REGEX
+            )
+        ) {
+            throw InvalidFieldException(
+                "A senha deve ter no mínimo 6 caracteres, contendo pelo menos um número, uma letra maiúscula, uma minúscula e um caractere especial."
+            )
+        }
 
         if (name.isNullOrBlank()) throw InvalidFieldException("Nome é obrigatório")
 

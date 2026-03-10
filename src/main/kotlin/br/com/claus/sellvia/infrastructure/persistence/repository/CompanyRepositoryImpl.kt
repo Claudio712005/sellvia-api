@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component
 import kotlin.jvm.optionals.getOrNull
 
 @Component
-class CompanyRepositoryImpl (
-    private val springDataRepository: SpringDataCompanyRepository
-): CompanyRepository{
+class CompanyRepositoryImpl(
+    private val springDataRepository: SpringDataCompanyRepository,
+) : CompanyRepository {
     override fun findById(id: Long): Company? {
         return springDataRepository.findById(id).getOrNull()?.toDomain()
     }
-
 }

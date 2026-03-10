@@ -10,15 +10,15 @@ fun CategoryRequestDTO.toDomain(): Category =
         id = this.id,
         name = this.name,
         description = this.description,
-        company = Company(
-            id = this.companyId
-        ),
+        company =
+            Company(
+                id = this.companyId
+            ),
         createdAt = null,
         updatedAt = null,
         createdBy = null,
         updatedBy = null,
     )
-
 
 fun Category.toResponseDTO(): CategoryResponseDTO =
     CategoryResponseDTO(

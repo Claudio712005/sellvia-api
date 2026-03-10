@@ -17,37 +17,38 @@ import org.junit.jupiter.api.assertThrows
 import java.time.LocalDateTime
 
 class RefreshTokenUseCaseTest {
-
     private val userRepository = mockk<UserRepository>()
     private val tokenService = mockk<TokenServicePort>()
 
     private val authServiceHelper = AuthServiceHelper(tokenService)
 
-    private val refreshTokenUseCase = RefreshTokenUseCase(
-        tokenService,
-        userRepository,
-        authServiceHelper
-    )
+    private val refreshTokenUseCase =
+        RefreshTokenUseCase(
+            tokenService,
+            userRepository,
+            authServiceHelper
+        )
 
     @Test
     fun `should return LoginResponseDTO when refresh token is valid`() {
         val oldRefreshToken = "old-refresh-token"
         val username = "claus.sellvia"
-        val user = User(
-            id = 1L,
-            username = username,
-            password = "hashed-password",
-            name = "Claus",
-            cpf = "",
-            isActive = true,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now(),
-            createdBy = "",
-            updatedBy = "",
-            role = UserRole.SYSTEM_ADMIN,
-            company = null,
-            email = "email@gmail.com",
-        )
+        val user =
+            User(
+                id = 1L,
+                username = username,
+                password = "hashed-password",
+                name = "Claus",
+                cpf = "",
+                isActive = true,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now(),
+                createdBy = "",
+                updatedBy = "",
+                role = UserRole.SYSTEM_ADMIN,
+                company = null,
+                email = "email@gmail.com",
+            )
 
         every { tokenService.validateRefreshToken(oldRefreshToken) } returns username
         every { userRepository.findByUsername(username) } returns user
@@ -85,9 +86,10 @@ class RefreshTokenUseCaseTest {
         every { tokenService.validateRefreshToken(validToken) } returns username
         every { userRepository.findByUsername(username) } returns null
 
-        val exception = assertThrows<NotFoundResouceException> {
-            refreshTokenUseCase.execute(validToken)
-        }
+        val exception =
+            assertThrows<NotFoundResouceException> {
+                refreshTokenUseCase.execute(validToken)
+            }
 
         assertEquals("Usuário não encontrado", exception.message)
     }

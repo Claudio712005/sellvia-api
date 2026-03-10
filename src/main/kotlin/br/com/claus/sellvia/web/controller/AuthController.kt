@@ -17,35 +17,35 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.net.URI
 
 @RestController
 @RequestMapping(ApiEndpoints.Auth.AUTH_ROOT)
 class AuthController(
     private val loginUseCase: LoginUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase,
-    private val registryUserUseCase: RegistryUserUseCase
+    private val registryUserUseCase: RegistryUserUseCase,
 ) {
-
     @PostMapping(ApiEndpoints.Auth.LOGIN)
-    fun login(@Valid @RequestBody request: LoginRequestDTO): ResponseEntity<LoginResponseDTO> {
+    fun login(
+        @Valid @RequestBody request: LoginRequestDTO,
+    ): ResponseEntity<LoginResponseDTO> {
         val response = loginUseCase.execute(request)
         return ResponseEntity.ok(response)
     }
 
     @PostMapping(ApiEndpoints.Auth.REFRESH_TOKEN)
     fun refreshToken(
-        @RequestHeader(HttpHeaders.AUTHORIZATION) authHeader: String?
+        @RequestHeader(HttpHeaders.AUTHORIZATION) authHeader: String?,
     ): ResponseEntity<LoginResponseDTO> {
-
         val response = refreshTokenUseCase.execute(getToken(authHeader))
         return ResponseEntity.ok(response)
     }
 
     @PostMapping(ApiEndpoints.Auth.REGISTRY)
-    fun registryUser(@Valid @RequestBody request: UserRequestDTO,
-                     @RequestHeader(HttpHeaders.AUTHORIZATION) authHeader: String?): ResponseEntity<Any> {
-
+    fun registryUser(
+        @Valid @RequestBody request: UserRequestDTO,
+        @RequestHeader(HttpHeaders.AUTHORIZATION) authHeader: String?,
+    ): ResponseEntity<Any> {
         registryUserUseCase.execute(request, getToken(authHeader))
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }

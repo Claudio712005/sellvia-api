@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -28,38 +29,33 @@ import java.time.LocalDateTime
 @EntityListeners(AuditingEntityListener::class)
 class UserEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_gen")
+    @SequenceGenerator(
+        name = "users_gen",
+        sequenceName = "users_id_seq",
+        allocationSize = 1,
+    )
     var id: Long = 0,
-
     var name: String = "",
-
     @Column(unique = true)
     private var username: String = "",
-
     @Column(unique = true)
     var email: String = "",
-
     var cpf: String = "",
     var isActive: Boolean = true,
-
     @Column(name = "password")
     private var password: String = "",
-
     @CreatedDate
     var createdAt: LocalDateTime? = null,
-
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null,
-
     @CreatedBy
     var createdBy: String? = null,
     @LastModifiedBy
     var updatedBy: String? = null,
-
     @Enumerated(EnumType.STRING)
-    var role: UserRole = UserRole.COMPANY_USER
+    var role: UserRole = UserRole.COMPANY_USER,
 ) : UserDetails {
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     var company: CompanyEntity? = null
@@ -73,7 +69,10 @@ class UserEntity(
     }
 
     override fun isAccountNonExpired() = true
+
     override fun isAccountNonLocked() = true
+
     override fun isCredentialsNonExpired() = true
+
     override fun isEnabled() = isActive
 }

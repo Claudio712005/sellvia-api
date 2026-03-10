@@ -20,43 +20,48 @@ class RegistryUserUseCase(
     private val tokenService: TokenServicePort,
     private val companyRepository: CompanyRepository,
     private val passwordEncoder: PasswordEncoderPort,
-    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService)
+    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService),
 ) {
-
-    fun execute(requestDTO: UserRequestDTO, token: String) {
+    fun execute(
+        requestDTO: UserRequestDTO,
+        token: String,
+    ) {
         requestDTO.validate()
 
         val userInToken = validatePermission(token)
 
         checkUserPersistenceConstraints(requestDTO)
 
-        if (userInToken.role != UserRole.SYSTEM_ADMIN
-            && userInToken.company?.id != requestDTO.companyId
+        if (userInToken.role != UserRole.SYSTEM_ADMIN &&
+            userInToken.company?.id != requestDTO.companyId
         ) {
             throw WithoutPermissionException("Você não pode cadastrar um usuário para uma empresa diferente da sua.")
         }
 
-        val company = companyRepository
-            .findById(
-                requestDTO.companyId
-                    ?: throw NotFoundResouceException("A empresa para o usuário não pode ser encontrada")
-            )
-            ?: throw NotFoundResouceException("A empresa para o usuário não pode ser encontrada")
+        val company =
+            companyRepository
+                .findById(
+                    requestDTO.companyId
+                        ?: throw NotFoundResouceException("A empresa para o usuário não pode ser encontrada")
+                )
+                ?: throw NotFoundResouceException("A empresa para o usuário não pode ser encontrada")
 
         val encodedPassword = passwordEncoder.encode(requestDTO.password!!)
 
-        val user = requestDTO.toUser().copy(
-            company = company,
-            password = encodedPassword!!
-        )
+        val user =
+            requestDTO.toUser().copy(
+                company = company,
+                password = encodedPassword!!
+            )
 
         userRepository.save(user)
     }
 
     private fun validatePermission(token: String): User {
         val username = authServiceHelper.getUsernameByToken(token)
-        val userInToken = userRepository.findByUsername(username)
-            ?: throw NotFoundResouceException("Usuário do token não encontrado.")
+        val userInToken =
+            userRepository.findByUsername(username)
+                ?: throw NotFoundResouceException("Usuário do token não encontrado.")
 
         if (userInToken.role == UserRole.COMPANY_USER) {
             throw WithoutPermissionException("Sem permissão para realizar essa ação.")
@@ -78,4 +83,3 @@ class RegistryUserUseCase(
         }
     }
 }
-

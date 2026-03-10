@@ -3,7 +3,6 @@ package br.com.claus.sellvia.infrastructure.config
 import br.com.claus.sellvia.domain.enums.UserRole
 
 object ApiEndpoints {
-
     private const val PREFIX = "/api"
     private const val VERSION = "/v1.0.0"
     const val API_ROOT = "$PREFIX$VERSION"
@@ -31,17 +30,24 @@ object ApiEndpoints {
         const val CATEGORY_ROOT = "$API_ROOT/categories"
     }
 
-    val PUBLIC = arrayOf(
-        System.H2_CONSOLE_ROOT,
-        System.ERROR_ROOT,
-        System.SWAGGER_ROOT,
-        System.DOCS_ROOT,
-        Auth.LOGIN_ROOT,
-        Auth.REFRESH_TOKEN_ROOT
-    )
+    object Product {
+        const val PRODUCT_ROOT = "$API_ROOT/products"
+    }
 
-    val PRIVATE: Map<String, Array<UserRole>> = mapOf(
-        Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
-        Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER)
-    )
+    val PUBLIC =
+        arrayOf(
+            System.H2_CONSOLE_ROOT,
+            System.ERROR_ROOT,
+            System.SWAGGER_ROOT,
+            System.DOCS_ROOT,
+            Auth.LOGIN_ROOT,
+            Auth.REFRESH_TOKEN_ROOT
+        )
+
+    val PRIVATE: Map<String, Array<UserRole>> =
+        mapOf(
+            Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
+            Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER),
+            Product.PRODUCT_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
+        )
 }
