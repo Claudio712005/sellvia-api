@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
+import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -19,7 +20,12 @@ import java.time.LocalDateTime
 @EntityListeners(AuditingEntityListener::class)
 data class CompanyEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "companies_gen")
+    @SequenceGenerator(
+        name = "companies_gen",
+        sequenceName = "companies_id_seq",
+        allocationSize = 1,
+    )
     val id: Long? = null,
     val name: String = "",
     val cnpj: String = "",
@@ -27,18 +33,15 @@ data class CompanyEntity(
     val websiteUrl: String = "",
     val isActive: Boolean = true,
     val companyUrlLogo: String = "",
-
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate
     var updatedAt: LocalDateTime? = null,
-
     @CreatedBy
-    var createdBy: String? =  null,
+    var createdBy: String? = null,
     @LastModifiedBy
     var updatedBy: String? = null,
-){
-
+) {
     @OneToMany(mappedBy = "company")
     val users: List<UserEntity> = emptyList()
 }

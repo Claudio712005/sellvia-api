@@ -6,21 +6,20 @@ import br.com.claus.sellvia.domain.enums.ProductType
 import br.com.claus.sellvia.domain.enums.ResourceStatus
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.ResourceAlreadyExistsException
-import br.com.claus.sellvia.domain.model.Product
 import br.com.claus.sellvia.domain.model.Company
+import br.com.claus.sellvia.domain.model.Product
 import br.com.claus.sellvia.domain.repository.ProductRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
+import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.Mockito.`when`
 import java.math.BigDecimal
 
 class UpdateProductUseCaseTest {
-
     private val repository = mock(ProductRepository::class.java)
     private val permissionHelperPort = mock(PermissionHelperPort::class.java)
     private val useCase = UpdateProductUseCase(repository, permissionHelperPort)
@@ -49,9 +48,10 @@ class UpdateProductUseCaseTest {
     fun `should throw IllegalArgumentException when id is invalid`() {
         val request = createRequestDTO()
 
-        val exception = assertThrows(IllegalArgumentException::class.java) {
-            useCase.execute(request, 0L)
-        }
+        val exception =
+            assertThrows(IllegalArgumentException::class.java) {
+                useCase.execute(request, 0L)
+            }
 
         assertEquals("ID do produto deve ser um número positivo.", exception.message)
     }
@@ -81,19 +81,23 @@ class UpdateProductUseCaseTest {
         }
     }
 
-    private fun createRequestDTO(companyId: Long = 10L) = ProductRequestDTO(
-        name = "Novo Nome",
-        description = "Nova Descricao",
-        price = BigDecimal("100.0"),
-        productionCost = BigDecimal("50.0"),
-        companyId = companyId,
-        sku = "SKU123",
-        stockQuantity = 10,
-        type = ProductType.PHYSICAL,
-        status = ResourceStatus.ACTIVE
-    )
+    private fun createRequestDTO(companyId: Long = 10L) =
+        ProductRequestDTO(
+            name = "Novo Nome",
+            description = "Nova Descricao",
+            price = BigDecimal("100.0"),
+            productionCost = BigDecimal("50.0"),
+            companyId = companyId,
+            sku = "SKU123",
+            stockQuantity = 10,
+            type = ProductType.PHYSICAL,
+            status = ResourceStatus.ACTIVE
+        )
 
-    private fun createDomainProduct(id: Long, companyId: Long) = Product(
+    private fun createDomainProduct(
+        id: Long,
+        companyId: Long,
+    ) = Product(
         id = id,
         name = "Nome Antigo",
         description = "Descricao Antiga",

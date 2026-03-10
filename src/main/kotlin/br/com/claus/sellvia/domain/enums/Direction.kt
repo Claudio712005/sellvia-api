@@ -1,7 +1,9 @@
 package br.com.claus.sellvia.domain.enums
 
 enum class Direction {
-    ASC, DESC;
+    ASC,
+    DESC,
+    ;
 
     companion object {
         fun fromString(value: String): Direction {

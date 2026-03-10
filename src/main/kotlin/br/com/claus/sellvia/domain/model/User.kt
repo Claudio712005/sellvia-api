@@ -13,9 +13,8 @@ data class User(
     val password: String = "",
     val createdAt: LocalDateTime? = null,
     val updatedAt: LocalDateTime? = null,
-    val createdBy: String? =  null,
+    val createdBy: String? = null,
     val updatedBy: String? = null,
     val role: UserRole,
-
     var company: Company? = null,
 )

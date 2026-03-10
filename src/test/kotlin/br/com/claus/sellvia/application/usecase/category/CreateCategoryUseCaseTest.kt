@@ -2,21 +2,17 @@ package br.com.claus.sellvia.application.usecase.category
 
 import br.com.claus.sellvia.application.dto.request.CategoryRequestDTO
 import br.com.claus.sellvia.application.port.PermissionHelperPort
-import br.com.claus.sellvia.application.port.TokenServicePort
-import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.EntitiesConflictException
 import br.com.claus.sellvia.domain.exception.InvalidFieldException
-import br.com.claus.sellvia.domain.exception.WithoutPermissionException
 import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.repository.CategoryRepository
 import io.mockk.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 class CreateCategoryUseCaseTest {
-
     private val repository = mockk<CategoryRepository>()
     private val permissionHelperPort = mockk<PermissionHelperPort>()
 
@@ -24,10 +20,11 @@ class CreateCategoryUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        useCase = CreateCategoryUseCase(
-            repository = repository,
-            permissionServiceHelperPort = permissionHelperPort
-        )
+        useCase =
+            CreateCategoryUseCase(
+                repository = repository,
+                permissionServiceHelperPort = permissionHelperPort
+            )
     }
 
     @Test
@@ -55,11 +52,12 @@ class CreateCategoryUseCaseTest {
 
     @Test
     fun `should throw InvalidFieldException when request validation fails`() {
-        val request = CategoryRequestDTO(
-            name = null,
-            description = "Description",
-            companyId = 1L
-        )
+        val request =
+            CategoryRequestDTO(
+                name = null,
+                description = "Description",
+                companyId = 1L
+            )
 
         assertThrows<InvalidFieldException> {
             useCase.execute(request)
@@ -78,9 +76,10 @@ class CreateCategoryUseCaseTest {
             repository.findByNameAndCompanyId(request.name!!, request.companyId!!)
         } returns mockk()
 
-        val exception = assertThrows<EntitiesConflictException> {
-            useCase.execute(request)
-        }
+        val exception =
+            assertThrows<EntitiesConflictException> {
+                useCase.execute(request)
+            }
 
         assertEquals(
             "Já existe uma categoria com o nome '${request.name}' para esta empresa.",
@@ -92,9 +91,10 @@ class CreateCategoryUseCaseTest {
         }
     }
 
-    private fun createValidRequest() = CategoryRequestDTO(
-        name = "Category Test",
-        description = "Category description",
-        companyId = 1L
-    )
+    private fun createValidRequest() =
+        CategoryRequestDTO(
+            name = "Category Test",
+            description = "Category description",
+            companyId = 1L
+        )
 }

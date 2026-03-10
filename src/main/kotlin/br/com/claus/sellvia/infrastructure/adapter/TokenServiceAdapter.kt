@@ -6,8 +6,6 @@ import br.com.claus.sellvia.domain.model.User
 import br.com.claus.sellvia.infrastructure.persistence.model.UserEntity
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import jakarta.servlet.http.HttpServletRequest
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -19,7 +17,6 @@ class TokenServiceAdapter(
     @Value("\${jwt.token-expiration}") private val tokenExpiration: Long = 3600000,
     @Value("\${jwt.refresh-token-expiration}") private val tokenRefreshExpiration: Long = tokenExpiration,
 ) : TokenServicePort {
-
     private val algorithm = Algorithm.HMAC256(secret)
 
     override fun generateToken(user: User) = createToken(user, TokenType.MAIN_TOKEN, tokenExpiration)
@@ -32,14 +29,18 @@ class TokenServiceAdapter(
 
     override fun getClaimFromToken(claim: String): String? {
         val principal = SecurityContextHolder.getContext().authentication?.principal as? UserEntity
-        return when(claim) {
+        return when (claim) {
             "companyId" -> principal?.company?.id.toString()
             "role" -> principal?.role?.name
             else -> null
         }
     }
 
-    private fun createToken(user: User, type: TokenType, expiration: Long): String {
+    private fun createToken(
+        user: User,
+        type: TokenType,
+        expiration: Long,
+    ): String {
         return JWT.create()
             .withSubject(user.username)
             .withClaim("role", user.role.name)
@@ -49,7 +50,10 @@ class TokenServiceAdapter(
             .sign(algorithm)
     }
 
-    private fun validate(token: String, expectedType: TokenType): String? {
+    private fun validate(
+        token: String,
+        expectedType: TokenType,
+    ): String? {
         return try {
             val verifier = JWT.require(algorithm).build()
             val decodedJWT = verifier.verify(token)
@@ -61,5 +65,4 @@ class TokenServiceAdapter(
             null
         }
     }
-
 }

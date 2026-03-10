@@ -19,12 +19,21 @@ data class ProductResponseDTO(
     override val createdBy: String? = null,
     override val updatedBy: String? = null,
     override val category: CategoryResponseDTO? = null,
-
     val sku: String,
     val stockQuantity: Int? = null,
     val type: ProductType,
-
-    ) : SaleableItemResponseDTO(
-    id, name, description, price, productionCost, companyId, status, imageUrl,
-    category, createdAt, updatedAt, createdBy, updatedBy
-)
+) : SaleableItemResponseDTO(
+        id,
+        name,
+        description,
+        price,
+        productionCost,
+        companyId,
+        status,
+        imageUrl,
+        category,
+        createdAt,
+        updatedAt,
+        createdBy,
+        updatedBy
+    )

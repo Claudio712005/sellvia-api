@@ -6,9 +6,9 @@ import br.com.claus.sellvia.application.usecase.category.CreateCategoryUseCase
 import br.com.claus.sellvia.application.usecase.category.DeleteCategoryUseCase
 import br.com.claus.sellvia.application.usecase.category.FindPageableCategoryUseCase
 import br.com.claus.sellvia.application.usecase.category.UpdateCategoryUseCase
-import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
 import br.com.claus.sellvia.domain.enums.Direction
 import br.com.claus.sellvia.domain.model.Category
+import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
 import br.com.claus.sellvia.domain.pagination.Pagination
 import br.com.claus.sellvia.infrastructure.config.ApiEndpoints
 import br.com.claus.sellvia.infrastructure.persistence.mapper.toEntity
@@ -30,13 +30,12 @@ class CategoryController(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val findByPageableCategoryUseCase: FindPageableCategoryUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
-    private val updateCategoryUseCase: UpdateCategoryUseCase
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
 ) {
-
     @PostMapping
     fun createCategory(
         @RequestBody
-        requestDTO: CategoryRequestDTO
+        requestDTO: CategoryRequestDTO,
     ): ResponseEntity<Any> {
         Category().toEntity()
         createCategoryUseCase.execute(requestDTO)
@@ -51,21 +50,24 @@ class CategoryController(
         @RequestParam(required = false, defaultValue = "ASC") sortDirection: String,
         @RequestParam(required = false, defaultValue = "0") companyId: Long,
     ): ResponseEntity<Pagination<CategoryResponseDTO>> {
-        val searchQuery = CategorySearchQuery(
-            page = page,
-            perPage = pageSize,
-            terms = "",
-            sort = sortBy,
-            direction = Direction.valueOf(sortDirection),
-            companyId = companyId
-        )
+        val searchQuery =
+            CategorySearchQuery(
+                page = page,
+                perPage = pageSize,
+                terms = "",
+                sort = sortBy,
+                direction = Direction.valueOf(sortDirection),
+                companyId = companyId
+            )
 
         return ResponseEntity.ok()
-            .body(findByPageableCategoryUseCase.execute(searchQuery));
+            .body(findByPageableCategoryUseCase.execute(searchQuery))
     }
 
     @DeleteMapping("{id}")
-    fun deleteCategory(@PathVariable(value = "id") categoryId: Long): ResponseEntity<Any> {
+    fun deleteCategory(
+        @PathVariable(value = "id") categoryId: Long,
+    ): ResponseEntity<Any> {
         deleteCategoryUseCase.execute(categoryId)
         return ResponseEntity.noContent().build()
     }
@@ -73,8 +75,9 @@ class CategoryController(
     @PutMapping("{id}")
     fun updateCategory(
         @PathVariable(value = "id") categoryId: Long,
-        @RequestBody requestDTO: CategoryRequestDTO
-    ): ResponseEntity<CategoryResponseDTO> = ResponseEntity.ok(
-        updateCategoryUseCase.execute(categoryId, requestDTO)
-    )
+        @RequestBody requestDTO: CategoryRequestDTO,
+    ): ResponseEntity<CategoryResponseDTO> =
+        ResponseEntity.ok(
+            updateCategoryUseCase.execute(categoryId, requestDTO)
+        )
 }

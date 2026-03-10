@@ -9,25 +9,23 @@ import br.com.claus.sellvia.domain.exception.WithoutPermissionException
 import br.com.claus.sellvia.domain.model.ErrorView
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.server.ResponseStatusException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
-
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleValidationError(
         exception: MethodArgumentNotValidException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         val errorMessage = HashMap<String, String?>()
-        exception.bindingResult.fieldErrors.forEach{
-                e -> errorMessage.put(e.field, e.defaultMessage)
+        exception.bindingResult.fieldErrors.forEach {
+                e ->
+            errorMessage.put(e.field, e.defaultMessage)
         }
         return ErrorView(
             status = HttpStatus.BAD_REQUEST.value(),
@@ -41,7 +39,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleNotFound(
         exception: NotFoundResouceException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.NOT_FOUND.value(),
@@ -55,7 +53,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     fun handleNotFound(
         exception: InvalidCredentialsException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.UNAUTHORIZED.value(),
@@ -69,7 +67,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     fun handleInvalidToken(
         exception: InvalidTokenException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.UNAUTHORIZED.value(),
@@ -83,7 +81,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleServerError(
         exception: InvalidFieldException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.BAD_REQUEST.value(),
@@ -97,7 +95,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     fun handleServerError(
         exception: EntitiesConflictException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.CONFLICT.value(),
@@ -106,12 +104,12 @@ class GlobalExceptionHandler {
             path = request.servletPath
         )
     }
-          
+
     @ExceptionHandler(WithoutPermissionException::class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     fun handleServerError(
         exception: WithoutPermissionException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.FORBIDDEN.value(),
@@ -125,7 +123,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleServerError(
         exception: Exception,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -139,7 +137,7 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleServerError(
         exception: IllegalArgumentException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ErrorView {
         return ErrorView(
             status = HttpStatus.BAD_REQUEST.value(),
@@ -148,7 +146,6 @@ class GlobalExceptionHandler {
             path = request.servletPath
         )
     }
-
 }
 
 data class ErrorResponse(val message: String?)

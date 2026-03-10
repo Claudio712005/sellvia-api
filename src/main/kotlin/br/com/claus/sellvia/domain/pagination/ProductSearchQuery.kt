@@ -21,11 +21,11 @@ class ProductSearchQuery(
     val createdBy: String? = null,
     val updatedBy: String? = null,
     val id: Long? = null,
-    val sku: String? = null
+    val sku: String? = null,
 ) : SearchQuery(
-    page,
-    perPage,
-    "",
-    sort,
-    direction
-)
+        page,
+        perPage,
+        "",
+        sort,
+        direction
+    )

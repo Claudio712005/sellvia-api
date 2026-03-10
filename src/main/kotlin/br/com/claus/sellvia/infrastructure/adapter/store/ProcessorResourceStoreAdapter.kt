@@ -10,16 +10,14 @@ import java.util.UUID
 @Component
 class ProcessorResourceStoreAdapter(
     val optimizer: ImageProcessorPort,
-    val sysStore: SystemStoragePort
-): ProcessorResourceStorePort {
-
+    val sysStore: SystemStoragePort,
+) : ProcessorResourceStorePort {
     override fun saveOptimizedImage(
         imageBytes: ByteArray,
         companyId: Long,
         folderDestination: FolderDestination,
-        resourceId: Long
+        resourceId: Long,
     ): String {
-
         val optimizedImage = optimizer.optimize(imageBytes)
 
         val path = folderDestination.buildPath(companyId, resourceId)
@@ -31,5 +29,4 @@ class ProcessorResourceStoreAdapter(
             contentType = "image/webp",
         )
     }
-
 }

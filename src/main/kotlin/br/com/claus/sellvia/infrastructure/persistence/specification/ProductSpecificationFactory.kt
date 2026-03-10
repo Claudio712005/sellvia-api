@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification
 import java.math.BigDecimal
 
 object ProductSpecificationFactory {
-
     fun build(query: ProductSearchQuery): Specification<ProductEntity> {
         return Specification { root, _, cb ->
             val predicates = mutableListOf<Predicate>()

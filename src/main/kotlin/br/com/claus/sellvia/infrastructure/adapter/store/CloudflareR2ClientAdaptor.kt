@@ -1,7 +1,6 @@
 package br.com.claus.sellvia.infrastructure.adapter.store
 
 import br.com.claus.sellvia.application.port.store.SystemStoragePort
-import br.com.claus.sellvia.domain.enums.FolderDestination
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -13,9 +12,8 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest
 @Component
 class CloudflareR2ClientAdaptor(
     private val s3Client: S3Client,
-    @Value("\${cloudflare-r2.bucket-name}") private val BUCKET_NAME: String
+    @Value("\${cloudflare-r2.bucket-name}") private val BUCKET_NAME: String,
 ) : SystemStoragePort {
-
     companion object {
         private val LOGGER = LoggerFactory.getLogger(CloudflareR2ClientAdaptor::class.java)
     }
@@ -29,12 +27,13 @@ class CloudflareR2ClientAdaptor(
         val objectKey = "${path.trim('/')}/$filename"
 
         return executeS3Operation("UPLOAD", objectKey, BUCKET_NAME) {
-            val putRequest = PutObjectRequest.builder()
-                .bucket(BUCKET_NAME)
-                .key(objectKey)
-                .contentType(contentType)
-                .contentLength(file.size.toLong())
-                .build()
+            val putRequest =
+                PutObjectRequest.builder()
+                    .bucket(BUCKET_NAME)
+                    .key(objectKey)
+                    .contentType(contentType)
+                    .contentLength(file.size.toLong())
+                    .build()
 
             s3Client.putObject(putRequest, RequestBody.fromBytes(file))
             objectKey
@@ -43,10 +42,11 @@ class CloudflareR2ClientAdaptor(
 
     override fun delete(key: String) {
         executeS3Operation("DELETE", key, BUCKET_NAME) {
-            val deleteRequest = DeleteObjectRequest.builder()
-                .bucket(BUCKET_NAME)
-                .key(key)
-                .build()
+            val deleteRequest =
+                DeleteObjectRequest.builder()
+                    .bucket(BUCKET_NAME)
+                    .key(key)
+                    .build()
 
             s3Client.deleteObject(deleteRequest)
         }
@@ -56,7 +56,7 @@ class CloudflareR2ClientAdaptor(
         action: String,
         key: String,
         bucket: String,
-        operation: () -> T
+        operation: () -> T,
     ): T {
         LOGGER.info("Starting R2 operation: [{}] | Key: [{}] | Bucket: [{}]", action, key, bucket)
 
@@ -67,7 +67,11 @@ class CloudflareR2ClientAdaptor(
         } catch (e: Exception) {
             LOGGER.error(
                 "Failed R2 operation: [{}] | Key: [{}] | Bucket: [{}] | Error: {}",
-                action, key, bucket, e.message, e
+                action,
+                key,
+                bucket,
+                e.message,
+                e
             )
             throw e
         }

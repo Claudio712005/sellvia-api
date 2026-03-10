@@ -8,10 +8,11 @@ class CategorySearchQuery(
     terms: String,
     sort: String,
     direction: Direction,
-    var companyId: Long? = null
-): SearchQuery(
-    page,
-    perPage,
-    terms,
-    sort,
-    direction)
+    var companyId: Long? = null,
+) : SearchQuery(
+        page,
+        perPage,
+        terms,
+        sort,
+        direction
+    )

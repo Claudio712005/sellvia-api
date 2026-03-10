@@ -14,11 +14,10 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import kotlin.test.Test
 
 class LoginUseCaseTest {
-
     private val userRepository = mockk<UserRepository>()
     private val passwordEncoder = mockk<PasswordEncoderPort>()
     private val tokenService = mockk<TokenServicePort>()
@@ -31,20 +30,21 @@ class LoginUseCaseTest {
         val rawPassword = "password123"
         val hashSimulado = "hash_encriptado_pelo_encoder"
 
-        val user = User(
-            username = "claus",
-            password = hashSimulado,
-            id = 1L,
-            name = "clau",
-            cpf = "123456789",
-            isActive = true,
-            role = UserRole.SYSTEM_ADMIN,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now(),
-            createdBy = "system",
-            updatedBy = "system",
-            email = "email@gmail.com"
-        )
+        val user =
+            User(
+                username = "claus",
+                password = hashSimulado,
+                id = 1L,
+                name = "clau",
+                cpf = "123456789",
+                isActive = true,
+                role = UserRole.SYSTEM_ADMIN,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now(),
+                createdBy = "system",
+                updatedBy = "system",
+                email = "email@gmail.com"
+            )
 
         every { userRepository.findByUsername("claus") } returns user
 
@@ -73,7 +73,6 @@ class LoginUseCaseTest {
 
     @Test
     fun `should throw exception when password is blank`() {
-
         shouldThrow<InvalidFieldException> {
             loginUseCase.execute(LoginRequestDTO("    ", "     "))
         }

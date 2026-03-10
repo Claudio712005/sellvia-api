@@ -1,6 +1,5 @@
 package br.com.claus.sellvia.infrastructure.persistence.mapper
 
-import br.com.claus.sellvia.application.dto.response.CompanyResponseDTO
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.infrastructure.persistence.model.CompanyEntity
 

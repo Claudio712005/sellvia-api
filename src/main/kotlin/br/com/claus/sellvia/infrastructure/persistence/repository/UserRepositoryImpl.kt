@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserRepositoryImpl(
-    private val springDataRepository: SpringDataUserRepository
-): UserRepository {
-
+    private val springDataRepository: SpringDataUserRepository,
+) : UserRepository {
     override fun findByUsername(username: String): User? {
         return springDataRepository.findByUsername(username)?.toModel()
     }
@@ -33,5 +32,4 @@ class UserRepositoryImpl(
     override fun existsByUsername(username: String): Boolean {
         return springDataRepository.existsByUsername(username)
     }
-
 }

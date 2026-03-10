@@ -12,11 +12,13 @@ import br.com.claus.sellvia.domain.repository.ProductRepository
 @UseCase
 class UpdateProductUseCase(
     private val repository: ProductRepository,
-    private val permissionServicePort: PermissionHelperPort
+    private val permissionServicePort: PermissionHelperPort,
 ) {
-
-    fun execute(requestDTO: ProductRequestDTO, id: Long): ProductResponseDTO {
-        if(id <= 0) {
+    fun execute(
+        requestDTO: ProductRequestDTO,
+        id: Long,
+    ): ProductResponseDTO {
+        if (id <= 0) {
             throw IllegalArgumentException("ID do produto deve ser um número positivo.")
         }
 
@@ -26,21 +28,27 @@ class UpdateProductUseCase(
 
         val product = repository.findById(id) ?: throw NotFoundResouceException("Produto com ID $id não encontrado.")
 
-        val updatedProduct = product.copy(
-            name = requestDTO.name.trim(),
-            description = requestDTO.description.trim(),
-            price = requestDTO.price,
-            productionCost = requestDTO.productionCost,
-            status = requestDTO.status,
-            sku = requestDTO.sku.trim().uppercase(),
-            stockQuantity = requestDTO.stockQuantity,
-            type = requestDTO.type,
-        )
+        val updatedProduct =
+            product.copy(
+                name = requestDTO.name.trim(),
+                description = requestDTO.description.trim(),
+                price = requestDTO.price,
+                productionCost = requestDTO.productionCost,
+                status = requestDTO.status,
+                sku = requestDTO.sku.trim().uppercase(),
+                stockQuantity = requestDTO.stockQuantity,
+                type = requestDTO.type,
+            )
 
         return repository.update(updatedProduct).toResponseDTO()
     }
 
-    private fun validateBusinessRules(sku: String, name: String, companyId: Long, id: Long) {
+    private fun validateBusinessRules(
+        sku: String,
+        name: String,
+        companyId: Long,
+        id: Long,
+    ) {
         permissionServicePort.verifyUserCanDoesThisAction(companyId)
 
         if (repository.existsBySkuAndCompanyIdAndNotId(sku, companyId, id)) {

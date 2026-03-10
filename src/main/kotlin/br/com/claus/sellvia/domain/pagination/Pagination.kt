@@ -5,7 +5,7 @@ data class Pagination<T>(
     val currentPage: Int,
     val perPage: Int,
     val totalItems: Long,
-    val totalPages: Int
+    val totalPages: Int,
 ) {
     fun <R> map(mapper: (T) -> R): Pagination<R> {
         return Pagination(
