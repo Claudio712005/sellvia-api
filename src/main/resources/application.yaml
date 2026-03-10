@@ -36,10 +36,10 @@ jwt:
   refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}
 
 cloudflare-r2:
-  account-id: ${CLOUDFLARE_R2_ACCOUNT_ID:7625cb7491ee3485c49e35fb40762ba2}
-  secret-key: ${CLOUDFLARE_R2_ACCESS_KEY:2a9008ccdc9c783c9fd43b1c0394e6aa81f28b72cf42ea0f71ac8c18a77137b2}
-  access-key: ${CLOUDFLARE_R2_SECRET_KEY:23596941a23d2dbee8e768471305bd86}
-  bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME:sellvia}
+  account-id: ${CLOUDFLARE_R2_ACCOUNT_ID}
+  secret-key: ${CLOUDFLARE_R2_ACCESS_KEY}
+  access-key: ${CLOUDFLARE_R2_SECRET_KEY}
+  bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME}
 
 logging:
   level:

@@ -9,8 +9,52 @@ on:
       - 'v*'
 
 jobs:
-  docker:
+
+  validate-migrations:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: sellvia_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Wait for PostgreSQL
+        run: sleep 10
+
+      - name: Validate Flyway migrations
+        run: ./mvnw flyway:migrate
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: sellvia_test
+          FLYWAY_USER: postgres
+          FLYWAY_PASSWORD: postgres
+
+
+  docker:
+    needs: validate-migrations
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
