@@ -11,6 +11,14 @@ plugins {
     jacoco
 }
 
+flyway {
+    url = "jdbc:postgresql://${System.getenv("DB_HOST")}:${System.getenv("DB_PORT")}/${System.getenv("DB_NAME")}"
+    user = System.getenv("FLYWAY_USER")
+    password = System.getenv("FLYWAY_PASSWORD")
+    locations = arrayOf("classpath:db/migration")
+    baselineOnMigrate = true
+}
+
 allOpen {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.MappedSuperclass")
