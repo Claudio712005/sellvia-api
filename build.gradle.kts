@@ -86,6 +86,10 @@ dependencies {
     testImplementation("io.mockk:mockk:1.14.9")
     testImplementation("io.kotest:kotest-assertions-core:5.8.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
+    implementation("org.postgresql:postgresql")
 }
 
 kotlin {
