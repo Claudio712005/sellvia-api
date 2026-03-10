@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -22,7 +23,12 @@ import java.time.LocalDateTime
 @EntityListeners(AuditingEntityListener::class)
 data class CategoryEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_gen")
+    @SequenceGenerator(
+        name = "categories_gen",
+        sequenceName = "categories_id_seq",
+        allocationSize = 1
+    )
     val id: Long? = null,
     @Column(nullable = false)
     val name: String = "",

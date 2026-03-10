@@ -18,7 +18,6 @@ abstract class SaleableItemRequestDTO(
         require(!name.isNullOrBlank()) { "Nome não pode ser vazio." }
         require(price >= BigDecimal.ZERO) { "Preço deve ser maior ou igual a zero." }
         require(productionCost >= BigDecimal.ZERO) { "Custo de produção deve ser maior ou igual a zero." }
-        require(companyId != null) { "ID da empresa é obrigatório." }
         require(description.isNotBlank()) { "Descrição não pode ser vazia." }
         require(categoryId == null || categoryId!! > 0) { "ID da categoria deve ser maior que zero." }
     }

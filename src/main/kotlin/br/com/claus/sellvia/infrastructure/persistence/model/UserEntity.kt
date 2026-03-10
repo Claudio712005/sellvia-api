@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -28,7 +29,12 @@ import java.time.LocalDateTime
 @EntityListeners(AuditingEntityListener::class)
 class UserEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_gen")
+    @SequenceGenerator(
+        name = "users_gen",
+        sequenceName = "users_id_seq",
+        allocationSize = 1,
+    )
     var id: Long = 0,
     var name: String = "",
     @Column(unique = true)

@@ -23,7 +23,7 @@ class LoginUseCase(
             userRepository.findByUsername(request.username!!)
                 ?: throw InvalidCredentialsException("Usuário não encontrado ou credencias inválidas.")
 
-        if (!passwordEncoder.matches(request.password!!, user.password!!)) {
+        if (!passwordEncoder.matches(request.password!!, user.password)) {
             throw InvalidCredentialsException("Usuário não encontrado ou credencias inválida3.")
         }
 

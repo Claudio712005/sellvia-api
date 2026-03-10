@@ -36,7 +36,7 @@ class UpdateCategoryUseCase(
             throw IllegalArgumentException("Já existe uma categoria com o nome '${request.name}' para esta empresa")
         }
 
-        category.name = request.name!!
+        category.name = request.name
         category.description = request.description!!
 
         return repository.save(category).toResponseDTO()

@@ -13,6 +13,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Inheritance
 import jakarta.persistence.InheritanceType
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -28,7 +29,13 @@ import java.time.LocalDateTime
 @DiscriminatorColumn(name = "item_type")
 @EntityListeners(AuditingEntityListener::class)
 abstract class SaleableItemEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "saleable_items_gen")
+    @SequenceGenerator(
+        name = "saleable_items_gen",
+        sequenceName = "saleable_items_id_seq",
+        allocationSize = 1
+    )
     val id: Long? = null,
     val name: String,
     val description: String,
