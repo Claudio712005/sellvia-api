@@ -5,6 +5,8 @@ on:
     workflows: ["CI - Build and Tests"]
     types:
       - completed
+    branches:
+      - homolog
 
 jobs:
 
@@ -16,6 +18,8 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Docker meta
         id: meta
@@ -23,9 +27,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_HUB_USERNAME }}/sellvia
           tags: |
-            type=raw,value=hml,enable=${{ github.event.workflow_run.head_branch == 'homolog' }}
-            type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'main' }}
-            type=ref,event=tag
+            type=raw,value=hml
             type=ref,event=branch
 
       - name: Login to Docker Hub
