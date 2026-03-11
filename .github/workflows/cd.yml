@@ -1,8 +1,8 @@
-name: CD - Deploy Homolog
+name: cd-deploy
 
 on:
   workflow_run:
-    workflows: ["CI - Build and Tests"]
+    workflows: ["ci-build-and-tests"]
     types:
       - completed
 
