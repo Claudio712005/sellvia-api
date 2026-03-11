@@ -1,4 +1,4 @@
-name: CD - Build and Push Docker Image
+name: CD - Deploy Homolog
 
 on:
   workflow_run:
@@ -7,9 +7,8 @@ on:
       - completed
 
 jobs:
-
-  docker:
-    if: >
+  deploy:
+    if: |
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'homolog'
     runs-on: ubuntu-latest
