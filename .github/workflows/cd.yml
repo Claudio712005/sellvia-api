@@ -5,12 +5,12 @@ on:
     workflows: ["ci-build-and-tests"]
     types:
       - completed
+    branches:
+      - homolog
 
 jobs:
   deploy:
-    if: |
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'homolog'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
