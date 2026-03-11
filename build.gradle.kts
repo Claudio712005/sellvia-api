@@ -109,3 +109,11 @@ apply(from = "jacoco-report.gradle.kts")
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+val jacocoScript = rootProject.file("jacoco-report.gradle.kts")
+
+if (jacocoScript.exists()) {
+    apply(from = jacocoScript)
+} else {
+    logger.lifecycle("Jacoco report script not found, skipping custom coverage configuration.")
+}

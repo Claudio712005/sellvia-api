@@ -1,4 +1,4 @@
-name: ci-build-and-tests
+name: ci
 
 on:
   push:
@@ -99,3 +99,22 @@ jobs:
           DB_NAME: sellvia_test
           FLYWAY_USER: postgres
           FLYWAY_PASSWORD: postgres
+
+
+  trigger-cd:
+    name: Trigger Docker Publish
+    needs: validate-migrations
+    if: github.ref == 'refs/heads/homolog' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger docker publish workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'docker-publish.yml',
+              ref: 'homolog'
+            })

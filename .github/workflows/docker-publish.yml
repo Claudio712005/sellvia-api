@@ -1,12 +1,7 @@
 name: docker-publish
 
 on:
-  push:
-    branches:
-      - main
-      - homolog
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -16,8 +11,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Docker meta
         id: meta
