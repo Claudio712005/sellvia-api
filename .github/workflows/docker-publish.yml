@@ -1,12 +1,12 @@
 name: docker-publish
 
 on:
-  workflow_run:
-    workflows: ["ci-build-and-tests"]
-    types:
-      - completed
+  push:
     branches:
+      - main
       - homolog
+    tags:
+      - 'v*'
 
 jobs:
   deploy:
