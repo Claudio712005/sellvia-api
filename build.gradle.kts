@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.flywaydb:flyway-database-postgresql:11.3.2")
+        classpath("org.postgresql:postgresql:42.7.4")
+    }
+}
+
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
@@ -15,6 +25,7 @@ flyway {
     url = "jdbc:postgresql://${System.getenv("DB_HOST")}:${System.getenv("DB_PORT")}/${System.getenv("DB_NAME")}"
     user = System.getenv("FLYWAY_USER")
     password = System.getenv("FLYWAY_PASSWORD")
+    driver = "org.postgresql.Driver"
     locations = arrayOf("classpath:db/migration")
     baselineOnMigrate = true
 }
