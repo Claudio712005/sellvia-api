@@ -16,7 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "companies")
+@Table(name = "companies", schema = "sellvia")
 @EntityListeners(AuditingEntityListener::class)
 data class CompanyEntity(
     @Id

@@ -25,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "sellvia")
 @EntityListeners(AuditingEntityListener::class)
 class UserEntity(
     @Id

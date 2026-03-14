@@ -99,6 +99,8 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core:11.3.2")
     implementation("org.flywaydb:flyway-database-postgresql:11.3.2")
+
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 }
 
 extra["flyway.version"] = "11.3.2"

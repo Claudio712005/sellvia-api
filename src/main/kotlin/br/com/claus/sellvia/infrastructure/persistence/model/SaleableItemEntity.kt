@@ -24,7 +24,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "saleable_items")
+@Table(name = "saleable_items", schema = "sellvia")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "item_type")
 @EntityListeners(AuditingEntityListener::class)
