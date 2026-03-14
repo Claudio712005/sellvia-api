@@ -88,7 +88,6 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core:11.3.2")
     implementation("org.flywaydb:flyway-database-postgresql:11.3.2")
-
 }
 
 extra["flyway.version"] = "11.3.2"
