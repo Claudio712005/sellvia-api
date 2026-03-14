@@ -96,8 +96,9 @@ jobs:
           done
 
       - name: Validate Flyway migrations
-        run: ./gradlew flywayValidate
+        run: ./gradlew flywayMigrate flywayValidate
         env:
+          MAIN_APP_SCHEMA: sellvia
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: sellvia_test

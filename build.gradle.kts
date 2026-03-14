@@ -66,7 +66,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.h2database:h2")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.postgresql:postgresql:42.7.4")
+    runtimeOnly("org.postgresql:postgresql:42.7.4")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -87,6 +88,7 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core:11.3.2")
     implementation("org.flywaydb:flyway-database-postgresql:11.3.2")
+
 }
 
 extra["flyway.version"] = "11.3.2"
