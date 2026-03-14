@@ -4,17 +4,19 @@ spring:
     profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:local_sellvia_db}
-    username: ${DB_USERNAME:adm_local}
-    password: ${DB_PASSWORD:adm_local}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:claus}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   flyway:
     enabled: true
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:local_sellvia_db}
-    user: ${FLYWAY_USER:postgres}
-    password: ${FLYWAY_PASSWORD:Senha123}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:claus}
+    user: ${FLYWAY_USER}
+    password: ${FLYWAY_PASSWORD}
     locations: classpath:db/migration
     baseline-on-migrate: true
+    schemas:
+      - ${MAIN_APP_SCHEMA:sellvia}
 
   sql:
     init:
@@ -36,10 +38,10 @@ jwt:
   refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}
 
 cloudflare-r2:
-  account-id: ${CLOUDFLARE_R2_ACCOUNT_ID}
-  secret-key: ${CLOUDFLARE_R2_ACCESS_KEY}
-  access-key: ${CLOUDFLARE_R2_SECRET_KEY}
-  bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME}
+  account-id: ${CLOUDFLARE_R2_ACCOUNT_ID:dummy}
+  secret-key: ${CLOUDFLARE_R2_ACCESS_KEY:dummy}
+  access-key: ${CLOUDFLARE_R2_SECRET_KEY:dummy}
+  bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME:dummy}
 
 logging:
   level:
