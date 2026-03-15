@@ -44,6 +44,9 @@ cloudflare-r2:
   access-key: ${CLOUDFLARE_R2_SECRET_KEY}
   bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME}
 
+image-service:
+  base-url: ${IMAGE_SERVICE_BASE_URL}
+
 logging:
   level:
     software.amazon.awssdk: DEBUG
