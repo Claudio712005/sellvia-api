@@ -23,7 +23,7 @@ data class CompanyEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "companies_gen")
     @SequenceGenerator(
         name = "companies_gen",
-        sequenceName = "companies_id_seq",
+        sequenceName = "sellvia.companies_id_seq",
         allocationSize = 1,
     )
     val id: Long? = null,

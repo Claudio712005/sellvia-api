@@ -32,7 +32,7 @@ class UserEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_gen")
     @SequenceGenerator(
         name = "users_gen",
-        sequenceName = "users_id_seq",
+        sequenceName = "sellvia.users_id_seq",
         allocationSize = 1,
     )
     var id: Long = 0,

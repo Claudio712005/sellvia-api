@@ -2,6 +2,7 @@ package br.com.claus.sellvia.infrastructure.persistence.model
 
 import br.com.claus.sellvia.domain.enums.ResourceStatus
 import jakarta.persistence.DiscriminatorColumn
+import jakarta.persistence.DiscriminatorType
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.EnumType
@@ -26,14 +27,17 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "saleable_items", schema = "sellvia")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "item_type")
+@DiscriminatorColumn(
+    name = "item_type",
+    discriminatorType = DiscriminatorType.STRING
+)
 @EntityListeners(AuditingEntityListener::class)
 abstract class SaleableItemEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "saleable_items_gen")
     @SequenceGenerator(
         name = "saleable_items_gen",
-        sequenceName = "saleable_items_id_seq",
+        sequenceName = "sellvia.saleable_items_id_seq",
         allocationSize = 1
     )
     val id: Long? = null,

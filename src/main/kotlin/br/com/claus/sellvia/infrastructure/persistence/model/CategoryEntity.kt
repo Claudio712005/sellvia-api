@@ -26,14 +26,14 @@ data class CategoryEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_gen")
     @SequenceGenerator(
         name = "categories_gen",
-        sequenceName = "categories_id_seq",
+        sequenceName = "sellvia.categories_id_seq",
         allocationSize = 1
     )
     val id: Long? = null,
     @Column(nullable = false)
-    val name: String = "",
+    val name: String? = "",
     @Column(nullable = false)
-    val description: String = "",
+    val description: String? = "",
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate
