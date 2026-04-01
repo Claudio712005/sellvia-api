@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Inheritance
 import jakarta.persistence.InheritanceType
+import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
@@ -49,6 +50,7 @@ abstract class SaleableItemEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     val company: CompanyEntity,
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = true)
     val category: CategoryEntity? = null,
     @Enumerated(EnumType.STRING)
     val status: ResourceStatus,
