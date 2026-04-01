@@ -16,14 +16,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "companies")
+@Table(name = "companies", schema = "sellvia")
 @EntityListeners(AuditingEntityListener::class)
 data class CompanyEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "companies_gen")
     @SequenceGenerator(
         name = "companies_gen",
-        sequenceName = "companies_id_seq",
+        sequenceName = "sellvia.companies_id_seq",
         allocationSize = 1,
     )
     val id: Long? = null,

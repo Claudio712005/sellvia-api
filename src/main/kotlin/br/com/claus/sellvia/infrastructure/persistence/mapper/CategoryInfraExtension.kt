@@ -7,8 +7,8 @@ import br.com.claus.sellvia.infrastructure.persistence.model.CompanyEntity
 fun Category.toEntity(): CategoryEntity {
     return CategoryEntity(
         id = this.id,
-        name = this.name!!,
-        description = this.description!!,
+        name = this.name,
+        description = this.description,
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
         createdBy = this.createdBy,

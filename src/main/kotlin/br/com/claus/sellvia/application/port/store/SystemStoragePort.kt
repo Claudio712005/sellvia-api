@@ -9,4 +9,6 @@ interface SystemStoragePort {
     ): String
 
     fun delete(key: String)
+
+    fun buildFileUrl(key: String?): String
 }

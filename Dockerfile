@@ -5,12 +5,14 @@ COPY gradlew .
 COPY gradle gradle
 COPY build.gradle.kts .
 COPY settings.gradle.kts .
+COPY jacoco-report.gradle.kts .
 
 RUN chmod +x gradlew
-RUN ./gradlew dependencies
+RUN ./gradlew --no-daemon dependencies
 
-COPY src src
-RUN ./gradlew bootJar -x test
+COPY . .
+
+RUN ./gradlew --no-daemon bootJar -x test
 
 FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app

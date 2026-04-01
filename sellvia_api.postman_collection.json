@@ -1,0 +1,548 @@
+{
+  "info": {
+    "_postman_id": "d5de544f-fd94-4677-88ea-9ac64513cb08",
+    "name": "Sellvia",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30809359"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Refresh token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZV91c2VyIiwicm9sZSI6IkNPTVBBTllfVVNFUiIsInR5cGUiOiJSRUZSRVNIX1RPS0VOIiwiZXhwIjoxNzcwOTQ0MzIzfQ.4uTA1pPug24FTiNMJv57gbNzAeCQZkj1uMohzk6XXEc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/auth/refresh-token",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registry",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcwNjk5Mzk4fQ.UWWm96rE66oIW5C4CbZIkEDYbyfSHOO_Fvm5b2neFUI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"teste_user\",\n    \"email\": \"teste@email.com\",\n    \"password\": \"aaa@1A\",\n    \"name\": \"teste\",\n    \"cpf\": \"12121212121\",\n    \"userRole\": \"COMPANY_USER\",\n    \"companyId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/auth/registry",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "auth",
+                "registry"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\n{\n    \"username\": \"claus_admin\",\n    \"password\": \"admin123\"\n}\n\n\n// {\n//     \"username\": \"teste_user\",\n//     \"password\": \"aaa@1A\"\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://sellvia-hml.onrender.com/api/v1.0.0/auth/login",
+              "protocol": "https",
+              "host": [
+                "sellvia-hml",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v1.0.0",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcxNzk3OTk2fQ.TmJGnHsuRJ07ZhjoOMOtDZmyufa2TlHqgQWQwvnraAc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Cadernos 2\",\n    \"description\": \"Teste 1\",\n    \"companyId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://sellvia-hml.onrender.com/api/v1.0.0/categories",
+              "protocol": "https",
+              "host": [
+                "sellvia-hml",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v1.0.0",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find pageable",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcwNzY5OTA4fQ.S6Bghcjwxkd8-VKNYnn1auhge1nu6-f6Jyr0YhCPQzI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/categories?companyId=2",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "companyId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcwNzM5NzY2fQ.qh9k7yM84xxLcegcR9-xgrGKuNxKHxuycfsHdDeX9FY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/categories/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "categories",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcwNzM5NzY2fQ.qh9k7yM84xxLcegcR9-xgrGKuNxKHxuycfsHdDeX9FY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Cadernos 4\",\n    \"description\": \"Teste novo 2\",\n    \"companyId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/categories/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "categories",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcxNzk3OTk2fQ.TmJGnHsuRJ07ZhjoOMOtDZmyufa2TlHqgQWQwvnraAc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "data",
+                  "value": "{\n  \"name\": \"Notebook Dell Inspiron 15\",\n  \"description\": \"Notebook 15.6 polegadas, 16GB RAM\",\n  \"price\": 4599.90,\n  \"productionCost\": 3200.00,\n  \"companyId\": 2,\n  \"status\": \"ACTIVE\",\n  \"sku\": \"DELL-INS-15-16GB\",\n  \"stockQuantity\": 25,\n  \"type\": \"PHYSICAL\"\n}",
+                  "type": "text",
+                  "uuid": "b7df9dad-2150-4276-895e-6fbd4b0805a0",
+                  "contentType": "application/json"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "3e59f96d-bd89-4ee3-b106-697686596561",
+                  "src": "/Users/clauaraujo11/Downloads/WhatsApp Image 2026-02-09 at 19.15.55.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/products",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcyMDgxMTM0fQ.KwqmoCXlIB0K7WwaPrnblocuy7x0GIBy_qvIlrR-WSk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Notebook Dell Inspiron 15 teste\",\n  \"description\": \"Notebook 15.6 polegadas, 16GB RAM\",\n  \"price\": 4599.90,\n  \"productionCost\": 3200.00,\n  \"companyId\": 2,\n  \"status\": \"ACTIVE\",\n  \"sku\": \"AUD-NOISE-900\",\n  \"stockQuantity\": 25,\n  \"type\": \"PHYSICAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/products/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcyMzM4NjM5fQ.XMM0KqPcZcX9Xj_E3gLXpnVFqpFJNlsCu537iwCCrl0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Notebook Dell Inspiron 15\",\n  \"description\": \"Notebook 15.6 polegadas, 16GB RAM\",\n  \"price\": 4599.90,\n  \"productionCost\": 3200.00,\n  \"companyId\": 2,\n  \"status\": \"ACTIVE\",\n  \"sku\": \"DELL-INS-15-16GB\",\n  \"stockQuantity\": 25,\n  \"type\": \"PHYSICAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/products/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find All Products",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbGF1c19hZG1pbiIsInJvbGUiOiJTWVNURU1fQURNSU4iLCJ0eXBlIjoiTUFJTl9UT0tFTiIsImNvbXBhbnlJZCI6MSwiZXhwIjoxNzcyNDI4NzM4fQ.QEPSALp5U6Q98GIU8dOoAddtdLUTo38K9LY_mGwLthQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "localhost:8080/api/v1.0.0/products?page=0&perPage=10&sort=price&direction=DESC&name=monito&categoryId=2&minPrice&maxPrice&minUpdatedAt&maxUpdatedAt&active&createdBy&updatedBy&id&companyId=1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1.0.0",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "perPage",
+                  "value": "10"
+                },
+                {
+                  "key": "sort",
+                  "value": "price"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                },
+                {
+                  "key": "name",
+                  "value": "monito"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "2"
+                },
+                {
+                  "key": "minPrice",
+                  "value": null
+                },
+                {
+                  "key": "maxPrice",
+                  "value": null
+                },
+                {
+                  "key": "minUpdatedAt",
+                  "value": null
+                },
+                {
+                  "key": "maxUpdatedAt",
+                  "value": null
+                },
+                {
+                  "key": "active",
+                  "value": null
+                },
+                {
+                  "key": "createdBy",
+                  "value": null
+                },
+                {
+                  "key": "updatedBy",
+                  "value": null
+                },
+                {
+                  "key": "id",
+                  "value": null
+                },
+                {
+                  "key": "companyId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{TOKEN_API}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "TOKEN_API",
+      "value": ""
+    },
+    {
+      "key": "REFRESH_TOKEN",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

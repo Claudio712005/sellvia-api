@@ -8,7 +8,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "services")
+@Table(name = "services", schema = "sellvia")
 @DiscriminatorValue("SERVICE")
 class ServiceEntity(
     id: Long? = null,

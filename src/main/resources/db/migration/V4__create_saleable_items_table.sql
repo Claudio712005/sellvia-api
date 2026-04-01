@@ -4,7 +4,7 @@ CREATE SEQUENCE IF NOT EXISTS saleable_items_id_seq
 
 CREATE TABLE saleable_items (
     id BIGINT NOT NULL DEFAULT nextval('saleable_items_id_seq'),
-    item_type VARCHAR(31) NOT NULL,
+    item_type VARCHAR(31),
     company_id BIGINT NOT NULL,
     category_id BIGINT,
     name VARCHAR(255) NOT NULL,

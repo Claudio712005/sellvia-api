@@ -25,14 +25,14 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "sellvia")
 @EntityListeners(AuditingEntityListener::class)
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_gen")
     @SequenceGenerator(
         name = "users_gen",
-        sequenceName = "users_id_seq",
+        sequenceName = "sellvia.users_id_seq",
         allocationSize = 1,
     )
     var id: Long = 0,

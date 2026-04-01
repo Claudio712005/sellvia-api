@@ -64,7 +64,7 @@ class CategoryRepositoryImpl(
 
         val springPage =
             springDataRepository.findByNameContainingIgnoreCaseAndCompanyId(
-                searchQuery.terms,
+                searchQuery.name,
                 companyId,
                 pageable
             )

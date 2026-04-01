@@ -5,10 +5,11 @@ import br.com.claus.sellvia.domain.enums.Direction
 class CategorySearchQuery(
     page: Int,
     perPage: Int,
-    terms: String,
+    terms: String = "",
     sort: String,
     direction: Direction,
     var companyId: Long? = null,
+    val name: String? = null,
 ) : SearchQuery(
         page,
         perPage,

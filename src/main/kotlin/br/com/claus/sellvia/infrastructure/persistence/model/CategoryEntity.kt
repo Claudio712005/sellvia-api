@@ -19,21 +19,21 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "categories")
+@Table(name = "categories", schema = "sellvia")
 @EntityListeners(AuditingEntityListener::class)
 data class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_gen")
     @SequenceGenerator(
         name = "categories_gen",
-        sequenceName = "categories_id_seq",
+        sequenceName = "sellvia.categories_id_seq",
         allocationSize = 1
     )
     val id: Long? = null,
     @Column(nullable = false)
-    val name: String = "",
+    val name: String? = "",
     @Column(nullable = false)
-    val description: String = "",
+    val description: String? = "",
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate

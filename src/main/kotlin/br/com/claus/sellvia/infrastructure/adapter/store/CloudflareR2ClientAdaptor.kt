@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest
 class CloudflareR2ClientAdaptor(
     private val s3Client: S3Client,
     @Value("\${cloudflare-r2.bucket-name}") private val BUCKET_NAME: String,
+    @Value("\${image-service.base-url}") private val ENDPOINT_URL: String,
 ) : SystemStoragePort {
     companion object {
         private val LOGGER = LoggerFactory.getLogger(CloudflareR2ClientAdaptor::class.java)
@@ -50,6 +51,10 @@ class CloudflareR2ClientAdaptor(
 
             s3Client.deleteObject(deleteRequest)
         }
+    }
+
+    override fun buildFileUrl(key: String?): String {
+        return "$ENDPOINT_URL/$key"
     }
 
     private fun <T> executeS3Operation(

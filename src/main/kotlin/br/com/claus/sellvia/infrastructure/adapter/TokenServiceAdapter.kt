@@ -30,7 +30,7 @@ class TokenServiceAdapter(
     override fun getClaimFromToken(claim: String): String? {
         val principal = SecurityContextHolder.getContext().authentication?.principal as? UserEntity
         return when (claim) {
-            "companyId" -> principal?.company?.id.toString()
+            "companyId" -> principal?.company?.id?.toString()
             "role" -> principal?.role?.name
             else -> null
         }

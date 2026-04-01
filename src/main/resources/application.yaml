@@ -1,20 +1,23 @@
 spring:
   application:
-    name: Sellvia
-    profiles:
-    active: dev
+    name: ${SPRING_APPLICATION_NAME}
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
+
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:local_sellvia_db}
-    username: ${DB_USERNAME:adm_local}
-    password: ${DB_PASSWORD:adm_local}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   flyway:
     enabled: true
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:local_sellvia_db}
-    user: ${FLYWAY_USER:postgres}
-    password: ${FLYWAY_PASSWORD:Senha123}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    user: ${FLYWAY_USER}
+    password: ${FLYWAY_PASSWORD}
     locations: classpath:db/migration
     baseline-on-migrate: true
+    schemas:
+      - ${MAIN_APP_SCHEMA}
 
   sql:
     init:
@@ -31,15 +34,18 @@ spring:
           ignore_explicit_for_joined: true
 
 jwt:
-  secret: ${JWT_SECRET:secret-temporaria}
-  token-expiration: ${JWT_TOKEN_EXPIRATION:18000000}
-  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}
+  secret: ${JWT_SECRET}
+  token-expiration: ${JWT_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION}
 
 cloudflare-r2:
   account-id: ${CLOUDFLARE_R2_ACCOUNT_ID}
   secret-key: ${CLOUDFLARE_R2_ACCESS_KEY}
   access-key: ${CLOUDFLARE_R2_SECRET_KEY}
   bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME}
+
+image-service:
+  base-url: ${IMAGE_SERVICE_BASE_URL}
 
 logging:
   level:
