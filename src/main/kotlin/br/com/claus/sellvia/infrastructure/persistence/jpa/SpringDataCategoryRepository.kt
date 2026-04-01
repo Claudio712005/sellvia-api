@@ -12,7 +12,7 @@ interface SpringDataCategoryRepository : JpaRepository<CategoryEntity, Long> {
     ): CategoryEntity?
 
     fun findByNameContainingIgnoreCaseAndCompanyId(
-        name: String,
+        name: String? = "",
         companyId: Long,
         pageable: Pageable,
     ): Page<CategoryEntity>

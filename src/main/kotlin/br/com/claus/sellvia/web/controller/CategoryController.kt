@@ -49,15 +49,16 @@ class CategoryController(
         @RequestParam(required = false, defaultValue = "id") sortBy: String,
         @RequestParam(required = false, defaultValue = "ASC") sortDirection: String,
         @RequestParam(required = false, defaultValue = "0") companyId: Long,
+        @RequestParam(required = false, defaultValue = "") name: String,
     ): ResponseEntity<Pagination<CategoryResponseDTO>> {
         val searchQuery =
             CategorySearchQuery(
                 page = page,
                 perPage = pageSize,
-                terms = "",
                 sort = sortBy,
                 direction = Direction.valueOf(sortDirection),
-                companyId = companyId
+                companyId = companyId,
+                name = name
             )
 
         return ResponseEntity.ok()

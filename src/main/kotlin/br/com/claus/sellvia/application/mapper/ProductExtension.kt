@@ -21,7 +21,7 @@ fun ProductRequestDTO.toDomain() =
         createdAt = null,
         updatedAt = null,
         imageUrl = imageUrl,
-        category = Category(id = categoryId),
+        category = categoryId?.let { Category(id = it) }
     )
 
 fun Product.toResponseDTO() =
