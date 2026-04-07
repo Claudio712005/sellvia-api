@@ -7,19 +7,17 @@ import br.com.claus.sellvia.domain.annotation.UseCase
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.WithoutPermissionException
-import br.com.claus.sellvia.domain.model.User
 import br.com.claus.sellvia.domain.repository.UserRepository
 
 @UseCase
 class FindUserByIdUseCase(
     private val repository: UserRepository,
-    private val permissionHelperPort: PermissionHelperPort
+    private val permissionHelperPort: PermissionHelperPort,
 ) {
-
-    fun execute(id: Long): UserResponseDTO{
+    fun execute(id: Long): UserResponseDTO {
         val authenticatedUser = permissionHelperPort.getDetailsOfAuthenticatedUser()
 
-        if(authenticatedUser.role != UserRole.SYSTEM_ADMIN || authenticatedUser.userId != id){
+        if (authenticatedUser.role != UserRole.SYSTEM_ADMIN || authenticatedUser.userId != id) {
             throw WithoutPermissionException("Usuário sem permissão para consultar outro usuário.")
         }
 

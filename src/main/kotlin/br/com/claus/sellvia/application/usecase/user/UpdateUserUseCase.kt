@@ -10,18 +10,20 @@ import br.com.claus.sellvia.domain.repository.UserRepository
 @UseCase
 class UpdateUserUseCase(
     private val repository: UserRepository,
-    private val permissionHelperPort: PermissionHelperPort
+    private val permissionHelperPort: PermissionHelperPort,
 ) {
-
-    fun execute(id: Long, user: UserRequestDTO): UserResponseDTO {
+    fun execute(
+        id: Long,
+        user: UserRequestDTO,
+    ): UserResponseDTO {
         val authenticatedUser = permissionHelperPort.getDetailsOfAuthenticatedUser()
 
-        if(authenticatedUser.userId != id){
+        if (authenticatedUser.userId != id) {
             throw Exception("Usuário sem permissão para atualizar outro usuário.")
         }
 
         return repository.findById(id)?.let {
-             repository.save(
+            repository.save(
                 it.copy(
                     name = user.name ?: it.name,
                     email = user.email ?: it.email,

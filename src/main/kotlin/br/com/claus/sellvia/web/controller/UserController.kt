@@ -27,41 +27,51 @@ class UserController(
     private val updateUserUseCase: UpdateUserUseCase,
     private val changePasswordUseCase: ChangePasswordUseCase,
     private val deleteUserByIdUseCase: DeleteUserByIdUseCase,
-    private val createUserUseCase: CreateUserUseCase
+    private val createUserUseCase: CreateUserUseCase,
 ) {
-
     @GetMapping("{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<UserResponseDTO> {
+    fun getById(
+        @PathVariable id: Long,
+    ): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(
             findUserByIdUseCase.execute(id)
         )
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody user: UserRequestDTO): ResponseEntity<UserResponseDTO> {
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody user: UserRequestDTO,
+    ): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(
             updateUserUseCase.execute(id, user)
         )
     }
 
     @PutMapping("/password/{id}")
-    fun updatePassword(@PathVariable id: Long, @RequestBody  request: UpdatePasswordRequestDTO): ResponseEntity<String> {
+    fun updatePassword(
+        @PathVariable id: Long,
+        @RequestBody request: UpdatePasswordRequestDTO,
+    ): ResponseEntity<String> {
         return ResponseEntity.ok(
             changePasswordUseCase.execute(id, request)
         )
     }
 
     @DeleteMapping("{id}")
-    fun deleteById(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteById(
+        @PathVariable id: Long,
+    ): ResponseEntity<Void> {
         deleteUserByIdUseCase.execute(id)
         return ResponseEntity.ok().build()
     }
 
     @PostMapping
-    fun create(@RequestBody user: UserRequestDTO): ResponseEntity<Unit> {
+    fun create(
+        @RequestBody user: UserRequestDTO,
+    ): ResponseEntity<Unit> {
         val res = createUserUseCase.execute(user)
         val uri = URI.create(ApiEndpoints.User.USER_ROOT + "/${res.id}")
         return ResponseEntity.created(uri).build()
     }
-
 }

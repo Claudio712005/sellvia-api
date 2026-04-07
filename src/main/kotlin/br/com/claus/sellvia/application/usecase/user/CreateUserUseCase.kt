@@ -14,30 +14,28 @@ import br.com.claus.sellvia.domain.repository.UserRepository
 @UseCase
 class CreateUserUseCase(
     private val repository: UserRepository,
-    private val permissionHelperPort: PermissionHelperPort
+    private val permissionHelperPort: PermissionHelperPort,
 ) {
-
     fun execute(user: UserRequestDTO): UserResponseDTO {
-
         user.validate()
 
         val userdetails = permissionHelperPort.getDetailsOfAuthenticatedUser()
 
-        if(userdetails.role == UserRole.COMPANY_USER){
+        if (userdetails.role == UserRole.COMPANY_USER) {
             throw WithoutPermissionException("Você não tem permissão para realizar essa ação.")
-        } else if(userdetails.role == UserRole.COMPANY_ADMIN && userdetails.companyId != user.companyId) {
+        } else if (userdetails.role == UserRole.COMPANY_ADMIN && userdetails.companyId != user.companyId) {
             throw WithoutPermissionException("Você não tem permissão para criar um usuário para essa empresa.")
         }
 
-        if(repository.existsByEmail(user.email!!)){
+        if (repository.existsByEmail(user.email!!)) {
             throw ResourceAlreadyExistsException("Já existe um usuário com esse email.")
         }
 
-        if(repository.existsByUsername(user.username!!)){
+        if (repository.existsByUsername(user.username!!)) {
             throw ResourceAlreadyExistsException("Já existe um usuário com esse username.")
         }
 
-        if(repository.existsByCpf(user.cpf!!)){
+        if (repository.existsByCpf(user.cpf!!)) {
             throw ResourceAlreadyExistsException("Já existe um usuário com esse cpf.")
         }
 

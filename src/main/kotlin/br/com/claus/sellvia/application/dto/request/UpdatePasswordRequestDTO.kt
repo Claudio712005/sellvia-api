@@ -5,10 +5,9 @@ import br.com.claus.sellvia.domain.exception.InvalidFieldException
 data class UpdatePasswordRequestDTO(
     val password: String,
     val confirmPassword: String,
-    val newPassword: String
+    val newPassword: String,
 ) {
     fun validate(): Boolean {
-
         if (newPassword.isBlank() ||
             !newPassword.matches(
                 PASSWORD_REGEX
