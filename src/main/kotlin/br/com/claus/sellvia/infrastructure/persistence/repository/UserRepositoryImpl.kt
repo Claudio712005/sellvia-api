@@ -32,4 +32,8 @@ class UserRepositoryImpl(
     override fun existsByUsername(username: String): Boolean {
         return springDataRepository.existsByUsername(username)
     }
+
+    override fun findById(id: Long): User? {
+        return springDataRepository.findById(id).orElse(null)?.toModel()
+    }
 }

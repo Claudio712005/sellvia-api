@@ -54,7 +54,7 @@ class CloudflareR2ClientAdaptor(
     }
 
     override fun buildFileUrl(key: String?): String {
-        return "$ENDPOINT_URL/$key"
+        return "$ENDPOINT_URL/$key "
     }
 
     private fun <T> executeS3Operation(
