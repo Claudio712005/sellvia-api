@@ -34,7 +34,7 @@ class FindPageableCategoryUseCaseTest {
     @Test
     fun `should return all categories when user is SYSTEM_ADMIN`() {
         val searchQuery = createSearchQuery(companyId = null)
-        val adminDetails = AuthenticatedUserDetails(role = UserRole.SYSTEM_ADMIN, companyId = null)
+        val adminDetails = AuthenticatedUserDetails(role = UserRole.SYSTEM_ADMIN, companyId = null, userId = 1L)
 
         every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns adminDetails
         every { permissionHelperPort.verifyUserCanDoesThisAction(any()) } just runs
@@ -58,10 +58,9 @@ class FindPageableCategoryUseCaseTest {
 
     @Test
     fun `should enforce company filter from user details when not admin`() {
-        // Cenário: Usuário comum tenta buscar sem filtro, mas o UseCase deve injetar a empresa 10L
         val userCompanyId = 10L
         val searchQuery = createSearchQuery(companyId = null)
-        val userDetails = AuthenticatedUserDetails(role = UserRole.COMPANY_USER, companyId = userCompanyId)
+        val userDetails = AuthenticatedUserDetails(role = UserRole.COMPANY_USER, companyId = userCompanyId, userId = 2L)
 
         every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns userDetails
         every { permissionHelperPort.verifyUserCanDoesThisAction(userCompanyId) } just runs
@@ -92,8 +91,7 @@ class FindPageableCategoryUseCaseTest {
         val targetCompanyId = 99L
         val searchQuery = createSearchQuery(companyId = targetCompanyId)
 
-        // Simula usuário logado na empresa 10 tentando acessar a 99
-        val userDetails = AuthenticatedUserDetails(role = UserRole.COMPANY_USER, companyId = userCompanyId)
+        val userDetails = AuthenticatedUserDetails(role = UserRole.COMPANY_USER, companyId = userCompanyId, userId = 1L)
 
         every { permissionHelperPort.getDetailsOfAuthenticatedUser() } returns userDetails
 

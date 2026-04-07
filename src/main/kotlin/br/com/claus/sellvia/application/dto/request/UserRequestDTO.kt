@@ -3,7 +3,7 @@ package br.com.claus.sellvia.application.dto.request
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.InvalidFieldException
 
-private val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{6,}$".toRegex()
+val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{6,}$".toRegex()
 
 data class UserRequestDTO(
     val id: Long? = null,
