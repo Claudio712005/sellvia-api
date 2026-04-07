@@ -30,8 +30,10 @@ class PermissionHelperAdapter(
             tokenService.getClaimFromToken("role")?.let {
                 UserRole.valueOf(it.uppercase())
             } ?: throw InvalidTokenException("Token inválido.")
+        val userId = tokenService.getClaimFromToken("userId")?.toLong() ?: throw InvalidTokenException("Token inválido.")
 
         return AuthenticatedUserDetails(
+            userId = userId,
             role = userRole,
             companyId = companyId
         )

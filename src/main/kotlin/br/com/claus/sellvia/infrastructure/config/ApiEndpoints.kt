@@ -26,6 +26,10 @@ object ApiEndpoints {
         const val REFRESH_TOKEN_ROOT = "$AUTH_ROOT$REFRESH_TOKEN"
     }
 
+    object User {
+        const val USER_ROOT = "$API_ROOT/users"
+    }
+
     object Category {
         const val CATEGORY_ROOT = "$API_ROOT/categories"
     }
@@ -49,5 +53,6 @@ object ApiEndpoints {
             Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
             Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER),
             Product.PRODUCT_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
+            User.USER_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN)
         )
 }

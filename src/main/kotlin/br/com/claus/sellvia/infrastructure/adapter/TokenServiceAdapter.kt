@@ -32,6 +32,7 @@ class TokenServiceAdapter(
         return when (claim) {
             "companyId" -> principal?.company?.id?.toString()
             "role" -> principal?.role?.name
+            "userId" -> principal?.id?.toString()
             else -> null
         }
     }
@@ -45,6 +46,7 @@ class TokenServiceAdapter(
             .withSubject(user.username)
             .withClaim("role", user.role.name)
             .withClaim("type", type.name)
+            .withClaim("userId", user.id)
             .withClaim("companyId", user.company?.id)
             .withExpiresAt(Date(System.currentTimeMillis() + expiration))
             .sign(algorithm)
