@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.multipart.MaxUploadSizeExceededException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -23,15 +24,14 @@ class GlobalExceptionHandler {
         request: HttpServletRequest,
     ): ErrorView {
         val errorMessage = HashMap<String, String?>()
-        exception.bindingResult.fieldErrors.forEach {
-                e ->
+        exception.bindingResult.fieldErrors.forEach { e ->
             errorMessage.put(e.field, e.defaultMessage)
         }
         return ErrorView(
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.name,
             message = errorMessage.toString(),
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -45,7 +45,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.NOT_FOUND.value(),
             error = HttpStatus.NOT_FOUND.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -59,7 +59,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.UNAUTHORIZED.value(),
             error = HttpStatus.UNAUTHORIZED.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -73,7 +73,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.UNAUTHORIZED.value(),
             error = HttpStatus.UNAUTHORIZED.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -87,7 +87,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -101,7 +101,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.CONFLICT.value(),
             error = HttpStatus.CONFLICT.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -115,7 +115,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.FORBIDDEN.value(),
             error = HttpStatus.FORBIDDEN.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -129,7 +129,7 @@ class GlobalExceptionHandler {
             status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             error = HttpStatus.INTERNAL_SERVER_ERROR.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
         )
     }
 
@@ -143,7 +143,21 @@ class GlobalExceptionHandler {
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.name,
             message = exception.message,
-            path = request.servletPath
+            path = request.servletPath,
+        )
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleMaxUploadSizeExceededException(
+        exception: MaxUploadSizeExceededException,
+        request: HttpServletRequest,
+    ): ErrorView {
+        return ErrorView(
+            status = HttpStatus.BAD_REQUEST.value(),
+            error = HttpStatus.BAD_REQUEST.name,
+            message = "O Arquivo/imagem ultrapassa o limite de 10MB permitidos pelo sistema.",
+            path = request.servletPath,
         )
     }
 }
