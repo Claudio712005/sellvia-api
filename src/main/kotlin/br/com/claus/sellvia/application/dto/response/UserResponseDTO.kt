@@ -8,4 +8,5 @@ data class UserResponseDTO(
     val name: String = "",
     val role: UserRole,
     val email: String = "",
+    val cpf: String = "",
 )

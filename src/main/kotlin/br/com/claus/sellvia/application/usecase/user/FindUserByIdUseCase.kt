@@ -17,7 +17,7 @@ class FindUserByIdUseCase(
     fun execute(id: Long): UserResponseDTO {
         val authenticatedUser = permissionHelperPort.getDetailsOfAuthenticatedUser()
 
-        if (authenticatedUser.role != UserRole.SYSTEM_ADMIN || authenticatedUser.userId != id) {
+        if (authenticatedUser.role != UserRole.SYSTEM_ADMIN && authenticatedUser.userId != id) {
             throw WithoutPermissionException("Usuário sem permissão para consultar outro usuário.")
         }
 

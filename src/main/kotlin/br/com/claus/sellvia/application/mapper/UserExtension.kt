@@ -13,6 +13,7 @@ fun User.toResponseDTO(): UserResponseDTO {
         role = this.role,
         name = this.name,
         email = this.email,
+        cpf = this.cpf,
     )
 }
 
