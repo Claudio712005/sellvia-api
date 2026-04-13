@@ -1,5 +1,6 @@
 package br.com.claus.sellvia.infrastructure.persistence.specification
 
+import br.com.claus.sellvia.domain.enums.ProductType
 import br.com.claus.sellvia.domain.enums.ResourceStatus
 import br.com.claus.sellvia.domain.pagination.ProductSearchQuery
 import br.com.claus.sellvia.infrastructure.persistence.model.ProductEntity
@@ -41,6 +42,7 @@ object ProductSpecificationFactory {
 
             query.categoryId?.let { predicates.add(cb.equal(root.get<Any>("category").get<Any>("id"), it)) }
             query.sku?.let { predicates.add(cb.equal(root.get<Any>("sku"), it)) }
+            query.type?.let { predicates.add(cb.equal(root.get<ProductType>("type"), it)) }
 
             cb.and(*predicates.toTypedArray())
         }

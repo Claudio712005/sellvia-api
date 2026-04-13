@@ -38,6 +38,11 @@ object ApiEndpoints {
         const val PRODUCT_ROOT = "$API_ROOT/products"
     }
 
+    object Company {
+        const val COMPANY_ROOT = "$API_ROOT/companies"
+        const val CATALOG_PDF = "/catalog/pdf"
+    }
+
     val PUBLIC =
         arrayOf(
             System.H2_CONSOLE_ROOT,
@@ -53,6 +58,7 @@ object ApiEndpoints {
             Auth.REGISTRY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
             Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER),
             Product.PRODUCT_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
-            User.USER_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN)
+            User.USER_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
+            "${Company.COMPANY_ROOT}/**" to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER)
         )
 }

@@ -1,6 +1,7 @@
 package br.com.claus.sellvia.domain.pagination
 
 import br.com.claus.sellvia.domain.enums.Direction
+import br.com.claus.sellvia.domain.enums.ProductType
 import java.time.LocalDateTime
 
 class ProductSearchQuery(
@@ -22,6 +23,7 @@ class ProductSearchQuery(
     val updatedBy: String? = null,
     val id: Long? = null,
     val sku: String? = null,
+    val type: ProductType? = null,
 ) : SearchQuery(
         page,
         perPage,
