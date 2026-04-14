@@ -32,7 +32,8 @@ data class CompanyEntity(
     val businessName: String = "",
     val websiteUrl: String = "",
     val isActive: Boolean = true,
-    val companyUrlLogo: String = "",
+    val companyUrlLogo: String? = null,
+    val mainPhoneNumber: String? = null,
     @CreatedDate
     var createdAt: LocalDateTime? = null,
     @LastModifiedDate

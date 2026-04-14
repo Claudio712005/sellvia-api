@@ -1,0 +1,17 @@
+package br.com.claus.sellvia.infrastructure.persistence.repository
+
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.context.annotation.Import
+import org.springframework.test.context.ActiveProfiles
+
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(
+    ProductRepositoryImpl::class,
+    CompanyRepositoryImpl::class,
+    CategoryRepositoryImpl::class,
+    UserRepositoryImpl::class,
+)
+abstract class AbstractRepositoryTest

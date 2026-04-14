@@ -1,6 +1,7 @@
 package br.com.claus.sellvia.application.usecase.product
 
 import br.com.claus.sellvia.application.dto.request.ProductRequestDTO
+import br.com.claus.sellvia.application.dto.request.ProductRequestDTO.Companion.DEFAULT_WHATSAPP_MESSAGE
 import br.com.claus.sellvia.application.dto.response.ProductResponseDTO
 import br.com.claus.sellvia.application.mapper.toResponseDTO
 import br.com.claus.sellvia.application.port.PermissionHelperPort
@@ -38,6 +39,10 @@ class UpdateProductUseCase(
                 sku = requestDTO.sku.trim().uppercase(),
                 stockQuantity = requestDTO.stockQuantity,
                 type = requestDTO.type,
+                externalLink = requestDTO.externalLink?.trim()?.ifBlank { null },
+                whatsappMessage =
+                    requestDTO.whatsappMessage?.trim()?.takeIf { it.isNotBlank() }
+                        ?: DEFAULT_WHATSAPP_MESSAGE,
             )
 
         return repository.update(updatedProduct).toResponseDTO()

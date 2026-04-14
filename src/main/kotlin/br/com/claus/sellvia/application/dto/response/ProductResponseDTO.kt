@@ -22,6 +22,8 @@ data class ProductResponseDTO(
     val sku: String,
     val stockQuantity: Int? = null,
     val type: ProductType,
+    val externalLink: String? = null,
+    val whatsappMessage: String? = null,
 ) : SaleableItemResponseDTO(
         id,
         name,

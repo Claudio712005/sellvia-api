@@ -20,7 +20,9 @@ fun Product.toEntity() =
         updatedAt = updatedAt,
         createdBy = createdBy,
         updatedBy = updatedBy,
-        category = category?.toEntity()
+        category = category?.toEntity(),
+        externalLink = externalLink,
+        whatsappMessage = whatsappMessage,
     )
 
 fun ProductEntity.toDomain() =
@@ -40,5 +42,7 @@ fun ProductEntity.toDomain() =
         updatedAt = updatedAt,
         createdBy = createdBy,
         updatedBy = updatedBy,
-        category = category?.toDomain()
+        category = category?.toDomain(),
+        externalLink = externalLink,
+        whatsappMessage = whatsappMessage,
     )

@@ -17,6 +17,12 @@ interface SpringDataProductRepository :
         companyId: Long,
     ): Boolean
 
+    fun existsBySkuAndCompanyIdAndIdNot(
+        sku: String,
+        companyId: Long,
+        id: Long,
+    ): Boolean
+
     fun existsByNameAndCompanyIdAndIdNot(
         name: String,
         companyId: Long,

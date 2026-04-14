@@ -31,6 +31,8 @@ class ProductEntity(
     val stockQuantity: Int? = null,
     @Enumerated(EnumType.STRING)
     val type: ProductType = ProductType.PHYSICAL,
+    val externalLink: String? = null,
+    val whatsappMessage: String? = null,
 ) : SaleableItemEntity(
         id,
         name,
