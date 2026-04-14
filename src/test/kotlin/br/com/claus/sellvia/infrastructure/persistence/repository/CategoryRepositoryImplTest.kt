@@ -1,10 +1,9 @@
 package br.com.claus.sellvia.infrastructure.persistence.repository
 
+import br.com.claus.sellvia.domain.enums.Direction
 import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.domain.pagination.CategorySearchQuery
-import br.com.claus.sellvia.domain.enums.Direction
-import br.com.claus.sellvia.infrastructure.persistence.model.CategoryEntity
 import br.com.claus.sellvia.infrastructure.persistence.model.CompanyEntity
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -28,15 +27,16 @@ class CategoryRepositoryImplTest : AbstractRepositoryTest() {
 
     @BeforeEach
     fun setup() {
-        savedCompany = entityManager.persistAndFlush(
-            CompanyEntity(
-                name = "Category Company",
-                cnpj = "44.444.444/0001-44",
-                businessName = "Category Business",
-                websiteUrl = "https://category.com",
-                isActive = true,
+        savedCompany =
+            entityManager.persistAndFlush(
+                CompanyEntity(
+                    name = "Category Company",
+                    cnpj = "44.444.444/0001-44",
+                    businessName = "Category Business",
+                    websiteUrl = "https://category.com",
+                    isActive = true,
+                )
             )
-        )
     }
 
     @Test
@@ -99,14 +99,15 @@ class CategoryRepositoryImplTest : AbstractRepositoryTest() {
         repository.save(buildCategory("Paginated A"))
         repository.save(buildCategory("Paginated B"))
 
-        val query = CategorySearchQuery(
-            page = 0,
-            perPage = 10,
-            sort = "id",
-            direction = Direction.ASC,
-            companyId = savedCompany.id!!,
-            name = "",
-        )
+        val query =
+            CategorySearchQuery(
+                page = 0,
+                perPage = 10,
+                sort = "id",
+                direction = Direction.ASC,
+                companyId = savedCompany.id!!,
+                name = "",
+            )
 
         val result = repository.findBySearchQueryPageable(query)
         result.items shouldHaveSize 2
@@ -118,14 +119,15 @@ class CategoryRepositoryImplTest : AbstractRepositoryTest() {
         repository.save(buildCategory("Alpha Category"))
         repository.save(buildCategory("Beta Category"))
 
-        val query = CategorySearchQuery(
-            page = 0,
-            perPage = 10,
-            sort = "id",
-            direction = Direction.ASC,
-            companyId = savedCompany.id!!,
-            name = "Alpha",
-        )
+        val query =
+            CategorySearchQuery(
+                page = 0,
+                perPage = 10,
+                sort = "id",
+                direction = Direction.ASC,
+                companyId = savedCompany.id!!,
+                name = "Alpha",
+            )
 
         val result = repository.findBySearchQueryPageable(query)
         result.items shouldHaveSize 1

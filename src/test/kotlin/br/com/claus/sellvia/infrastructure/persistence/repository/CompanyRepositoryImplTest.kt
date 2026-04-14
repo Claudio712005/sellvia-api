@@ -23,16 +23,17 @@ class CompanyRepositoryImplTest : AbstractRepositoryTest() {
 
     @BeforeEach
     fun setup() {
-        savedCompany = entityManager.persistAndFlush(
-            CompanyEntity(
-                name = "Original Company",
-                cnpj = "11.111.111/0001-11",
-                businessName = "Original Business",
-                websiteUrl = "https://original.com",
-                isActive = true,
-                mainPhoneNumber = "11999990000",
+        savedCompany =
+            entityManager.persistAndFlush(
+                CompanyEntity(
+                    name = "Original Company",
+                    cnpj = "11.111.111/0001-11",
+                    businessName = "Original Business",
+                    websiteUrl = "https://original.com",
+                    isActive = true,
+                    mainPhoneNumber = "11999990000",
+                )
             )
-        )
     }
 
     @Test
@@ -51,18 +52,19 @@ class CompanyRepositoryImplTest : AbstractRepositoryTest() {
 
     @Test
     fun `should update company fields`() {
-        val updated = repository.update(
-            Company(
-                id = savedCompany.id,
-                name = "Updated Company",
-                cnpj = "11.111.111/0001-11",
-                businessName = "Updated Business",
-                websiteUrl = "https://updated.com",
-                isActive = true,
-                companyUrlLogo = null,
-                mainPhoneNumber = "11988880000",
+        val updated =
+            repository.update(
+                Company(
+                    id = savedCompany.id,
+                    name = "Updated Company",
+                    cnpj = "11.111.111/0001-11",
+                    businessName = "Updated Business",
+                    websiteUrl = "https://updated.com",
+                    isActive = true,
+                    companyUrlLogo = null,
+                    mainPhoneNumber = "11988880000",
+                )
             )
-        )
 
         updated.name shouldBe "Updated Company"
         updated.businessName shouldBe "Updated Business"
@@ -71,15 +73,16 @@ class CompanyRepositoryImplTest : AbstractRepositoryTest() {
 
     @Test
     fun `should return true when CNPJ exists for different company`() {
-        val other = entityManager.persistAndFlush(
-            CompanyEntity(
-                name = "Other Company",
-                cnpj = "22.222.222/0001-22",
-                businessName = "Other Business",
-                websiteUrl = "https://other.com",
-                isActive = true,
+        val other =
+            entityManager.persistAndFlush(
+                CompanyEntity(
+                    name = "Other Company",
+                    cnpj = "22.222.222/0001-22",
+                    businessName = "Other Business",
+                    websiteUrl = "https://other.com",
+                    isActive = true,
+                )
             )
-        )
 
         repository.existsByCnpjAndIdNot("22.222.222/0001-22", savedCompany.id!!).shouldBeTrue()
     }

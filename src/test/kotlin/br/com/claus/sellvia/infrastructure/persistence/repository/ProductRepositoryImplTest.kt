@@ -31,15 +31,16 @@ class ProductRepositoryImplTest : AbstractRepositoryTest() {
 
     @BeforeEach
     fun setup() {
-        savedCompany = entityManager.persistAndFlush(
-            CompanyEntity(
-                name = "Test Company",
-                cnpj = "00.000.000/0001-00",
-                businessName = "Test Business",
-                websiteUrl = "https://test.com",
-                isActive = true,
+        savedCompany =
+            entityManager.persistAndFlush(
+                CompanyEntity(
+                    name = "Test Company",
+                    cnpj = "00.000.000/0001-00",
+                    businessName = "Test Business",
+                    websiteUrl = "https://test.com",
+                    isActive = true,
+                )
             )
-        )
     }
 
     @Test
@@ -115,14 +116,15 @@ class ProductRepositoryImplTest : AbstractRepositoryTest() {
     fun `should update product fields`() {
         val created = repository.create(buildProduct("SKU-006", "Old Name"))
 
-        val updated = repository.update(
-            created.copy(
-                name = "New Name",
-                price = BigDecimal("999.00"),
-                externalLink = "https://instagram.com/test",
-                whatsappMessage = "Custom message",
+        val updated =
+            repository.update(
+                created.copy(
+                    name = "New Name",
+                    price = BigDecimal("999.00"),
+                    externalLink = "https://instagram.com/test",
+                    whatsappMessage = "Custom message",
+                )
             )
-        )
 
         updated.name shouldBe "New Name"
         updated.price shouldBe BigDecimal("999.00")
