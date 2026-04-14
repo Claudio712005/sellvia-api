@@ -4,6 +4,7 @@ import br.com.claus.sellvia.application.dto.request.LoginRequestDTO
 import br.com.claus.sellvia.application.dto.response.LoginResponseDTO
 import br.com.claus.sellvia.application.port.PasswordEncoderPort
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.port.store.SystemStoragePort
 import br.com.claus.sellvia.application.service.AuthServiceHelper
 import br.com.claus.sellvia.domain.annotation.UseCase
 import br.com.claus.sellvia.domain.exception.InvalidCredentialsException
@@ -14,7 +15,8 @@ class LoginUseCase(
     val tokenServicePort: TokenServicePort,
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoderPort,
-    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService = tokenServicePort),
+    private val systemStoragePort: SystemStoragePort,
+    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenServicePort, systemStoragePort),
 ) {
     fun execute(request: LoginRequestDTO): LoginResponseDTO {
         request.validate()

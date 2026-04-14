@@ -1,6 +1,7 @@
 package br.com.claus.sellvia.application.usecase.auth
 
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.port.store.SystemStoragePort
 import br.com.claus.sellvia.application.service.AuthServiceHelper
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.InvalidTokenException
@@ -19,14 +20,14 @@ import java.time.LocalDateTime
 class RefreshTokenUseCaseTest {
     private val userRepository = mockk<UserRepository>()
     private val tokenService = mockk<TokenServicePort>()
-
-    private val authServiceHelper = AuthServiceHelper(tokenService)
+    private val systemStoragePort = mockk<SystemStoragePort>()
 
     private val refreshTokenUseCase =
         RefreshTokenUseCase(
             tokenService,
             userRepository,
-            authServiceHelper
+            systemStoragePort,
+            AuthServiceHelper(tokenService, systemStoragePort)
         )
 
     @Test

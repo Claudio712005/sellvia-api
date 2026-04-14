@@ -9,5 +9,6 @@ fun Company.toResponseDTO(): CompanyResponseDTO {
         name = this.name,
         websiteUrl = this.websiteUrl,
         companyUrlLogo = this.companyUrlLogo ?: "",
+        mainPhoneNumber = this.mainPhoneNumber,
     )
 }

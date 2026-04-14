@@ -3,6 +3,7 @@ package br.com.claus.sellvia.application.usecase.auth
 import br.com.claus.sellvia.application.dto.request.LoginRequestDTO
 import br.com.claus.sellvia.application.port.PasswordEncoderPort
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.port.store.SystemStoragePort
 import br.com.claus.sellvia.application.service.AuthServiceHelper
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.InvalidCredentialsException
@@ -21,9 +22,10 @@ class LoginUseCaseTest {
     private val userRepository = mockk<UserRepository>()
     private val passwordEncoder = mockk<PasswordEncoderPort>()
     private val tokenService = mockk<TokenServicePort>()
+    private val systemStoragePort = mockk<SystemStoragePort>()
 
     private val loginUseCase =
-        LoginUseCase(tokenService, userRepository, passwordEncoder, AuthServiceHelper(tokenService))
+        LoginUseCase(tokenService, userRepository, passwordEncoder, systemStoragePort, AuthServiceHelper(tokenService, systemStoragePort))
 
     @Test
     fun `should return tokens when credentials are valid`() {

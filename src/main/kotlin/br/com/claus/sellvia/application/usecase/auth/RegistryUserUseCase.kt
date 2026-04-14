@@ -4,6 +4,7 @@ import br.com.claus.sellvia.application.dto.request.UserRequestDTO
 import br.com.claus.sellvia.application.mapper.toUser
 import br.com.claus.sellvia.application.port.PasswordEncoderPort
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.port.store.SystemStoragePort
 import br.com.claus.sellvia.application.service.AuthServiceHelper
 import br.com.claus.sellvia.domain.annotation.UseCase
 import br.com.claus.sellvia.domain.enums.UserRole
@@ -20,7 +21,8 @@ class RegistryUserUseCase(
     private val tokenService: TokenServicePort,
     private val companyRepository: CompanyRepository,
     private val passwordEncoder: PasswordEncoderPort,
-    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService),
+    private val systemStoragePort: SystemStoragePort,
+    private val authServiceHelper: AuthServiceHelper = AuthServiceHelper(tokenService, systemStoragePort),
 ) {
     fun execute(
         requestDTO: UserRequestDTO,
