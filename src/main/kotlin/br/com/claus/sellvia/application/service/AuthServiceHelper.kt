@@ -3,10 +3,11 @@ package br.com.claus.sellvia.application.service
 import br.com.claus.sellvia.application.dto.response.LoginResponseDTO
 import br.com.claus.sellvia.application.mapper.toResponseDTO
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.port.store.SystemStoragePort
 import br.com.claus.sellvia.domain.exception.InvalidTokenException
 import br.com.claus.sellvia.domain.model.User
 
-class AuthServiceHelper(private val tokenService: TokenServicePort) {
+class AuthServiceHelper(private val tokenService: TokenServicePort, private val systemStoragePort: SystemStoragePort) {
     fun createLoginResponse(user: User): LoginResponseDTO {
         val token =
             tokenService
@@ -20,7 +21,10 @@ class AuthServiceHelper(private val tokenService: TokenServicePort) {
             refreshToken = refreshToken,
             user = user.toResponseDTO()
         ).also { dto ->
-            dto.company = user.company?.toResponseDTO()
+            dto.company =
+                user.company?.toResponseDTO()?.copy(
+                    companyUrlLogo = systemStoragePort.buildFileUrl(user.company?.companyUrlLogo)
+                )
         }
     }
 

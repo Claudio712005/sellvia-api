@@ -3,6 +3,7 @@ package br.com.claus.sellvia.application.usecase.auth
 import br.com.claus.sellvia.application.dto.request.UserRequestDTO
 import br.com.claus.sellvia.application.port.PasswordEncoderPort
 import br.com.claus.sellvia.application.port.TokenServicePort
+import br.com.claus.sellvia.application.port.store.SystemStoragePort
 import br.com.claus.sellvia.application.service.AuthServiceHelper
 import br.com.claus.sellvia.domain.enums.UserRole
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
@@ -24,6 +25,7 @@ class RegistryUserUseCaseTest {
     private val companyRepository = mockk<CompanyRepository>()
     private val passwordEncoder = mockk<PasswordEncoderPort>()
     private val authServiceHelper = mockk<AuthServiceHelper>()
+    private val systemStoragePort = mockk<SystemStoragePort>()
 
     private lateinit var useCase: RegistryUserUseCase
 
@@ -35,6 +37,7 @@ class RegistryUserUseCaseTest {
                 tokenService,
                 companyRepository,
                 passwordEncoder,
+                systemStoragePort,
                 authServiceHelper
             )
     }
