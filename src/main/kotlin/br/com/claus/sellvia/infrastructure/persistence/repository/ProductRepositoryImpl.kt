@@ -41,7 +41,7 @@ class ProductRepositoryImpl(
         companyId: Long,
         id: Long,
     ): Boolean {
-        return existsByNameAndCompanyIdAndNotId(sku, companyId, id)
+        return springDataRepository.existsBySkuAndCompanyIdAndIdNot(sku, companyId, id)
     }
 
     override fun existsByNameAndCompanyId(

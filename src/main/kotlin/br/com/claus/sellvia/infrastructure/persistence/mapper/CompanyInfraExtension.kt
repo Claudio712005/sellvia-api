@@ -24,5 +24,6 @@ fun CompanyEntity.toDomain(): Company {
         websiteUrl = this.websiteUrl,
         isActive = this.isActive,
         companyUrlLogo = this.companyUrlLogo,
+        mainPhoneNumber = this.mainPhoneNumber ?: "",
     )
 }

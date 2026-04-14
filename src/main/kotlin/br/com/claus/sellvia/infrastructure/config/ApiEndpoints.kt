@@ -36,11 +36,13 @@ object ApiEndpoints {
 
     object Product {
         const val PRODUCT_ROOT = "$API_ROOT/products"
+        const val UPDATE_IMAGE = "/update-image"
     }
 
     object Company {
         const val COMPANY_ROOT = "$API_ROOT/companies"
         const val CATALOG_PDF = "/catalog/pdf"
+        const val UPDATE_IMAGE = "/update-image"
     }
 
     val PUBLIC =
@@ -59,6 +61,13 @@ object ApiEndpoints {
             Category.CATEGORY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER),
             Product.PRODUCT_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
             User.USER_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
-            "${Company.COMPANY_ROOT}/**" to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN, UserRole.COMPANY_USER)
+            Company.COMPANY_ROOT to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN),
+            "${Company.COMPANY_ROOT}${Company.CATALOG_PDF}" to
+                arrayOf(
+                    UserRole.SYSTEM_ADMIN,
+                    UserRole.COMPANY_ADMIN,
+                    UserRole.COMPANY_USER
+                ),
+            "${Company.COMPANY_ROOT}${Company.UPDATE_IMAGE}" to arrayOf(UserRole.SYSTEM_ADMIN, UserRole.COMPANY_ADMIN)
         )
 }

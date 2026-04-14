@@ -22,6 +22,8 @@ data class Product(
     override val updatedBy: String? = null,
     override val imageUrl: String? = null,
     override val category: Category? = null,
+    val externalLink: String? = null,
+    val whatsappMessage: String? = null,
 ) : SaleableItem(
         id,
         name,

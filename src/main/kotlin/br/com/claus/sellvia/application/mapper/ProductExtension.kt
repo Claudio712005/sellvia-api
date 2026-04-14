@@ -21,7 +21,11 @@ fun ProductRequestDTO.toDomain() =
         createdAt = null,
         updatedAt = null,
         imageUrl = imageUrl,
-        category = categoryId?.let { Category(id = it) }
+        category = categoryId?.let { Category(id = it) },
+        externalLink = externalLink?.trim()?.ifBlank { null },
+        whatsappMessage =
+            whatsappMessage?.trim()?.takeIf { it.isNotBlank() }
+                ?: ProductRequestDTO.DEFAULT_WHATSAPP_MESSAGE,
     )
 
 fun Product.toResponseDTO() =
@@ -41,5 +45,7 @@ fun Product.toResponseDTO() =
         createdBy = createdBy,
         updatedBy = updatedBy,
         imageUrl = imageUrl,
-        category = category?.toResponseDTO()
+        category = category?.toResponseDTO(),
+        externalLink = externalLink,
+        whatsappMessage = whatsappMessage,
     )

@@ -5,6 +5,7 @@ import br.com.claus.sellvia.application.dto.response.ProductResponseDTO
 import br.com.claus.sellvia.application.usecase.product.CreateProductUseCase
 import br.com.claus.sellvia.application.usecase.product.DeleteProductUseCase
 import br.com.claus.sellvia.application.usecase.product.FindPageableProductUseCase
+import br.com.claus.sellvia.application.usecase.product.UpdateProductImageUseCase
 import br.com.claus.sellvia.application.usecase.product.UpdateProductUseCase
 import br.com.claus.sellvia.domain.pagination.Pagination
 import br.com.claus.sellvia.domain.pagination.ProductSearchQuery
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile
 class ProductController(
     private val createProductUseCase: CreateProductUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
+    private val updateProductImageUseCase: UpdateProductImageUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val findPageableProductUseCase: FindPageableProductUseCase,
 ) {
@@ -51,6 +53,12 @@ class ProductController(
         val response = updateProductUseCase.execute(request, id)
         return ResponseEntity.ok().body(response)
     }
+
+    @PutMapping("/{id}${ApiEndpoints.Product.UPDATE_IMAGE}", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    fun updateImage(
+        @PathVariable("id") id: Long,
+        @RequestPart("image") image: MultipartFile,
+    ): ResponseEntity<ProductResponseDTO> = ResponseEntity.ok(updateProductImageUseCase.execute(id, image.bytes))
 
     @DeleteMapping("/{id}")
     fun delete(

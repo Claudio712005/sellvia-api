@@ -43,7 +43,7 @@ class ExportProductCatalogUseCase(
             }
 
         val companyLogoBase64 =
-            if (options.showCompanyLogo && company.companyUrlLogo.isNotBlank()) {
+            if (options.showCompanyLogo && !company.companyUrlLogo.isNullOrBlank()) {
                 imageFetcherPort.fetchAsBase64DataUri(storagePort.buildFileUrl(company.companyUrlLogo))
             } else {
                 null

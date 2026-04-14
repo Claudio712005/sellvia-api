@@ -17,6 +17,8 @@ data class ProductRequestDTO(
     val sku: String,
     val stockQuantity: Int? = null,
     val type: ProductType = ProductType.PHYSICAL,
+    val externalLink: String? = null,
+    val whatsappMessage: String? = null,
 ) : SaleableItemRequestDTO(
         id = id,
         name = name,
@@ -33,5 +35,10 @@ data class ProductRequestDTO(
 
         require(sku.isNotBlank()) { "SKU não pode ser vazio." }
         require(stockQuantity == null || stockQuantity >= 0) { "Quantidade deve ser maior ou igual a zero." }
+    }
+
+    companion object {
+        const val DEFAULT_WHATSAPP_MESSAGE =
+            "Olá! Tenho interesse em um dos seus produtos. Pode me ajudar?"
     }
 }

@@ -7,5 +7,6 @@ data class Company(
     val businessName: String = "",
     val websiteUrl: String = "",
     val isActive: Boolean = true,
-    val companyUrlLogo: String = "",
+    var companyUrlLogo: String? = null,
+    val mainPhoneNumber: String = "",
 )

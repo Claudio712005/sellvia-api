@@ -20,39 +20,6 @@ import java.time.format.DateTimeFormatter
 class ProductCatalogController(
     private val exportProductCatalogUseCase: ExportProductCatalogUseCase,
 ) {
-    /**
-     * Gera e faz download do catálogo de produtos em PDF para a empresa informada.
-     *
-     * GET /api/v1.0.0/companies/{companyId}/catalog/pdf
-     *
-     * ── Filtros (todos opcionais) ──────────────────────────────────────────
-     *   name          filtra por nome (parcial, case-insensitive)
-     *   categoryId    filtra por categoria
-     *   minPrice      preço mínimo
-     *   maxPrice      preço máximo
-     *   active        true = apenas ativos | false = apenas inativos
-     *   sku           SKU exato
-     *   type          PHYSICAL | DIGITAL | SERVICE
-     *   sort          campo de ordenação (padrão: name)
-     *   direction     ASC | DESC (padrão: ASC)
-     *
-     * ── Opções de exibição (todos opcionais) ──────────────────────────────
-     *   showProductImages       exibe imagem de cada produto       (padrão: true)
-     *   showCompanyLogo         exibe logo da empresa no cabeçalho (padrão: true)
-     *   showCompanyBusinessName exibe razão social                 (padrão: true)
-     *   showCompanyCnpj         exibe CNPJ                         (padrão: true)
-     *   showCompanyWebsite      exibe site da empresa              (padrão: true)
-     *   showStats               exibe painel de estatísticas       (padrão: true)
-     *   showAveragePrice        exibe preço médio nas estatísticas  (padrão: true)
-     *   showActiveCount         exibe contagem de ativos           (padrão: true)
-     *   showTypeBreakdown       exibe contagem por tipo            (padrão: true)
-     *   showSku                 exibe SKU no card do produto       (padrão: true)
-     *   showStock               exibe estoque (produtos físicos)   (padrão: true)
-     *   showProductionCost      exibe custo de produção            (padrão: false)
-     *   showCategory            exibe categoria no card            (padrão: true)
-     *   showDescription         exibe descrição no card            (padrão: true)
-     *   showStatus              exibe badge ativo/inativo          (padrão: true)
-     */
     @GetMapping("/{companyId}${ApiEndpoints.Company.CATALOG_PDF}")
     fun exportCatalogPdf(
         @PathVariable companyId: Long,
