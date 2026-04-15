@@ -5,16 +5,16 @@ import java.time.LocalDateTime
 
 data class User(
     val id: Long? = null,
-    val name: String,
-    val cpf: String,
-    val username: String,
-    val isActive: Boolean,
-    val password: String,
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
-    val createdBy: String =  "",
-    val updatedBy: String = "",
+    val name: String = "",
+    val cpf: String = "",
+    val email: String = "",
+    val username: String = "",
+    val isActive: Boolean = true,
+    val password: String = "",
+    val createdAt: LocalDateTime? = null,
+    val updatedAt: LocalDateTime? = null,
+    val createdBy: String? = null,
+    val updatedBy: String? = null,
     val role: UserRole,
-
-    val company: Company? = null,
+    var company: Company? = null,
 )

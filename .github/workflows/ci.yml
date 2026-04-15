@@ -1,33 +1,125 @@
-name: CI - Build and Tests
+name: ci
 
 on:
   push:
-    branches:
-      - '**'
+    branches: ["**"]
   pull_request:
-    branches:
-      - '**'
+    branches: ["**"]
+
+permissions:
+  actions: write
+  contents: read
 
 jobs:
-  build-and-test:
+
+  lint:
+    name: Code Quality (KtLint)
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          distribution: temurin
+          java-version: 21
           cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Run KtLint
+        run: ./gradlew ktlintCheck
 
-      - name: Build with Gradle
-        run: ./gradlew build
 
-      - name: Run Tests
-        run: ./gradlew test
+  build-and-test:
+    name: Build, Test and Coverage
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Build, Test and Verify Coverage
+        run: ./gradlew build jacocoTestCoverageVerification jacocoTestReport
+
+      - name: Upload Jacoco HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: build/reports/jacoco/test/html/
+          retention-days: 7
+
+
+  validate-migrations:
+    name: Validate Flyway Migrations
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: sellvia_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres
+          do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+
+      - name: Validate Flyway migrations
+        run: ./gradlew flywayMigrate flywayValidate
+        env:
+          MAIN_APP_SCHEMA: sellvia
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: sellvia_test
+          FLYWAY_USER: postgres
+          FLYWAY_PASSWORD: postgres
+
+
+  trigger-cd:
+    name: Trigger Docker Publish
+    needs: validate-migrations
+    if: github.ref == 'refs/heads/homolog' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger docker publish workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'docker-publish.yml',
+              ref: 'homolog'
+            })

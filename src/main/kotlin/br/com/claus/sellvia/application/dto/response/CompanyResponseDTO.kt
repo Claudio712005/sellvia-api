@@ -5,4 +5,5 @@ data class CompanyResponseDTO(
     val name: String = "",
     val websiteUrl: String = "",
     val companyUrlLogo: String = "",
+    val mainPhoneNumber: String = "",
 )

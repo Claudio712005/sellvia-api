@@ -1,29 +1,59 @@
 spring:
   application:
-    name: Sellvia
-  datasource:
-    url: jdbc:h2:mem:sellviadb;DB_CLOSE_DELAY=-1
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    name: ${SPRING_APPLICATION_NAME}
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
 
-  h2:
-    console:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      file-size-threshold: 2MB
       enabled: true
-      path: /h2-console
 
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    user: ${FLYWAY_USER}
+    password: ${FLYWAY_PASSWORD}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    schemas:
+      - ${MAIN_APP_SCHEMA}
 
   sql:
     init:
-      mode: always
-      data-locations: classpath:data.sql
+      mode: never
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        discriminator:
+          ignore_explicit_for_joined: true
 
 jwt:
-  secret: "secret-temporaria"
-  token-expiration: 3600000
+  secret: ${JWT_SECRET}
+  token-expiration: ${JWT_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION}
+
+cloudflare-r2:
+  account-id: ${CLOUDFLARE_R2_ACCOUNT_ID}
+  secret-key: ${CLOUDFLARE_R2_ACCESS_KEY}
+  access-key: ${CLOUDFLARE_R2_SECRET_KEY}
+  bucket-name: ${CLOUDFLARE_R2_BUCKET_NAME}
+
+image-service:
+  base-url: ${IMAGE_SERVICE_BASE_URL}
+
+logging:
+  level:
+    software.amazon.awssdk: DEBUG

@@ -1,0 +1,92 @@
+PROPRIETARY SOFTWARE LICENSE
+
+Copyright (c) 2026 Claudio Silva Araujo. All rights reserved.
+
+TERMS AND CONDITIONS
+
+1. DEFINITIONS
+
+   "Software" means the Sellvia source code, configuration files, documentation,
+   and all associated materials available in this repository.
+
+   "Licensor" means Claudio Silva Araujo, the copyright holder of the Software.
+
+   "You" means any individual or legal entity exercising the permissions granted
+   by this License.
+
+2. GRANT OF LICENSE
+
+   Subject to the terms of this License, the Licensor grants You a limited,
+   non-exclusive, non-transferable, revocable license solely to VIEW and READ
+   the source code of the Software for personal, non-commercial, and
+   informational purposes.
+
+3. RESTRICTIONS
+
+   The following are strictly prohibited without prior written permission from
+   the Licensor:
+
+   a) Commercial Use. You may not use the Software, in whole or in part, for
+      any commercial purpose, including but not limited to selling, licensing,
+      renting, offering as a service, or incorporating into a product or service
+      that generates revenue.
+
+   b) Modification. You may not alter, transform, adapt, translate, or create
+      derivative works based on the Software or any part thereof.
+
+   c) Distribution. You may not copy, publish, distribute, sublicense, or
+      otherwise make the Software or any part of it available to third parties,
+      whether in its original form or as part of a larger work.
+
+   d) Sublicensing. You may not grant rights to the Software to any third party.
+
+   e) Reverse Engineering for Reproduction. You may not use the Software as a
+      basis for building a competing or similar system, service, or product.
+
+   f) Automated Processing. You may not use the Software to train machine
+      learning models, generate datasets, or feed automated systems without
+      explicit written consent from the Licensor.
+
+4. INTELLECTUAL PROPERTY
+
+   The Software and all copies thereof are proprietary to the Licensor and
+   title thereto remains with the Licensor. All rights in the Software not
+   specifically granted in this License are reserved to the Licensor.
+
+5. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. THE LICENSOR MAKES
+   NO WARRANTY THAT THE SOFTWARE IS ERROR-FREE OR THAT ACCESS THERETO WILL BE
+   UNINTERRUPTED.
+
+6. LIMITATION OF LIABILITY
+
+   IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+   OR BUSINESS INTERRUPTION) ARISING OUT OF OR IN CONNECTION WITH THIS LICENSE
+   OR THE USE OR INABILITY TO USE THE SOFTWARE, EVEN IF THE LICENSOR HAS BEEN
+   ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+7. TERMINATION
+
+   This License is effective until terminated. It will terminate automatically,
+   without notice from the Licensor, if You fail to comply with any term of
+   this License. Upon termination, You must immediately cease all use of the
+   Software and destroy any copies in your possession.
+
+8. GOVERNING LAW
+
+   This License shall be governed by and construed in accordance with the laws
+   of the Federative Republic of Brazil. Any disputes arising under or in
+   connection with this License shall be subject to the exclusive jurisdiction
+   of the courts located in Brazil.
+
+9. CONTACT
+
+   For permissions beyond the scope of this License, please contact:
+
+   Claudio Silva Araujo
+   clausilvaaraujo11@gmail.com

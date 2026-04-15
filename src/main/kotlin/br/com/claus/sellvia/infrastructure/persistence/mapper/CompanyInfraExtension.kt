@@ -1,6 +1,5 @@
 package br.com.claus.sellvia.infrastructure.persistence.mapper
 
-import br.com.claus.sellvia.application.dto.response.CompanyResponseDTO
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.infrastructure.persistence.model.CompanyEntity
 
@@ -25,14 +24,6 @@ fun CompanyEntity.toDomain(): Company {
         websiteUrl = this.websiteUrl,
         isActive = this.isActive,
         companyUrlLogo = this.companyUrlLogo,
-    )
-}
-
-fun Company.toResponseDTO(): CompanyResponseDTO {
-    return CompanyResponseDTO(
-        id = this.id,
-        name = this.name,
-        websiteUrl = this.websiteUrl,
-        companyUrlLogo = this.companyUrlLogo,
+        mainPhoneNumber = this.mainPhoneNumber ?: "",
     )
 }

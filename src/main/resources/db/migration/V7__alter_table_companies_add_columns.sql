@@ -1,0 +1,1 @@
+ALTER TABLE companies ADD COLUMN IF NOT EXISTS main_phone_number VARCHAR(20);

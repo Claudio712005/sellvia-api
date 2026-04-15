@@ -1,17 +1,14 @@
-name: CD - Build and Push Docker Image
+name: docker-publish
 
 on:
-  push:
-    branches:
-      - main
-      - homolog
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
-  docker:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -21,9 +18,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_HUB_USERNAME }}/sellvia
           tags: |
-            type=raw,value=hml,enable=${{ github.ref == 'refs/heads/homolog' }}
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=ref,event=tag            
+            type=raw,value=hml
             type=ref,event=branch
 
       - name: Login to Docker Hub
