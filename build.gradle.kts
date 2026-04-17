@@ -102,7 +102,7 @@ dependencies {
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 
-    implementation("org.xhtmlrenderer:flying-saucer-pdf:9.1.22")
+    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
 }
 
 extra["flyway.version"] = "11.3.2"

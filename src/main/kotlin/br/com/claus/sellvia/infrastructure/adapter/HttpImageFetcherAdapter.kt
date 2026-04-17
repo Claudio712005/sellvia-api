@@ -14,6 +14,11 @@ class HttpImageFetcherAdapter : ImageFetcherPort {
         private const val CONNECT_TIMEOUT_MS = 4_000
         private const val READ_TIMEOUT_MS = 8_000
         private const val OUTPUT_CONTENT_TYPE = "image/jpeg"
+
+        // Keeps pixel buffer small: 400px wide is sufficient for any PDF card size.
+        // A 400x400 ARGB image is 640KB; without this a 2000x2000 source is 16MB.
+        private const val MAX_WIDTH_PX = 400
+        private val JPEG_WRITER = JpegWriter(75, true)
     }
 
     override fun fetchAsBase64DataUri(url: String): String? {
@@ -53,7 +58,14 @@ class HttpImageFetcherAdapter : ImageFetcherPort {
 
     private fun convertToJpeg(bytes: ByteArray): ByteArray? {
         return try {
-            ImmutableImage.loader().fromBytes(bytes).bytes(JpegWriter.Default)
+            val image = ImmutableImage.loader().fromBytes(bytes)
+            val resized =
+                if (image.width > MAX_WIDTH_PX) {
+                    image.scaleToWidth(MAX_WIDTH_PX)
+                } else {
+                    image
+                }
+            resized.bytes(JPEG_WRITER)
         } catch (e: Exception) {
             null
         }
