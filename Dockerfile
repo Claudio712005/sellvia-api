@@ -22,4 +22,4 @@ COPY --from=build /app/build/libs/*.jar app.jar
 ENV JAVA_OPTS="-Xmx300m -Xms300m"
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=$PORT -Dserver.address=0.0.0.0 -jar app.jar"]
