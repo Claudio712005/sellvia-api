@@ -127,7 +127,7 @@ object CatalogHtmlBuilder {
             body {
                 font-family: Arial, Helvetica, sans-serif;
                 margin: 0;
-                padding: 0 0 52px 0;
+                padding: 0;
                 background-color: $bodyBg;
                 color: #2d3748;
             }
@@ -162,8 +162,6 @@ object CatalogHtmlBuilder {
             .products-wrapper { padding: 0 36px 24px 36px; }
             .product-grid { width: 100%; border-collapse: collapse; }
             .product-cell { width: ${sizing.cellWidthPct}%; vertical-align: top; padding: ${sizing.cellPaddingPx}px; }
-            /* ── page-break ── */
-            tr.product-pair { page-break-inside: avoid; }
             /* ── Card shared ── */
             .product-card {
                 background-color: $cardBg;
@@ -237,8 +235,8 @@ object CatalogHtmlBuilder {
             .placeholder { background-color: #f8fafc; border: 1px dashed #e2e8f0; }
             /* ── Footer ── */
             .page-footer {
-                position: fixed; bottom: 0; left: 0; right: 0;
                 height: 44px; background-color: #1a2942; padding: 0 36px;
+                margin-top: 24px;
             }
             .footer-table { width: 100%; height: 44px; }
             .footer-left  { vertical-align: middle; }
