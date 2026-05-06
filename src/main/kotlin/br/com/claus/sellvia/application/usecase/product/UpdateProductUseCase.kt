@@ -8,6 +8,7 @@ import br.com.claus.sellvia.application.port.PermissionHelperPort
 import br.com.claus.sellvia.domain.annotation.UseCase
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.ResourceAlreadyExistsException
+import br.com.claus.sellvia.domain.model.Category
 import br.com.claus.sellvia.domain.repository.ProductRepository
 
 @UseCase
@@ -39,6 +40,12 @@ class UpdateProductUseCase(
                 sku = requestDTO.sku.trim().uppercase(),
                 stockQuantity = requestDTO.stockQuantity,
                 type = requestDTO.type,
+                category =
+                    requestDTO.categoryId.let {
+                        Category(
+                            id = it,
+                        )
+                    },
                 externalLink = requestDTO.externalLink?.trim()?.ifBlank { null },
                 whatsappMessage =
                     requestDTO.whatsappMessage?.trim()?.takeIf { it.isNotBlank() }
