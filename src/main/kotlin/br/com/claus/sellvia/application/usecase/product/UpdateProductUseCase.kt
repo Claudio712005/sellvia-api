@@ -41,7 +41,7 @@ class UpdateProductUseCase(
                 stockQuantity = requestDTO.stockQuantity,
                 type = requestDTO.type,
                 category =
-                    requestDTO.categoryId.let {
+                    requestDTO.categoryId?.let {
                         Category(
                             id = it,
                         )
