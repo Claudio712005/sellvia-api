@@ -8,13 +8,14 @@ import br.com.claus.sellvia.application.port.PermissionHelperPort
 import br.com.claus.sellvia.domain.annotation.UseCase
 import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.ResourceAlreadyExistsException
-import br.com.claus.sellvia.domain.model.Category
+import br.com.claus.sellvia.domain.repository.CategoryRepository
 import br.com.claus.sellvia.domain.repository.ProductRepository
 
 @UseCase
 class UpdateProductUseCase(
     private val repository: ProductRepository,
     private val permissionServicePort: PermissionHelperPort,
+    private val categoryRepository: CategoryRepository,
 ) {
     fun execute(
         requestDTO: ProductRequestDTO,
@@ -30,6 +31,12 @@ class UpdateProductUseCase(
 
         val product = repository.findById(id) ?: throw NotFoundResouceException("Produto com ID $id não encontrado.")
 
+        val category =
+            requestDTO.categoryId?.let { categoryId ->
+                categoryRepository.findById(categoryId)
+                    ?: throw NotFoundResouceException("Categoria com ID $categoryId não encontrada.")
+            }
+
         val updatedProduct =
             product.copy(
                 name = requestDTO.name.trim(),
@@ -40,12 +47,7 @@ class UpdateProductUseCase(
                 sku = requestDTO.sku.trim().uppercase(),
                 stockQuantity = requestDTO.stockQuantity,
                 type = requestDTO.type,
-                category =
-                    requestDTO.categoryId.let {
-                        Category(
-                            id = it,
-                        )
-                    },
+                category = category,
                 externalLink = requestDTO.externalLink?.trim()?.ifBlank { null },
                 whatsappMessage =
                     requestDTO.whatsappMessage?.trim()?.takeIf { it.isNotBlank() }

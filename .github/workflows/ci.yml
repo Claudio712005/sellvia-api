@@ -109,7 +109,7 @@ jobs:
   trigger-cd:
     name: Trigger Docker Publish
     needs: validate-migrations
-    if: github.ref == 'refs/heads/homolog' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:

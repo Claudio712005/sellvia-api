@@ -43,15 +43,12 @@ class CreateProductUseCaseTest {
         val productSaved = request.toDomain().copy(id = 1L)
         val imageUrl = "path/to/image.jpg"
 
-        // Mocks de permissão e regras de negócio
         every { permissionHelpPort.verifyUserCanDoesThisAction(request.companyId) } just runs
         every { repository.existsBySkuAndCompanyId(any(), any()) } returns false
         every { repository.existsByNameAndCompanyId(any(), any()) } returns false
 
-        // Mock da nova validação de categoria
         every { categoryRepository.existsByIdAndCompanyId(10L, request.companyId) } returns true
 
-        // Mocks de persistência e Storage
         every { repository.create(any()) } returns productSaved
         every { processorResourceStorePort.saveOptimizedImage(any(), any(), any(), any()) } returns imageUrl
         every { repository.update(any()) } returns mockk()
@@ -72,7 +69,6 @@ class CreateProductUseCaseTest {
         every { repository.existsBySkuAndCompanyId(any(), any()) } returns false
         every { repository.existsByNameAndCompanyId(any(), any()) } returns false
 
-        // Simula que a categoria não foi encontrada
         every { categoryRepository.existsByIdAndCompanyId(999L, request.companyId) } returns false
 
         val exception =
@@ -86,7 +82,7 @@ class CreateProductUseCaseTest {
 
     @Test
     fun `should throw exception and rollback when image upload fails`() {
-        val request = createValidRequest() // Sem categoria
+        val request = createValidRequest()
         val image = "fake-image".toByteArray()
         val productSaved =
             mockk<Product> {

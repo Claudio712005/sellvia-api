@@ -1,6 +1,7 @@
 package br.com.claus.sellvia.infrastructure.persistence.mapper
 
 import br.com.claus.sellvia.domain.model.Product
+import br.com.claus.sellvia.infrastructure.persistence.model.CategoryEntity
 import br.com.claus.sellvia.infrastructure.persistence.model.ProductEntity
 
 fun Product.toEntity() =
@@ -21,6 +22,28 @@ fun Product.toEntity() =
         createdBy = createdBy,
         updatedBy = updatedBy,
         category = category?.toEntity(),
+        externalLink = externalLink,
+        whatsappMessage = whatsappMessage,
+    )
+
+fun Product.toEntityWithRef(categoryRef: CategoryEntity?) =
+    ProductEntity(
+        id = id,
+        sku = sku,
+        name = name,
+        price = price,
+        productionCost = productionCost,
+        stockQuantity = stockQuantity,
+        type = type,
+        company = company.toEntity(),
+        description = description,
+        status = status,
+        imageUrl = imageUrl,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+        createdBy = createdBy,
+        updatedBy = updatedBy,
+        category = categoryRef,
         externalLink = externalLink,
         whatsappMessage = whatsappMessage,
     )
