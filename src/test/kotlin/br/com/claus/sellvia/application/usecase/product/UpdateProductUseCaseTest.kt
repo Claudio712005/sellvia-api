@@ -8,6 +8,7 @@ import br.com.claus.sellvia.domain.exception.NotFoundResouceException
 import br.com.claus.sellvia.domain.exception.ResourceAlreadyExistsException
 import br.com.claus.sellvia.domain.model.Company
 import br.com.claus.sellvia.domain.model.Product
+import br.com.claus.sellvia.domain.repository.CategoryRepository
 import br.com.claus.sellvia.domain.repository.ProductRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -22,7 +23,8 @@ import java.math.BigDecimal
 class UpdateProductUseCaseTest {
     private val repository = mock(ProductRepository::class.java)
     private val permissionHelperPort = mock(PermissionHelperPort::class.java)
-    private val useCase = UpdateProductUseCase(repository, permissionHelperPort)
+    private val categoryRepository = mock(CategoryRepository::class.java)
+    private val useCase = UpdateProductUseCase(repository, permissionHelperPort, categoryRepository)
 
     @Test
     fun `should update product successfully when all validations pass`() {

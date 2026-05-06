@@ -15,8 +15,6 @@ class HttpImageFetcherAdapter : ImageFetcherPort {
         private const val READ_TIMEOUT_MS = 8_000
         private const val OUTPUT_CONTENT_TYPE = "image/jpeg"
 
-        // Keeps pixel buffer small: 400px wide is sufficient for any PDF card size.
-        // A 400x400 ARGB image is 640KB; without this a 2000x2000 source is 16MB.
         private const val MAX_WIDTH_PX = 400
         private val JPEG_WRITER = JpegWriter(75, true)
     }
@@ -27,9 +25,6 @@ class HttpImageFetcherAdapter : ImageFetcherPort {
         return try {
             val rawBytes = downloadBytes(url) ?: return null
 
-            // iText 2.x (usado pelo flying-saucer-pdf 9.x) não suporta WebP.
-            // Convertemos qualquer imagem recebida para JPEG via Scrimage,
-            // que lida com WebP automaticamente quando scrimage-webp está no classpath.
             val jpegBytes = convertToJpeg(rawBytes) ?: return null
 
             val base64 = Base64.getEncoder().encodeToString(jpegBytes)

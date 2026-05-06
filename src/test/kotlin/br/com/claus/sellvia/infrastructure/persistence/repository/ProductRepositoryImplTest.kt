@@ -93,10 +93,8 @@ class ProductRepositoryImplTest : AbstractRepositoryTest() {
         val product = repository.create(buildProduct("SKU-UPD", "Update Product"))
         val id = product.id!!
 
-        // Same SKU, same company, but different ID — should be false (it's the same product)
         repository.existsBySkuAndCompanyIdAndNotId("SKU-UPD", savedCompany.id!!, id).shouldBeFalse()
 
-        // Different product with same SKU
         val other = repository.create(buildProduct("SKU-OTHER2", "Other Product"))
         repository.existsBySkuAndCompanyIdAndNotId("SKU-OTHER2", savedCompany.id!!, id).shouldBeTrue()
     }

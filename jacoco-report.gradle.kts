@@ -29,7 +29,6 @@ tasks.named<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
     }
 
-    // Aplica filtros no Relatório
     classDirectories.setFrom(
         files(
             classDirectories.map {
